@@ -1,37 +1,13 @@
+@import 'root.css';
+
 *
 {
     padding: 0px;
     margin: 0px;
     font-family: "Montseratt", sans-serif;
-    color: #2F2F36;
 }
 
 body
 {
-    background-color: #2F2F36;
-}
-
-main
-{
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    height: 100vh;
-}
-
-.login-window
-{
-    background-color: #DEDEE9;
-    padding: 2vh;
-    border: 1px solid #DEDEE9;
-    border-radius: 10px;
-    align-items: center;
-    display: flex;
-    flex-direction: column;   
-}
-
-.item
-{
-    margin: 3%;
-    width: 100%;
+    background-color: var(--primary-dark-color);
 }

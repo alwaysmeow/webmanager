@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, Response, jsonify
+from flask import Flask, render_template, url_for, request, Response, jsonify, redirect, session
 
 app = Flask(__name__)
 
@@ -11,11 +11,18 @@ def loginCheck():
     data = request.get_json()
     print(data)
     if data['login'] != "meowmeow":
-        response = {"message": "barkbark"}
+        response = {"success": False}
         return jsonify(response), 200
     else:
-        response = {"message": "hello!"}
+        response = {"success": True, "redirect_url": "/home"}
         return jsonify(response), 200
+
+@app.route('/home')
+def loadManager(login = "meowmeow"):
+    if login:
+        return render_template("home.html", title = "WebManager", login = login)
+    else:
+        return "No Login"
 
 if __name__ == "__main__":
     app.run()

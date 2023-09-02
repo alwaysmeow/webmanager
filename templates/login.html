@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <main>
-        <form class="login-window" id="form">
-            <p class="item">Log In</p>
-            <input class="item" type="text" placeholder="login" id="loginInput">
-            <input class="item" type="text" placeholder="password" id="passwordInput">
-            <button class="item" type="submit">Send</button>
-        </form>
-    </main>
+{% extends 'base.html' %}
 
-    <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
-</body>
-</html>
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loginPage.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <form class="login-window" id="form">
+        <p class="item">Log In</p>
+        <input class="item" type="text" placeholder="Login" id="loginInput">
+        <input class="item" type="text" placeholder="Password" id="passwordInput">
+        <button class="item" type="submit">Send</button>
+    </form>
+</main>
+
+<script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
+{% endblock %}

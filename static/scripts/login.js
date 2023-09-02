@@ -1,7 +1,7 @@
 document.getElementById("form").addEventListener('submit', function(event){
     event.preventDefault()
 
-    const data = {
+    const postdata = {
         login: document.getElementById("loginInput").value,
         password: document.getElementById("passwordInput").value
     }
@@ -11,16 +11,17 @@ document.getElementById("form").addEventListener('submit', function(event){
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(postdata)
     }
-
-    console.log(data)
     
     fetch('/submit', request)
     .then(response => {
         return response.json()
     })
     .then(data => {
-        console.log(data)
+        if (data.success)
+        {
+            window.location.href = data.redirect_url
+        }
     })
 });
