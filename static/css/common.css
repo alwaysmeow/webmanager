@@ -26,4 +26,12 @@ main
     border: 1px solid #DEDEE9;
     border-radius: 10px;
     align-items: center;
+    display: flex;
+    flex-direction: column;   
+}
+
+.item
+{
+    margin: 3%;
+    width: 100%;
 }

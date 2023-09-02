@@ -9,9 +9,14 @@
 </head>
 <body>
     <main>
-        <div class="login-window">
-            <p>Hello, World!</p>
-        </div>
+        <form class="login-window" id="form">
+            <p class="item">Log In</p>
+            <input class="item" type="text" placeholder="login" id="loginInput">
+            <input class="item" type="text" placeholder="password" id="passwordInput">
+            <button class="item" type="submit">Send</button>
+        </form>
     </main>
+
+    <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 </body>
 </html>
