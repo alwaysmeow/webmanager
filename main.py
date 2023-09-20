@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, current_user
 
 from dotenv import load_dotenv
 from os import getenv
@@ -24,22 +24,23 @@ def welcome():
 @app.route('/submit', methods=["POST"])
 def loginCheck():
     data = request.get_json()
-    if data['login'] != "meowmeow":
-        response = {"success": False}
-        return jsonify(response), 200
-    else:
+    if data['login'] == "meowmeow":
         response = {"success": True, "redirect_url": "/home"}
         login_user(User("meowmeow"))
-        print("hello, meowmeow")
+        return jsonify(response), 200
+    elif data['login'] == "barkbark":
+        response = {"success": True, "redirect_url": "/home"}
+        login_user(User("barkbark"))
+        return jsonify(response), 200
+    else:
+        response = {"success": False}
         return jsonify(response), 200
 
 @app.route('/home')
 @login_required
-def loadManager(login = "meowmeow"):
-    if login:
-        return render_template("home.html", title = "WebManager", login = login)
-    else:
-        return "No Login"
+def loadManager():
+    print(current_user.id)
+    return render_template("home.html", title = "WebManager", login = current_user.id)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host="192.168.0.14",port="1820")
