@@ -1,0 +1,12 @@
+{
+    "user": "barkbark",
+    "categories": {
+        "studying": {
+            "MSU": "https://www.msu.ru/"
+        },
+        "social": {
+            "VK": "https://vk.com/",
+            "YouTube": "https://www.youtube.com/"
+        }
+    }
+}

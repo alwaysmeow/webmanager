@@ -1,0 +1,12 @@
+{
+    "user": "meowmeow",
+    "categories": {
+        "studying": {
+            "MPEI": "https://mpei.ru/"
+        },
+        "social": {
+            "VK": "https://vk.com/",
+            "YouTube": "https://www.youtube.com/"
+        }
+    }
+}

@@ -3,6 +3,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 
 from dotenv import load_dotenv
 from os import getenv
+import json
 
 from user import User
 
@@ -57,24 +58,11 @@ def logoutCurrentUser():
     response = {"success": True, "redirect_url": "/login"}
     return jsonify(response)
 
-"""
 @app.route('/data', methods=["GET"])
 @login_required
 def throwData():
-    response = {
-        "user": current_user.id,
-        "categories": {
-            "studying": {
-                "MPEI": "https://mpei.ru/"
-            },
-            "social": {
-                "VK": "https://vk.com/",
-                "YouTube": "https://www.youtube.com/"
-            }
-        }
-    }
-    return jsonify(response), 200
-"""
+    file = open(f"testjson/{current_user.id}.json")
+    return file, 200
 
 if __name__ == "__main__":
     app.run(debug=True, host="192.168.0.14",port="1820")
