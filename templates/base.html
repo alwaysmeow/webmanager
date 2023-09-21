@@ -12,9 +12,10 @@
 <body>
     <header>
         <div>{{ current_user.id }}</div>
-        <button>Logout</button>
+        <button id="logout-button">Logout</button>
     </header>
     {% block content -%}
     {% endblock -%}
+    <script src="{{ url_for('static', filename='scripts/base.js') }}"></script>
 </body>
 </html>
