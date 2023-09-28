@@ -20,24 +20,6 @@ login_manager.init_app(app)
 def loadUser(user_id):
     return User(user_id)
 
-@app.route('/')
-def welcome():
-    if current_user.is_authenticated:
-        url = url_for('loadManager')
-    else:
-        url = url_for('loadLoginPage')
-    return redirect(url, 301)
-
-@app.route('/login')
-def loadLoginPage():
-    return render_template("login.html", title = "Log In")
-
-@app.route('/home')
-@login_required
-def loadManager():
-    print(current_user.id)
-    return render_template("home.html", title = "WebManager", login = current_user.id)
-
 @app.route('/api/submit', methods=["POST"])
 def authorization():
     data = request.get_json()
