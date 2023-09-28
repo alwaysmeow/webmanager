@@ -1,11 +1,9 @@
-request = {
+const request = {
     method: "GET"
 }
 
 fetch("/data", request)
-.then(response => {
-    return response.json()
-})
+.then(response => response.json())
 .then(data => {
     console.log(data)
 })

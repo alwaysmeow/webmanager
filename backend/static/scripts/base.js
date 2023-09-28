@@ -1,6 +1,6 @@
 function logout()
 {
-    request = {
+    const request = {
         method: "GET"
     }
     

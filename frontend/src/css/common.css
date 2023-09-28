@@ -1,0 +1,13 @@
+@import 'root.css';
+
+*
+{
+    padding: 0px;
+    margin: 0px;
+    font-family: "Montseratt", sans-serif;
+}
+
+body
+{
+    background-color: var(--primary-dark-color);
+}

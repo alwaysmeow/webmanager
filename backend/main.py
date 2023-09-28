@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_cors import CORS
 
 from dotenv import load_dotenv
 from os import getenv
@@ -10,6 +11,7 @@ from user import User
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = getenv("KEY")
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -61,8 +63,8 @@ def logoutCurrentUser():
 @app.route('/data', methods=["GET"])
 @login_required
 def throwData():
-    file = open(f"testjson/{current_user.id}.json")
+    file = open(f"backend/testjson/{current_user.id}.json")
     return file, 200
 
 if __name__ == "__main__":
-    app.run(debug=True, host="192.168.0.14",port="1820")
+    app.run(debug=True)

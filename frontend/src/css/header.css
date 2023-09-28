@@ -1,0 +1,17 @@
+
+header
+{
+    background-color: var(--primary-bright-color);
+    color: var(--primary-dark-color);
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+    justify-content: end;
+    padding: 1%;
+}
