@@ -26,13 +26,14 @@ class LoginForm extends React.Component
 
         const request = {
             method: "POST",
+            credentials: 'include',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(postdata)
         }
         
-        fetch('http://127.0.0.1:5000//submit', request)
+        fetch('/api/submit', request)
         .then(response => {
             return response.json()
         })
@@ -40,7 +41,7 @@ class LoginForm extends React.Component
             console.log(data)
             if (data.success)
             {
-                // window.location.href = data.redirect_url
+                window.location.href = data.redirect_url
             }
         })
     }

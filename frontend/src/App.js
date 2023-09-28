@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from './components/LoginPage'
-import Header from './components/Header';
+import HomePage from './components/HomePage'
 
 class App extends React.Component
 {
@@ -9,10 +9,11 @@ class App extends React.Component
     {
         return(
             <>
-                <Header/>
                 <Router>
                     <Routes>
-                        <Route path="/" element={<LoginPage/>}></Route>
+                        <Route path="/"/>
+                        <Route path="/login" element={<LoginPage/>}/>
+                        <Route path="/home" element={<HomePage/>}/>
                     </Routes>
                 </Router>
             </>

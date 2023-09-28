@@ -1,15 +1,19 @@
 import React from 'react';
 import '../css/loginPage.css'
 import LoginForm from './LoginForm';
+import Header from './Header';
 
 class LoginPage extends React.Component
 {
     render()
     {
         return(
-            <main>
-                <LoginForm/>
-            </main>
+            <>
+                <Header/>
+                <main>
+                    <LoginForm/>
+                </main>
+            </>
         )
     }
 }

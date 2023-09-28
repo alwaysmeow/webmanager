@@ -11,7 +11,7 @@ from user import User
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 app.secret_key = getenv("KEY")
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -38,7 +38,7 @@ def loadManager():
     print(current_user.id)
     return render_template("home.html", title = "WebManager", login = current_user.id)
 
-@app.route('/submit', methods=["POST"])
+@app.route('/api/submit', methods=["POST"])
 def authorization():
     data = request.get_json()
     if data['login'] == "meowmeow":
@@ -53,18 +53,26 @@ def authorization():
         response = {"success": False}
         return jsonify(response), 200
 
-@app.route('/logout', methods=["GET"])
+@app.route('/api/logout', methods=["GET"])
 @login_required
 def logoutCurrentUser():
     logout_user()
     response = {"success": True, "redirect_url": "/login"}
     return jsonify(response)
 
-@app.route('/data', methods=["GET"])
+@app.route('/api/data', methods=["GET"])
 @login_required
 def throwData():
-    file = open(f"backend/testjson/{current_user.id}.json")
+    file = open(f"testjson/{current_user.id}.json")
     return file, 200
 
+@app.route('/api/username', methods=["GET"])
+def getUserName():
+    try:
+        response = {"logged": True, "name": current_user.id}
+    except:
+        response = {"logged": False}
+    return jsonify(response), 200
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port="8000")
