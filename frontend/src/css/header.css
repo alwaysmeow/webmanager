@@ -12,6 +12,6 @@ header
     display: flex;
     flex-direction: row;
     gap: 1%;
-    justify-content: end;
+    justify-content: flex-end;
     padding: 1%;
 }

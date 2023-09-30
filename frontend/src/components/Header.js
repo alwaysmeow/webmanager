@@ -3,17 +3,11 @@ import '../css/header.css'
 
 class Header extends React.Component
 {
-/*
-    componentDidMount()
-    {
-        this.setState({userName: this.props.userName})
-    }
-*/
     render()
     {
         return(
             <header>
-                <div></div>
+                <div>{ this.props.userName }</div>
                 <button id="logout-button" onClick={this.logout}>Logout</button>
             </header>
         )

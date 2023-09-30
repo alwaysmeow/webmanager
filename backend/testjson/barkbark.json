@@ -1,12 +1,30 @@
 {
     "userName": "barkbark",
-    "categories": {
-        "studying": {
-            "MSU": "https://www.msu.ru/"
+    "categories": 
+    [
+        {
+            "name": "studying",
+            "content":
+            [
+                {
+                    "name": "MSU",
+                    "url": "https://www.msu.ru/"
+                }
+            ]
         },
-        "social": {
-            "VK": "https://vk.com/",
-            "YouTube": "https://www.youtube.com/"
+        {
+            "name": "social",
+            "content":
+            [
+                {
+                    "name": "VK",
+                    "url": "https://vk.com/"
+                },
+                {
+                    "name": "YouTube",
+                    "url": "https://www.youtube.com/"
+                }
+            ]
         }
-    }
+    ]
 }

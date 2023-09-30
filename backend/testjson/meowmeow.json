@@ -1,12 +1,30 @@
 {
     "userName": "meowmeow",
-    "categories": {
-        "studying": {
-            "MPEI": "https://mpei.ru/"
+    "categories": 
+    [
+        {
+            "name": "studying",
+            "content":
+            [
+                {
+                    "name": "MPEI",
+                    "url": "https://mpei.ru/"
+                }
+            ]
         },
-        "social": {
-            "VK": "https://vk.com/",
-            "YouTube": "https://www.youtube.com/"
+        {
+            "name": "social",
+            "content":
+            [
+                {
+                    "name": "VK",
+                    "url": "https://vk.com/"
+                },
+                {
+                    "name": "YouTube",
+                    "url": "https://www.youtube.com/"
+                }
+            ]
         }
-    }
+    ]
 }
