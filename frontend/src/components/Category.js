@@ -26,7 +26,7 @@ class Category extends React.Component
                 <div className="category">
                 <div className="category-head" onClick={this.switchVisible}>{this.props.data.name}</div>
                 <ol className="link-list">
-                    {this.props.data.content.map((item, i) => <li><LinkBlock link={item} key={i} minimized={!this.state.isOpen}/></li>)}
+                    {this.props.data.content.map((item, i) => <li key={i}><LinkBlock link={item} minimized={!this.state.isOpen}/></li>)}
                 </ol>
             </div>
             )
@@ -37,7 +37,7 @@ class Category extends React.Component
                 <div className="category minimized" onClick={this.switchVisible}>
                 <div className="category-head">{this.props.data.name}</div>
                 <ol className="link-list">
-                    {this.props.data.content.map((item, i) => <li><LinkBlock link={item} key={i} minimized={!this.state.isOpen}/></li>)}
+                    {this.props.data.content.map((item, i) => <li key={i}><LinkBlock link={item} minimized={!this.state.isOpen}/></li>)}
                 </ol>
             </div>
             )

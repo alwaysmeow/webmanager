@@ -8,9 +8,11 @@
     background-color: var(--primary-bright-color);
     border: 1px var(--primary-bright-color) solid;
     border-radius: 5px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 1vh;
     text-align: center;
     cursor: pointer;
@@ -19,7 +21,13 @@
 
     overflow: hidden;
     transition: var(--transition-time);
-    max-height: 5vh;
+    max-height: 7vh;
+}
+
+.link-block img
+{
+    height: 3vh;
+    width: 3vh;
 }
 
 .link-block *

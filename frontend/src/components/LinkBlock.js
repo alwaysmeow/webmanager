@@ -3,6 +3,11 @@ import "../css/linkBlock.css"
 
 class LinkBlock extends React.Component
 {
+    componentDidMount()
+    {
+        console.log(new URL(this.props.link.url).origin + '/favicon.ico')
+    }
+
     render()
     {
         var className = "link-block"
@@ -12,7 +17,7 @@ class LinkBlock extends React.Component
         }
         return(
             <a className={className} href={this.props.link.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
-                <div>pic</div>
+                <img src={new URL(this.props.link.url).origin + '/favicon.ico'}/>
                 <div>{this.props.link.name}</div>
             </a>
         )
