@@ -11,7 +11,7 @@ class LinkBlock extends React.Component
             className += " minimized"
         }
         return(
-            <a className={className} href={this.props.link.url}>
+            <a className={className} href={this.props.link.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
                 <div>pic</div>
                 <div>{this.props.link.name}</div>
             </a>

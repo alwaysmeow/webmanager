@@ -30,6 +30,7 @@
 
 .link-block.minimized
 {
+    cursor: default;
     max-height: 0;
     gap: 0;
     padding: 0;

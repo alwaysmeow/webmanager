@@ -20,19 +20,28 @@ class Category extends React.Component
 
     render()
     {
-        var className = "category"
-        if (!this.state.isOpen)
+        if (this.state.isOpen)
         {
-            className += " minimized"
-        }
-        return(
-            <div className={className}>
+            return(
+                <div className="category">
                 <div className="category-head" onClick={this.switchVisible}>{this.props.data.name}</div>
                 <ol className="link-list">
                     {this.props.data.content.map((item, i) => <li><LinkBlock link={item} key={i} minimized={!this.state.isOpen}/></li>)}
                 </ol>
             </div>
-        )
+            )
+        }
+        else
+        {
+            return(
+                <div className="category minimized" onClick={this.switchVisible}>
+                <div className="category-head">{this.props.data.name}</div>
+                <ol className="link-list">
+                    {this.props.data.content.map((item, i) => <li><LinkBlock link={item} key={i} minimized={!this.state.isOpen}/></li>)}
+                </ol>
+            </div>
+            )
+        }
     }
 }
 
