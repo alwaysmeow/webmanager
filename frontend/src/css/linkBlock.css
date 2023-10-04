@@ -1,0 +1,41 @@
+@import 'root.css';
+
+.link-block
+{
+    width: 10vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    background-color: var(--primary-bright-color);
+    border: 1px var(--primary-bright-color) solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1vh;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--primary-dark-color);
+
+    overflow: hidden;
+    transition: var(--transition-time);
+    max-height: 5vh;
+}
+
+.link-block *
+{
+    cursor: pointer;
+    transition: var(--transition-time);
+}
+
+.link-block.minimized
+{
+    max-height: 0;
+    gap: 0;
+    padding: 0;
+}
+
+.link-block.minimized *
+{
+    opacity: 0%;
+}

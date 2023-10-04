@@ -2,4 +2,6 @@
 {
     --primary-dark-color: #2F2F36;
     --primary-bright-color: #DEDEE9;
+    
+    --transition-time: 1s;
 }

@@ -1,14 +1,20 @@
 import React from "react"
+import "../css/linkBlock.css"
 
 class LinkBlock extends React.Component
 {
     render()
     {
+        var className = "link-block"
+        if (this.props.minimized)
+        {
+            className += " minimized"
+        }
         return(
-            <div className="link-block" onClick={() => {window.location.href = this.props.link.url}}>
+            <a className={className} href={this.props.link.url}>
                 <div>pic</div>
                 <div>{this.props.link.name}</div>
-            </div>
+            </a>
         )
     }
 }
