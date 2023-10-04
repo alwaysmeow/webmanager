@@ -36,7 +36,7 @@
     transition: var(--transition-time);
 }
 
-.link-block.minimized
+.minimized .link-block
 {
     cursor: default;
     max-height: 0;
@@ -44,7 +44,7 @@
     padding: 0;
 }
 
-.link-block.minimized *
+.minimized .link-block *
 {
     opacity: 0%;
 }

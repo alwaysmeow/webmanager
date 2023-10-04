@@ -10,13 +10,8 @@ class LinkBlock extends React.Component
 
     render()
     {
-        var className = "link-block"
-        if (this.props.minimized)
-        {
-            className += " minimized"
-        }
         return(
-            <a className={className} href={this.props.link.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
+            <a className="link-block" href={this.props.link.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
                 <img src={new URL(this.props.link.url).origin + '/favicon.ico'}/>
                 <div>{this.props.link.name}</div>
             </a>

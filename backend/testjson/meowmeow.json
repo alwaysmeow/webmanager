@@ -3,7 +3,7 @@
     "categories": 
     [
         {
-            "name": "studying",
+            "name": "Studying",
             "content":
             [
                 {
@@ -13,7 +13,7 @@
             ]
         },
         {
-            "name": "social",
+            "name": "Social",
             "content":
             [
                 {
@@ -23,6 +23,28 @@
                 {
                     "name": "YouTube",
                     "url": "https://www.youtube.com/"
+                }
+            ]
+        },
+        {
+            "name": "Coding",
+            "content":
+            [
+                {
+                    "name": "stackoverflow",
+                    "url": "https://stackoverflow.com/"
+                },
+                {
+                    "name": "GitHub",
+                    "url": "https://github.com/"
+                },
+                {
+                    "name": "Habr",
+                    "url": "https://habr.com/"
+                },
+                {
+                    "name": "React",
+                    "url": "https://legacy.reactjs.org/"
                 }
             ]
         }
