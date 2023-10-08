@@ -55,6 +55,7 @@ class HomePage extends React.Component
             this.categories = data.categories;
             console.log(data);
         })
+        .catch(() => {window.location.href = '/login'})
     }
 }
 

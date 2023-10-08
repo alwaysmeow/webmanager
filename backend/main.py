@@ -7,6 +7,7 @@ from os import getenv
 import json
 
 from user import User
+from tools import *
 
 load_dotenv()
 
@@ -23,13 +24,9 @@ def loadUser(user_id):
 @app.route('/api/submit', methods=["POST"])
 def authorization():
     data = request.get_json()
-    if data['login'] == "meowmeow":
+    if authentication(data['login'], data['passwordHash']):
         response = {"success": True, "redirect_url": "/home"}
-        login_user(User("meowmeow"))
-        return jsonify(response), 200
-    elif data['login'] == "barkbark":
-        response = {"success": True, "redirect_url": "/home"}
-        login_user(User("barkbark"))
+        login_user(User(data['login']))
         return jsonify(response), 200
     else:
         response = {"success": False}

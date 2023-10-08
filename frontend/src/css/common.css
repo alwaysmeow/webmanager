@@ -11,3 +11,9 @@ body
 {
     background-color: var(--primary-dark-color);
 }
+
+div
+{
+    cursor: default;
+    user-select: none;
+}
