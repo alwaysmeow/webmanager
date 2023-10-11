@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginForm from './LoginForm';
-import Header from './Header';
+import LoginForm from '../components/LoginForm';
+import Header from '../components/Header';
 import '../css/loginPage.css';
 
 class LoginPage extends React.Component

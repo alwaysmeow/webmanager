@@ -25,7 +25,7 @@ def loadUser(user_id):
 def authorization():
     data = request.get_json()
     if authentication(data['login'], data['passwordHash']):
-        response = {"success": True, "redirect_url": "/home"}
+        response = {"success": True, "redirect_url": "/"}
         login_user(User(data['login']))
         return jsonify(response), 200
     else:
