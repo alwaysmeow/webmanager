@@ -9,9 +9,9 @@ class HomePage extends React.Component
     {
         super(props)
         this.state = {
-            userName: "",
             loaded: false
         }
+        this.username = ""
         this.categories = []
         this.getData()
     }
@@ -22,7 +22,7 @@ class HomePage extends React.Component
         {
             return(
                 <>
-                    <Header userName={this.state.userName}/>
+                    <Header username={this.username}/>
                     <main className='home'>
                         <ol className="category-list">
                             {this.categories.map((item, i) => <Category data = {item} key={i}/>)}
@@ -49,10 +49,10 @@ class HomePage extends React.Component
         .then(data =>
         {
             this.setState({
-                userName: data.userName,
                 loaded: true
             })
-            this.categories = data.categories;
+            this.username = data.username
+            this.categories = data.categories
             console.log(data);
         })
         .catch(() => {window.location.href = '/login'})

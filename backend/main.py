@@ -4,10 +4,9 @@ from flask_cors import CORS
 
 from dotenv import load_dotenv
 from os import getenv
-import json
 
 from user import User
-from tools import *
+from mongo import getUserData, authentication
 
 load_dotenv()
 
@@ -42,8 +41,7 @@ def logoutCurrentUser():
 @app.route('/api/data', methods=["GET"])
 @login_required
 def throwData():
-    file = open(f"testjson/{current_user.id}.json")
-    return file, 200
+    return getUserData(current_user.id), 200
 
 @app.route('/api/username', methods=["GET"])
 def getUserName():
