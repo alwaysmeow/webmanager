@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Category from "../components/Category"
 import "../css/homePage.css"
-import { getDataRequest } from '../tools/requests';
+import { getUserDataRequest } from '../tools/requests';
 
 class HomePage extends React.Component
 {
@@ -40,7 +40,7 @@ class HomePage extends React.Component
 
     async getData()
     {
-        const response = await getDataRequest()
+        const response = await getUserDataRequest()
         console.log(response)
         if (response === null)
             window.location.href = '/login'

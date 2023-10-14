@@ -14,7 +14,7 @@ export async function loginRequest(login, passwordHash)
         body: JSON.stringify(postdata)
     }
     
-    return await fetch('/api/submit', request)
+    return await fetch('/api/login', request)
     .then(response => {
         return response.json()
     })
@@ -33,14 +33,14 @@ export async function logoutRequest()
     })
 }
 
-export async function getDataRequest()
+export async function getUserDataRequest()
 {
     const request = {
         method: "GET",
         credentials: 'include'
     }
     
-    return await fetch("api/data", request)
+    return await fetch("api/userdata", request)
     .then(response => response.json())
     .catch(() => null)
 }

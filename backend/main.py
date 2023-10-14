@@ -20,7 +20,7 @@ login_manager.init_app(app)
 def loadUser(user_id):
     return User(user_id)
 
-@app.route('/api/submit', methods=["POST"])
+@app.route('/api/login', methods=["POST"])
 def authorization():
     data = request.get_json()
     if authentication(data['login'], data['passwordHash']):
@@ -41,7 +41,7 @@ def logoutCurrentUser():
         response = {"success": False}
     return jsonify(response), 200
 
-@app.route('/api/data', methods=["GET"])
+@app.route('/api/userdata', methods=["GET"])
 @login_required
 def throwData():
     return getUserData(current_user.id), 200
