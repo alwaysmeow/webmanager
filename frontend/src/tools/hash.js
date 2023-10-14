@@ -1,3 +1,5 @@
+// Unsecured
+
 async function hash(message) {
     // Преобразование сообщения в буфер
     const buffer = new TextEncoder().encode(message);

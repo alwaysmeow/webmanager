@@ -27,8 +27,8 @@ class LoginForm extends React.Component
     render()
     {
         return(
-            <form className="login-window" id="form">
-                <p className="item">Log In</p>
+            <form className="login-window" id="form" autoComplete="off">
+                <p>Log In</p>
                 <input 
                     className="item" 
                     type="text"

@@ -1,7 +1,9 @@
 :root
 {
-    --primary-dark-color: #2F2F36;
-    --primary-bright-color: #DEDEE9;
+    --primary-dark-color: #3D3D40;
+    --primary-bright-color: #E1E1EA;
+    --secondary-bright: #C9C9D7;
+    --red: #FD6452;
     
-    --transition-time: 1s;
+    --transition-time: 0.5s;
 }

@@ -15,13 +15,19 @@ main
     border-radius: 10px;
     align-items: center;
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
+    gap: 2vh;
+}
+
+input
+{
+    box-sizing: border-box;
 }
 
 .item
 {
     text-align: center;
-    margin: 3%;
     width: 100%;
-    color: #2F2F36;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
