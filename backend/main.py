@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from os import getenv
 
 from user import User
-from mongo import getUserData, authentication
+from dbinterface import *
 
 load_dotenv()
 
@@ -46,7 +46,7 @@ def logoutCurrentUser():
 def throwData():
     return getUserData(current_user.id), 200
 
-@app.route('/api/username', methods=["GET"])
+@app.route('/api/username', methods=["GET"]) # bad way (also should be deleted)
 def getUserName():
     try:
         response = {"logged": True, "name": current_user.id}
