@@ -34,9 +34,12 @@ def authorization():
 @app.route('/api/logout', methods=["GET"])
 @login_required
 def logoutCurrentUser():
-    logout_user()
-    response = {"success": True, "redirect_url": "/login"}
-    return jsonify(response)
+    try:
+        logout_user()
+        response = {"success": True, "redirect_url": "/login"}
+    except:
+        response = {"success": False}
+    return jsonify(response), 200
 
 @app.route('/api/data', methods=["GET"])
 @login_required

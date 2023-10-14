@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/loginPage.css'
 import hash from '../tools/hash.js'
+import { loginRequest } from '../tools/requests';
 
 class LoginForm extends React.Component
 {
@@ -8,26 +9,18 @@ class LoginForm extends React.Component
     {
         super(props)
         this.state = {
-            loginInputValue: '',
-            passwordInputValue: ''
+            loginInput: '',
+            passwordInput: ''
         }
 
-        this.loginInput = this.loginInput.bind(this)
-        this.passwordInput = this.passwordInput.bind(this)
+        this.Input = this.Input.bind(this)
         this.submit = this.submit.bind(this)
     }
 
-    passwordInput(event)
+    Input(event)
     {
         this.setState({
-            passwordInputValue: event.target.value
-        })
-    }
-
-    loginInput(event)
-    {
-        this.setState({
-            loginInputValue: event.target.value
+            [event.target.id]: event.target.value
         })
     }
 
@@ -37,11 +30,12 @@ class LoginForm extends React.Component
             <form className="login-window" id="form">
                 <p className="item">Log In</p>
                 <input 
-                    className="item" type="text" 
+                    className="item" 
+                    type="text"
                     placeholder="Login" 
                     id="loginInput" 
                     value={this.state.loginInputValue} 
-                    onChange={this.loginInput}
+                    onChange={this.Input}
                 />
                 <input 
                     className="item" 
@@ -49,7 +43,7 @@ class LoginForm extends React.Component
                     placeholder="Password" 
                     id="passwordInput" 
                     value={this.state.passwordInputValue} 
-                    onChange={this.passwordInput}
+                    onChange={this.Input}
                 />
                 <button className="item" type="submit" onClick={this.submit}>Send</button>
             </form>
@@ -59,31 +53,9 @@ class LoginForm extends React.Component
     async submit(event)
     {
         event.preventDefault()
-
-        const postdata = {
-            login: this.state.loginInputValue,
-            passwordHash: await hash(this.state.passwordInputValue)
-        }
-
-        const request = {
-            method: "POST",
-            credentials: 'include',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(postdata)
-        }
-        
-        fetch('/api/submit', request)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            if (data.success)
-            {
-                window.location.href = data.redirect_url
-            }
-        })
+        const response = await loginRequest(this.state.loginInput, await hash(this.state.passwordInput))
+        if (response.success)
+            window.location.href = response.redirect_url
     }
 }
 

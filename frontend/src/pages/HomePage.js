@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Category from "../components/Category"
 import "../css/homePage.css"
+import { getDataRequest } from '../tools/requests';
 
 class HomePage extends React.Component
 {
@@ -37,25 +38,20 @@ class HomePage extends React.Component
         }
     }
 
-    getData()
+    async getData()
     {
-        const request = {
-            method: "GET",
-            credentials: 'include'
-        }
-        
-        fetch("api/data", request)
-        .then(response => response.json())
-        .then(data =>
+        const response = await getDataRequest()
+        console.log(response)
+        if (response === null)
+            window.location.href = '/login'
+        else
         {
+            this.categories = response.categories
+            this.username = response.username
             this.setState({
                 loaded: true
             })
-            this.username = data.username
-            this.categories = data.categories
-            console.log(data);
-        })
-        .catch(() => {window.location.href = '/login'})
+        }
     }
 }
 

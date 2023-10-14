@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/header.css'
+import { logoutRequest } from '../tools/requests'
 
 class Header extends React.Component
 {
@@ -13,23 +14,12 @@ class Header extends React.Component
         )
     }
 
-    logout()
+    async logout()
     {
-        const request = {
-            method: "GET",
-            credentials: 'include'
-        }
-        
-        fetch('/api/logout', request)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            if (data.success)
-            {
-                window.location.href = data.redirect_url
-            }
-        })
+        const response = await logoutRequest()
+        console.log(response);
+        if (response.success)
+            window.location.href = response.redirect_url
     }
 }
 
