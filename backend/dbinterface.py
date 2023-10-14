@@ -65,10 +65,32 @@ def newCategory(username, categoryName):
 # Link Interface
 
 def deleteLink(username, categoryIndex, linkIndex):
-    pass
+    collection.update_one(
+        {"username": username}, 
+        {"$unset": {f"categories.{categoryIndex}.content.{linkIndex}": 1}}
+    )
+    collection.update_one(
+        {"username": username}, 
+        {"$pull": {f"categories.{categoryIndex}.content": None}}
+    )
 
 def renameLink(username, categoryIndex, linkIndex, newName):
-    pass
+    collection.update_one(
+        {"username": username},
+        {"$set": {f"categories.{categoryIndex}.content.{linkIndex}.name": newName}}
+    )
 
-def newLink(username, categoryIndex, linkName):
-    pass
+def newLink(username, categoryIndex, linkName, url):
+    collection.update_one(
+        {"username": username},
+        {
+            "$push": 
+            {
+                f"categories.{categoryIndex}.content": 
+                {
+                    "name": linkName, 
+                    "url": url
+                }
+            }
+        }
+    )
