@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import Header from '../components/Header';
 import Category from "../components/Category"
 import "../css/homePage.css"
 import { getUserDataRequest } from '../tools/requests';
+
+const Edit = createContext(false)
 
 class HomePage extends React.Component
 {
@@ -10,7 +12,8 @@ class HomePage extends React.Component
     {
         super(props)
         this.state = {
-            loaded: false
+            loaded: false,
+            editing: false,
         }
         this.username = ""
         this.categories = []
@@ -23,7 +26,7 @@ class HomePage extends React.Component
         {
             return(
                 <>
-                    <Header username={this.username}/>
+                    <Header showPanel={true}/>
                     <main className='home'>
                         <ol className="category-list">
                             {this.categories.map((item, i) => <Category data = {item} key={i}/>)}

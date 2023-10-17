@@ -16,7 +16,7 @@ header
 
     display: flex;
     flex-direction: row;
-    gap: 2%;
+    gap: 1%;
     justify-content: right;
     align-items: center;
 }

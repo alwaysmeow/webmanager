@@ -38,10 +38,16 @@ button
 
 button
 {
+    background-color: var(--secondary-bright);
     cursor: pointer;
 }
 
 button:hover
 {
-    background-color: var(--secondary-bright);
+    background-color: var(--contrast);
+}
+
+h1, h2, h3
+{
+    font-weight: normal;
 }

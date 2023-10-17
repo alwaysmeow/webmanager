@@ -28,11 +28,11 @@ class LoginForm extends React.Component
     {
         return(
             <form className="login-window" id="form" autoComplete="off">
-                <p>Log In</p>
+                <h2>Log In</h2>
                 <input 
                     className="item" 
                     type="text"
-                    placeholder="Login" 
+                    placeholder="Username" 
                     id="loginInput" 
                     value={this.state.loginInputValue} 
                     onChange={this.Input}
@@ -45,7 +45,7 @@ class LoginForm extends React.Component
                     value={this.state.passwordInputValue} 
                     onChange={this.Input}
                 />
-                <button className="item" type="submit" onClick={this.submit}>Send</button>
+                <button className="item" type="submit" onClick={this.submit}>Log In</button>
             </form>
         )
     }

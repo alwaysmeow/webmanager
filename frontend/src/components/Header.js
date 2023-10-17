@@ -10,16 +10,22 @@ class Header extends React.Component
         return(
             <header>
                 <div className="blank"/>
-                <div className="appname">WebManager</div>
-                <div className="icon-button">
-                    <User/>
-                </div>
-                <div className="icon-button">
-                    <Edit/>
-                </div>
-                <div className="icon-button" onClick={this.logout}>
-                    <LogOut/>
-                </div>
+                <h2 className="appname">WebManager</h2>
+                {
+                    this.props.showPanel ?
+                    <>
+                        <div className="icon-button">
+                            <User/>
+                        </div>
+                        <div className="icon-button">
+                            <Edit/>
+                        </div>
+                        <div className="icon-button" onClick={this.logout}>
+                            <LogOut/>
+                        </div>
+                    </>
+                    : <></>
+                }
             </header>
         )
     }
