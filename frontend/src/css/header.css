@@ -2,7 +2,6 @@
 header
 {
     background-color: var(--primary-dark-color);
-    color: var(--primary-bright-color);
 
     height: 5vh;
     padding: 1vh;
@@ -23,6 +22,7 @@ header
 
 header *
 {
+    color: var(--primary-bright-color);;
     transition: var(--transition-time);
     z-index: 1;
 }
@@ -44,12 +44,10 @@ header *
 
 .appname
 {
-    color: var(--primary-bright-color);
     position: fixed;
     left: 0;
     right: 0;
     text-align: center;
-    font-size: 16pt;
 }
 
 header:hover *
@@ -72,14 +70,27 @@ header:hover .blank
     cursor: pointer;
 }
 
-.icon-button:hover
+.icon-button.active
 {
-    background-color: var(--secondary-bright);
+    background-color: var(--primary-bright-color);
 }
 
-header svg *
+header:hover .icon-button.active
 {
-    margin: 0;
+    background-color: var(--primary-dark-color);
+}
+
+.icon-button.active svg *
+{
+    color: var(--primary-dark-color);
+}
+
+header:hover .icon-button.active svg *
+{
     color: var(--primary-bright-color);
+}
+
+.icon-button:hover
+{
     background-color: var(--secondary-bright);
 }

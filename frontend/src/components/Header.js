@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/header.css'
 import { logoutRequest } from '../tools/requests'
 import { LogOut, Edit, User } from 'react-feather'
+import EditContext from './EditContext';
 
 class Header extends React.Component
 {
@@ -17,14 +18,18 @@ class Header extends React.Component
                         <div className="icon-button">
                             <User/>
                         </div>
-                        <div className="icon-button">
-                            <Edit/>
-                        </div>
+                        <EditContext.Consumer>
+                            {
+                            ({editState, toggleEditState}) => (
+                                <div className={"icon-button" + (editState ? " active" : "")} onClick={toggleEditState}>
+                                    <Edit/>
+                                </div>
+                            )}
+                        </EditContext.Consumer>
                         <div className="icon-button" onClick={this.logout}>
                             <LogOut/>
                         </div>
-                    </>
-                    : <></>
+                    </> : <></>
                 }
             </header>
         )
@@ -38,5 +43,7 @@ class Header extends React.Component
             window.location.href = response.redirect_url
     }
 }
+
+Header.contextType = EditContext
 
 export default Header
