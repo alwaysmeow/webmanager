@@ -36,7 +36,7 @@ class HomePage extends React.Component
                 <>
                     <EditContext.Provider value={this.state.editing}>
                         <Header showPanel={true}/>
-                        <main className='home'>
+                        <main className={"home" + (this.state.editing.editState ? " editing" : "")}>
                             <TransitionGroup className="category-list" component="div">
                                 {this.categories.map((item, i) => (
                                     <CSSTransition key={i} timeout={500} classNames="link-block">
@@ -46,9 +46,9 @@ class HomePage extends React.Component
                             </TransitionGroup>
                             <TransitionGroup>
                                 {this.state.editing.editState ? (
-                                        <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
-                                            <AddCategoryButton />
-                                        </CSSTransition>
+                                    <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
+                                        <AddCategoryButton />
+                                    </CSSTransition>
                                 ) : (
                                     <></>
                                 )}

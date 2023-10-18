@@ -22,6 +22,7 @@
     overflow: hidden;
     transition: var(--transition-time);
     max-height: 7vh;
+    height: 7vh;
 }
 
 .link-block img

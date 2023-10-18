@@ -11,16 +11,19 @@
 
     outline: 1px solid var(--contrast);
     border-radius: 5px;
+    border-color: var(--contrast);
     box-sizing: border-box;
 
     transition: var(--transition-time);
     overflow: hidden;
+    cursor: pointer;
 }
 
 .add-category-button div
 {
     text-align: center;
     color: var(--contrast);
+    cursor: pointer;
 }
 
 .add-category-button-enter,
@@ -30,4 +33,14 @@
     outline-color: var(--primary-dark-color);
     box-sizing: border-box;
     transition: var(--transition-time);
+}
+
+.add-category-button:hover
+{
+    background-color: var(--contrast);
+}
+
+.add-category-button:hover div
+{
+    color: var(--primary-dark-color)
 }

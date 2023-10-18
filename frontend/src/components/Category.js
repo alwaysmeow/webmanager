@@ -22,26 +22,33 @@ class Category extends React.Component
         this.setState({isOpen: !this.state.isOpen})
     }
 
+    handleClick = () =>
+    {
+        if (!this.state.isOpen)
+            this.switchVisible()
+    }
+
+    headClick = () =>
+    {
+        if (this.state.isOpen)
+            this.switchVisible()
+    }
+
     render()
     {
-        // Should be refactored
-        // Problem with switchVisible handle
-
         return(
-            <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={this.switchVisible}>
-                <div className="category-head">{this.props.data.name}</div>
-                <TransitionGroup className="link-list" component="ol">
-                    {this.props.data.content.map((item, i) => 
-                        <CSSTransition key={i} timeout={{ enter: 0, exit: 500 }} classNames="link-block">
-                            <LinkBlock link={item} minimized={!this.state.isOpen}/>
-                        </CSSTransition>
-                    )}
-                    {this.context.editState ? 
-                        <CSSTransition key={"addLinkButton"} timeout={{ enter: 0, exit: 500 }} classNames="add-link-button">
-                            <AddLinkButton minimized={!this.state.isOpen}/> 
-                        </CSSTransition>
-                    : <></>}
-                </TransitionGroup>
+            <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={this.handleClick}>
+                <div className="category-head" onClick={this.headClick}>{this.props.data.name}</div>
+                <div className="category-content">
+                    <TransitionGroup className="link-list" component="ol">
+                        {this.props.data.content.map((item, i) => 
+                            <CSSTransition key={i} timeout={{ enter: 0, exit: 500 }} classNames="link-block">
+                                <LinkBlock link={item} minimized={!this.state.isOpen}/>
+                            </CSSTransition>
+                        )}
+                        <AddLinkButton minimized={!this.state.isOpen} hide={!this.context.editState}/> 
+                    </TransitionGroup>
+                </div>
             </div>
         )
     }
