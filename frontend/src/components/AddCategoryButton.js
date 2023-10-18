@@ -6,7 +6,7 @@ class AddCategoryButton extends React.Component
     render()
     {
         return(
-            <div className="add-category-button"><p>+</p></div>
+            <div className="add-category-button"><div>+</div></div>
         )
     }
 }

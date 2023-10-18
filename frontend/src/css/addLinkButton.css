@@ -1,3 +1,5 @@
+.add-link-button-enter-active,
+.add-link-button-exit,
 .add-link-button
 {
     max-height: 7vh;
@@ -10,11 +12,19 @@
     align-items: center;
     justify-content: center;
 
-    border: 1px solid var(--contrast);
+    outline: 1px solid var(--contrast);
     border-radius: 5px;
 
     transition: var(--transition-time);
     overflow: hidden;
+}
+
+.add-link-button-enter,
+.add-link-button-exit-active
+{
+    width: 0;
+    outline-color: var(--primary-dark-color);
+    transition: var(--transition-time);
 }
 
 .add-link-button div

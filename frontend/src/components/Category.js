@@ -26,8 +26,6 @@ class Category extends React.Component
         // Should be refactored
         // Problem with switchVisible handle
 
-        console.log(this.context);
-
         if (this.state.isOpen)
         {
             return(

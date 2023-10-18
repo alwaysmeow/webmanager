@@ -2,6 +2,8 @@
 
 .home
 {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     margin-top: 1vh;
     margin-bottom: 1vh;
@@ -16,4 +18,5 @@
     flex-direction: column;
     gap: 1vh;
     width: 100%;
+    margin-bottom: 2vh;
 }

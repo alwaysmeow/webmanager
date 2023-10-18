@@ -1,4 +1,5 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from "react-transition-group"
 import Header from '../components/Header';
 import Category from "../components/Category"
 import AddCategoryButton from "../components/AddCategoryButton"
@@ -34,12 +35,22 @@ class HomePage extends React.Component
                 <>
                     <EditContext.Provider value={this.state.editing}>
                         <Header showPanel={true}/>
-                        <main className='home'>
-                            <ol className="category-list">
-                                {this.categories.map((item, i) => <Category data={item} key={i}/>)}
-                                {this.state.editing.editState ? <AddCategoryButton/> : <></>}
-                            </ol>
-                        </main>
+                        <TransitionGroup className='home' component="main">
+                            <TransitionGroup className="category-list" component="ol">
+                                {this.categories.map((item, i) => 
+                                    <CSSTransition key={i} timeout={500} classNames="link-block">
+                                        <Category data={item} />
+                                    </CSSTransition>
+                                )}
+                            </TransitionGroup>
+                            {this.state.editing.editState ? (
+                                <CSSTransition timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
+                                    <AddCategoryButton />
+                                </CSSTransition>
+                            ) : (
+                                <></>
+                            )}
+                        </TransitionGroup>
                     </EditContext.Provider>
                 </>
             )

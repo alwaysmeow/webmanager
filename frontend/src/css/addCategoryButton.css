@@ -1,18 +1,33 @@
+.add-category-button-enter-active,
+.add-category-button-exit,
 .add-category-button
 {
     width: 10vw;
+    height: 4vh;
     
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 5px;
-    margin: 5px;
-    border: 1px solid var(--contrast);
+    outline: 1px solid var(--contrast);
     border-radius: 5px;
+    box-sizing: border-box;
+
+    transition: var(--transition-time);
+    overflow: hidden;
 }
 
-.add-category-button p
+.add-category-button div
 {
     text-align: center;
     color: var(--contrast);
+}
+
+.add-category-button-enter,
+.add-category-button-exit-active
+{
+    height: 0;
+    outline-color: var(--primary-dark-color);
+    box-sizing: border-box;
+    transition: var(--transition-time);
 }
