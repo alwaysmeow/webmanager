@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Category from "../components/Category"
+import AddCategoryButton from "../components/AddCategoryButton"
 import EditContext from '../components/EditContext';
 import "../css/homePage.css"
 import { getUserDataRequest } from '../tools/requests';
@@ -16,15 +17,11 @@ class HomePage extends React.Component
                 editState: false,
                 toggleEditState: () => {
                     this.setState({
-                        editing:{
-                            editState: !this.state.editing.editState,
-                            toggleEditState: this.state.editing.toggleEditState
-                        }
+                        editing: {...this.state.editing, editState: !this.state.editing.editState}
                     })
                 }
             },
         }
-        this.username = ""
         this.categories = []
         this.getData()
     }
@@ -40,6 +37,7 @@ class HomePage extends React.Component
                         <main className='home'>
                             <ol className="category-list">
                                 {this.categories.map((item, i) => <Category data={item} key={i}/>)}
+                                {this.state.editing.editState ? <AddCategoryButton/> : <></>}
                             </ol>
                         </main>
                     </EditContext.Provider>
@@ -61,7 +59,6 @@ class HomePage extends React.Component
         else
         {
             this.categories = response.categories
-            this.username = response.username
             this.setState({
                 loaded: true
             })

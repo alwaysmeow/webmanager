@@ -1,0 +1,23 @@
+.category
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1vh;
+    width: 100%;
+}
+
+.category-head
+{
+    color: var(--primary-bright-color);
+    padding: 5px;
+}
+
+.link-list
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1vh;
+    list-style: none;
+}

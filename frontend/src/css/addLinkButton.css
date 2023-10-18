@@ -1,0 +1,35 @@
+.add-link-button
+{
+    max-height: 7vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    
+    width: 2vw;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--contrast);
+    border-radius: 5px;
+
+    transition: var(--transition-time);
+    overflow: hidden;
+}
+
+.add-link-button div
+{
+    text-align: center;
+    color: var(--contrast);
+}
+
+.add-link-button.minimized
+{
+    max-height: 0;
+    padding: 0;
+}
+
+.add-link-button.minimized div
+{
+    opacity: 0%;
+}
