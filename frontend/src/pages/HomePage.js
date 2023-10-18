@@ -31,20 +31,21 @@ class HomePage extends React.Component
     {
         if (this.state.loaded)
         {
+
             return(
                 <>
                     <EditContext.Provider value={this.state.editing}>
                         <Header showPanel={true}/>
                         <TransitionGroup className='home' component="main">
-                            <TransitionGroup className="category-list" component="ol">
-                                {this.categories.map((item, i) => 
+                            <div className="category-list">
+                                {this.categories.map((item, i) => (
                                     <CSSTransition key={i} timeout={500} classNames="link-block">
                                         <Category data={item} />
                                     </CSSTransition>
-                                )}
-                            </TransitionGroup>
+                                ))}
+                            </div>
                             {this.state.editing.editState ? (
-                                <CSSTransition timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
+                                <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
                                     <AddCategoryButton />
                                 </CSSTransition>
                             ) : (

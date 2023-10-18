@@ -1,4 +1,5 @@
 import React from "react"
+import { CSSTransition, TransitionGroup } from "react-transition-group"
 import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
 import EditContext from "./EditContext"
@@ -26,30 +27,23 @@ class Category extends React.Component
         // Should be refactored
         // Problem with switchVisible handle
 
-        if (this.state.isOpen)
-        {
-            return(
-                <div className="category">
-                    <div className="category-head" onClick={this.switchVisible}>{this.props.data.name}</div>
-                    <ol className="link-list">
-                        {this.props.data.content.map((item, i) => <li key={i}><LinkBlock link={item} minimized={!this.state.isOpen}/></li>)}
-                        {this.context.editState ? <AddLinkButton minimized={!this.state.isOpen}/> : <></>}
-                    </ol>
-                </div>
-            )
-        }
-        else
-        {
-            return(
-                <div className="category minimized" onClick={this.switchVisible}>
-                    <div className="category-head">{this.props.data.name}</div>
-                    <ol className="link-list">
-                        {this.props.data.content.map((item, i) => <li key={i}><LinkBlock link={item} minimized={!this.state.isOpen}/></li>)}
-                        {this.context.editState ? <AddLinkButton minimized={!this.state.isOpen}/> : <></>}
-                    </ol>
-                </div>
-            )
-        }
+        return(
+            <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={this.switchVisible}>
+                <div className="category-head">{this.props.data.name}</div>
+                <TransitionGroup className="link-list" component="ol">
+                    {this.props.data.content.map((item, i) => 
+                        <CSSTransition key={i} timeout={{ enter: 0, exit: 500 }} classNames="link-block">
+                            <LinkBlock link={item} minimized={!this.state.isOpen}/>
+                        </CSSTransition>
+                    )}
+                    {this.context.editState ? 
+                        <CSSTransition key={"addLinkButton"} timeout={{ enter: 0, exit: 500 }} classNames="add-link-button">
+                            <AddLinkButton minimized={!this.state.isOpen}/> 
+                        </CSSTransition>
+                    : <></>}
+                </TransitionGroup>
+            </div>
+        )
     }
 }
 
