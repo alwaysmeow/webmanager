@@ -4,6 +4,7 @@ import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
 import EditContext from "./EditContext"
 import "../css/category.css"
+import { renameCategoryRequest } from "../tools/requests"
 
 class Category extends React.Component
 {
@@ -11,10 +12,13 @@ class Category extends React.Component
     {
         super(props)
         this.state = {
-            isOpen: true
+            isOpen: true,
+            name: this.props.data.name
         }
 
         this.switchVisible = this.switchVisible.bind(this)
+        this.inputCategoryName = this.inputCategoryName.bind(this)
+        this.renameCategory = this.renameCategory.bind(this)
     }
 
     switchVisible()
@@ -34,11 +38,34 @@ class Category extends React.Component
             this.switchVisible()
     }
 
+    inputCategoryName(event)
+    {
+        this.setState({name: event.target.value})
+    }
+
+    renameCategory(event)
+    {
+        if (this.state.name !== this.props.data.name)
+        {
+            renameCategoryRequest(this.props.index, this.state.name)
+            // BUG: cannot return old name without page reloading
+            // this.props.data.name doesn't change after request, so we should work with data in HomePage (HomePage.categories)
+            // Maybe HomePage.categories should be in HomePage.state.categories
+        }
+    }
+
     render()
     {
         return(
             <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={this.handleClick}>
-                <div className="category-head" onClick={this.headClick}>{this.props.data.name}</div>
+                {
+                    this.context.editState
+                    ?
+                        <input className="category-head" value={this.state.name} onChange={this.inputCategoryName} onBlur={this.renameCategory}/>
+                    :
+                        <div className="category-head" onClick={this.headClick}>{this.state.name}</div>
+                }
+                
                 <div className="category-content">
                     <TransitionGroup className="link-list" component="ol">
                         {this.props.data.content.map((item, i) => 

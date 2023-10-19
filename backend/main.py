@@ -46,13 +46,13 @@ def logoutCurrentUser():
 def throwData():
     return getUserData(current_user.id), 200
 
-@app.route('/api/username', methods=["GET"]) # bad way (also should be deleted)
-def getUserName():
-    try:
-        response = {"logged": True, "name": current_user.id}
-    except:
-        response = {"logged": False}
-    return jsonify(response), 200
+@app.route('/api/rename_category', methods=["POST"])
+@login_required
+def renameCategoryProcessing():
+    data = request.get_json()
+    renameCategory(current_user.id, data["categoryIndex"], data["newName"])
+    return jsonify({"success": True}), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True, port="8000")

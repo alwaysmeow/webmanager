@@ -15,9 +15,7 @@ export async function loginRequest(login, passwordHash)
     }
     
     return await fetch('/api/login', request)
-    .then(response => {
-        return response.json()
-    })
+    .then(response => response.json())
 }
 
 export async function logoutRequest()
@@ -28,9 +26,7 @@ export async function logoutRequest()
     }
         
     return await fetch('/api/logout', request)
-    .then(response => {
-        return response.json()
-    })
+    .then(response => response.json())
 }
 
 export async function getUserDataRequest()
@@ -43,4 +39,23 @@ export async function getUserDataRequest()
     return await fetch("api/userdata", request)
     .then(response => response.json())
     .catch(() => null)
+}
+
+export function renameCategoryRequest(categoryIndex, newName)
+{
+    const postdata = {
+        categoryIndex: categoryIndex,
+        newName: newName
+    }
+
+    const request = {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/rename_category", request)
 }

@@ -13,6 +13,15 @@
     padding: 5px;
 }
 
+input.category-head
+{
+    background-color: var(--primary-dark-color);
+    color: var(--primary-bright-color);
+    border: none;
+    font-size: 1em;
+    text-align: center;
+}
+
 .link-list
 {
     display: flex;

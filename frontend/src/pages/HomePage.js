@@ -40,7 +40,7 @@ class HomePage extends React.Component
                             <TransitionGroup className="category-list" component="div">
                                 {this.categories.map((item, i) => (
                                     <CSSTransition key={i} timeout={500} classNames="link-block">
-                                        <Category data={item} />
+                                        <Category data={item} index={i}/>
                                     </CSSTransition>
                                 ))}
                             </TransitionGroup>
