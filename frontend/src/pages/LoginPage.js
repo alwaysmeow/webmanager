@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginForm from '../components/LoginForm';
-import Header from '../components/Header';
 import '../css/loginPage.css';
 
 class LoginPage extends React.Component
@@ -9,7 +8,6 @@ class LoginPage extends React.Component
     {
         return(
             <>
-                <Header/>
                 <main>
                     <LoginForm/>
                 </main>

@@ -21,6 +21,7 @@
 {
     width: 0;
     border-color: var(--primary-dark-color);
+    cursor: default;
 }
 
 .add-link-button div

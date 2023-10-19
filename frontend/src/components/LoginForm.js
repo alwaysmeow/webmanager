@@ -10,42 +10,80 @@ class LoginForm extends React.Component
         super(props)
         this.state = {
             loginInput: '',
-            passwordInput: ''
+            passwordInput: '',
+            invalidInput: false,
+            translatePasswordInput: ""
         }
 
         this.Input = this.Input.bind(this)
         this.submit = this.submit.bind(this)
+        this.unsetInvalidInput = this.unsetInvalidInput.bind(this)
+        this.waveLeft = this.waveLeft.bind(this)
+        this.waveRight = this.waveRight.bind(this)
+        this.endWaving = this.endWaving.bind(this)
+        this.wave = this.wave.bind(this)
     }
 
     Input(event)
     {
         this.setState({
-            [event.target.id]: event.target.value
+            [event.target.id]: event.target.value,
+            invalidInput: false
         })
+    }
+
+    unsetInvalidInput()
+    {
+        this.setState({invalidInput: false})
+    }
+
+    waveLeft()
+    {
+        this.setState({translatePasswordInput: " left"})
+    }
+
+    waveRight()
+    {
+        this.setState({translatePasswordInput: " right"})
+    }
+
+    endWaving()
+    {
+        this.setState({translatePasswordInput: ""})
+    }
+
+    wave()
+    {
+        const timing = 100;
+        this.waveLeft()
+        setTimeout(this.waveRight, timing)
+        setTimeout(this.endWaving, timing * 2)
     }
 
     render()
     {
         return(
-            <form className="login-window" id="form" autoComplete="off">
-                <h2>Log In</h2>
+            <form className={"login-window" + (this.state.invalidInput ? " invalid" : "")} id="form" autoComplete="off">
+                <h1>WebManager</h1>
                 <input 
-                    className="item" 
+                    className="loginform-item" 
                     type="text"
                     placeholder="Username" 
-                    id="loginInput" 
-                    value={this.state.loginInputValue} 
+                    id="loginInput"
+                    value={this.state.loginInput} 
                     onChange={this.Input}
                 />
                 <input 
-                    className="item" 
+                    className={"loginform-item" + this.state.translatePasswordInput} 
                     type="password" 
-                    placeholder="Password" 
+                    placeholder="Password"
                     id="passwordInput" 
-                    value={this.state.passwordInputValue} 
+                    value={this.state.passwordInput} 
                     onChange={this.Input}
                 />
-                <button className="item" type="submit" onClick={this.submit}>Log In</button>
+                <button className="loginform-item login-button" type="submit" onClick={this.submit}>Log In</button>
+                <div className="separating-line"/>
+                <button className="loginform-item register-button">Register</button>
             </form>
         )
     }
@@ -56,6 +94,15 @@ class LoginForm extends React.Component
         const response = await loginRequest(this.state.loginInput, await hash(this.state.passwordInput))
         if (response.success)
             window.location.href = response.redirect_url
+        else
+        {
+            this.setState({
+                invalidInput: true,
+                passwordInput: ""
+            })
+            setTimeout(this.unsetInvalidInput, 500)
+            this.wave()
+        }
     }
 }
 
