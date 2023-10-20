@@ -3,7 +3,6 @@ import { CSSTransition, TransitionGroup } from "react-transition-group"
 import Header from '../components/Header';
 import Category from "../components/Category"
 import AddCategoryButton from "../components/AddCategoryButton"
-import EditContext from '../components/EditContext';
 import "../css/homePage.css"
 import { getUserDataRequest } from '../tools/requests';
 
@@ -14,47 +13,46 @@ class HomePage extends React.Component
         super(props)
         this.state = {
             loaded: false,
-            editing: {
-                editState: false,
-                toggleEditState: () => {
-                    this.setState({
-                        editing: {...this.state.editing, editState: !this.state.editing.editState}
-                    })
-                }
-            },
+            editing: false
         }
         this.categories = []
         this.getData()
+
+        this.toggleEditState = this.toggleEditState.bind(this)
+    }
+
+    toggleEditState()
+    {
+        this.setState({
+            editing: !this.state.editing
+        })
     }
 
     render()
     {
         if (this.state.loaded)
         {
-
             return(
                 <>
-                    <EditContext.Provider value={this.state.editing}>
-                        <Header showPanel={true}/>
-                        <main className={"home" + (this.state.editing.editState ? " editing" : "")}>
-                            <TransitionGroup className="category-list" component="div">
-                                {this.categories.map((item, i) => (
-                                    <CSSTransition key={i} timeout={500} classNames="link-block">
-                                        <Category data={item} index={i}/>
-                                    </CSSTransition>
-                                ))}
-                            </TransitionGroup>
-                            <TransitionGroup>
-                                {this.state.editing.editState ? (
-                                    <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
-                                        <AddCategoryButton />
-                                    </CSSTransition>
-                                ) : (
-                                    <></>
-                                )}
-                            </TransitionGroup>
-                        </main>
-                    </EditContext.Provider>
+                    <Header showPanel={true} editing={this.state.editing} toggleEditState={this.toggleEditState}/>
+                    <main className={"home" + (this.state.editing ? " editing" : "")}>
+                        <TransitionGroup className="category-list" component="div">
+                            {this.categories.map((item, i) => (
+                                <CSSTransition key={i} timeout={500} classNames="link-block">
+                                    <Category data={item} index={i} editing={this.state.editing}/>
+                                </CSSTransition>
+                            ))}
+                        </TransitionGroup>
+                        <TransitionGroup>
+                            {this.state.editing ? (
+                                <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
+                                    <AddCategoryButton />
+                                </CSSTransition>
+                            ) : (
+                                <></>
+                            )}
+                        </TransitionGroup>
+                    </main>
                 </>
             )
         }

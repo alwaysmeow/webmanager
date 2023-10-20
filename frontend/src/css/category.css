@@ -22,6 +22,11 @@ input.category-head
     text-align: center;
 }
 
+input.category-head:focus
+{
+    border: none;
+}
+
 .link-list
 {
     display: flex;

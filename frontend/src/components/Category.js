@@ -2,7 +2,6 @@ import React from "react"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
-import EditContext from "./EditContext"
 import "../css/category.css"
 import { renameCategoryRequest } from "../tools/requests"
 
@@ -59,7 +58,7 @@ class Category extends React.Component
         return(
             <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={this.handleClick}>
                 {
-                    this.context.editState
+                    this.props.editing
                     ?
                         <input className="category-head" value={this.state.name} onChange={this.inputCategoryName} onBlur={this.renameCategory}/>
                     :
@@ -73,14 +72,12 @@ class Category extends React.Component
                                 <LinkBlock link={item} minimized={!this.state.isOpen}/>
                             </CSSTransition>
                         )}
-                        <AddLinkButton minimized={!this.state.isOpen} hide={!this.context.editState}/> 
+                        <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing}/> 
                     </TransitionGroup>
                 </div>
             </div>
         )
     }
 }
-
-Category.contextType = EditContext
 
 export default Category
