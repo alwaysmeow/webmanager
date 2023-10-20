@@ -4,6 +4,7 @@ import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
 import "../css/category.css"
 import { renameCategoryRequest } from "../tools/requests"
+import UserDataContext from "./UserDataContext"
 
 class Category extends React.Component
 {
@@ -12,7 +13,7 @@ class Category extends React.Component
         super(props)
         this.state = {
             isOpen: true,
-            name: this.props.data.name
+            name: this.props.name
         }
 
         this.switchVisible = this.switchVisible.bind(this)
@@ -42,19 +43,19 @@ class Category extends React.Component
         this.setState({name: event.target.value})
     }
 
-    renameCategory(event)
+    renameCategory()
     {
-        if (this.state.name !== this.props.data.name)
+        if (this.state.name !== this.props.name)
         {
             renameCategoryRequest(this.props.index, this.state.name)
-            // BUG: cannot return old name without page reloading
-            // this.props.data.name doesn't change after request, so we should work with data in HomePage (HomePage.categories)
-            // Maybe HomePage.categories should be in HomePage.state.categories
+            this.context.renameCategory(this.props.index, this.state.name)
         }
     }
 
     render()
     {
+        const content = this.context.userdata[this.props.index].content
+
         return(
             <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={this.handleClick}>
                 {
@@ -67,9 +68,9 @@ class Category extends React.Component
                 
                 <div className="category-content">
                     <TransitionGroup className="link-list" component="ol">
-                        {this.props.data.content.map((item, i) => 
+                        {content.map((item, i) => 
                             <CSSTransition key={i} timeout={{ enter: 0, exit: 500 }} classNames="link-block">
-                                <LinkBlock link={item} minimized={!this.state.isOpen}/>
+                                <LinkBlock categoryIndex={this.props.index} linkIndex={i} link={item} minimized={!this.state.isOpen}/>
                             </CSSTransition>
                         )}
                         <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing}/> 
@@ -79,5 +80,7 @@ class Category extends React.Component
         )
     }
 }
+
+Category.contextType = UserDataContext
 
 export default Category

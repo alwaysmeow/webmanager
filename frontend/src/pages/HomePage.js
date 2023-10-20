@@ -5,6 +5,7 @@ import Category from "../components/Category"
 import AddCategoryButton from "../components/AddCategoryButton"
 import "../css/homePage.css"
 import { getUserDataRequest } from '../tools/requests';
+import UserDataContext from '../components/UserDataContext';
 
 class HomePage extends React.Component
 {
@@ -13,9 +14,18 @@ class HomePage extends React.Component
         super(props)
         this.state = {
             loaded: false,
-            editing: false
+            editing: false,
+            userdataContext: {
+                userdata: [],
+                renameCategory: (categoryIndex, newName) => {
+                    var updated = this.state.userdataContext
+                    updated.userdata[categoryIndex].name = newName
+                    this.setState({
+                        userdataContext: updated
+                    })
+                }
+            }
         }
-        this.categories = []
         this.getData()
 
         this.toggleEditState = this.toggleEditState.bind(this)
@@ -36,13 +46,16 @@ class HomePage extends React.Component
                 <>
                     <Header showPanel={true} editing={this.state.editing} toggleEditState={this.toggleEditState}/>
                     <main className={"home" + (this.state.editing ? " editing" : "")}>
-                        <TransitionGroup className="category-list" component="div">
-                            {this.categories.map((item, i) => (
-                                <CSSTransition key={i} timeout={500} classNames="link-block">
-                                    <Category data={item} index={i} editing={this.state.editing}/>
-                                </CSSTransition>
-                            ))}
-                        </TransitionGroup>
+                        <UserDataContext.Provider value={this.state.userdataContext}>
+                            <TransitionGroup className="category-list" component="div">
+                                {this.state.userdataContext.userdata.map((item, i) => (
+                                    <CSSTransition key={i} timeout={500} classNames="link-block">
+                                        <Category name={item.name} index={i} editing={this.state.editing}/>
+                                    </CSSTransition>
+                                ))}
+                            </TransitionGroup>
+                        </UserDataContext.Provider>
+                        
                         <TransitionGroup>
                             {this.state.editing ? (
                                 <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
@@ -70,9 +83,9 @@ class HomePage extends React.Component
             window.location.href = '/login'
         else
         {
-            this.categories = response.categories
             this.setState({
-                loaded: true
+                loaded: true,
+                userdataContext: {...this.state.userdataContext, userdata: response.categories}
             })
         }
     }
