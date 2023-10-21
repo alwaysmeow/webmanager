@@ -13,7 +13,7 @@ class Category extends React.Component
         super(props)
         this.state = {
             isOpen: true,
-            name: this.props.name
+            name: ""
         }
 
         this.switchVisible = this.switchVisible.bind(this)
@@ -21,21 +21,16 @@ class Category extends React.Component
         this.renameCategory = this.renameCategory.bind(this)
     }
 
+    componentDidMount()
+    {
+        this.setState({
+            name: this.context.userdata[this.props.index].name
+        })
+    }
+
     switchVisible()
     {
         this.setState({isOpen: !this.state.isOpen})
-    }
-
-    handleClick = () =>
-    {
-        if (!this.state.isOpen)
-            this.switchVisible()
-    }
-
-    headClick = () =>
-    {
-        if (this.state.isOpen)
-            this.switchVisible()
     }
 
     inputCategoryName(event)
@@ -45,7 +40,7 @@ class Category extends React.Component
 
     renameCategory()
     {
-        if (this.state.name !== this.props.name)
+        if (this.state.name !== this.context.userdata[this.props.index].name)
         {
             renameCategoryRequest(this.props.index, this.state.name)
             this.context.renameCategory(this.props.index, this.state.name)
@@ -57,20 +52,28 @@ class Category extends React.Component
         const content = this.context.userdata[this.props.index].content
 
         return(
-            <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={this.handleClick}>
+            <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={() => {if (!this.state.isOpen) this.switchVisible()}}>
                 {
                     this.props.editing
                     ?
-                        <input className="category-head" value={this.state.name} onChange={this.inputCategoryName} onBlur={this.renameCategory}/>
+                        <input className="category-head" 
+                            value={this.state.name} 
+                            onChange={this.inputCategoryName} 
+                            onBlur={this.renameCategory}
+                        />
                     :
-                        <div className="category-head" onClick={this.headClick}>{this.state.name}</div>
+                        <div className="category-head" 
+                            onClick={() => {if (this.state.isOpen) this.switchVisible()}}
+                        >
+                            {this.state.name}
+                        </div>
                 }
                 
                 <div className="category-content">
                     <TransitionGroup className="link-list" component="ol">
                         {content.map((item, i) => 
                             <CSSTransition key={i} timeout={{ enter: 0, exit: 500 }} classNames="link-block">
-                                <LinkBlock categoryIndex={this.props.index} linkIndex={i} link={item} minimized={!this.state.isOpen}/>
+                                <LinkBlock categoryIndex={this.props.index} linkIndex={i} minimized={!this.state.isOpen} editing={this.props.editing}/>
                             </CSSTransition>
                         )}
                         <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing}/> 

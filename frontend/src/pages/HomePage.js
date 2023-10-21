@@ -15,8 +15,10 @@ class HomePage extends React.Component
         this.state = {
             loaded: false,
             editing: false,
+
             userdataContext: {
                 userdata: [],
+
                 renameCategory: (categoryIndex, newName) => {
                     var updated = this.state.userdataContext
                     updated.userdata[categoryIndex].name = newName
@@ -50,21 +52,20 @@ class HomePage extends React.Component
                             <TransitionGroup className="category-list" component="div">
                                 {this.state.userdataContext.userdata.map((item, i) => (
                                     <CSSTransition key={i} timeout={500} classNames="link-block">
-                                        <Category name={item.name} index={i} editing={this.state.editing}/>
+                                        <Category index={i} editing={this.state.editing}/>
                                     </CSSTransition>
                                 ))}
                             </TransitionGroup>
+                            <TransitionGroup>
+                                {this.state.editing ? (
+                                    <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
+                                        <AddCategoryButton />
+                                    </CSSTransition>
+                                ) : (
+                                    <></>
+                                )}
+                            </TransitionGroup>
                         </UserDataContext.Provider>
-                        
-                        <TransitionGroup>
-                            {this.state.editing ? (
-                                <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
-                                    <AddCategoryButton />
-                                </CSSTransition>
-                            ) : (
-                                <></>
-                            )}
-                        </TransitionGroup>
                     </main>
                 </>
             )
