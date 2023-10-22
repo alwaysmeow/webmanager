@@ -80,6 +80,12 @@ def renameLink(username, categoryIndex, linkIndex, newName):
         {"$set": {f"categories.{categoryIndex}.content.{linkIndex}.name": newName}}
     )
 
+def changeUrl(username, categoryIndex, linkIndex, newUrl):
+    collection.update_one(
+        {"username": username},
+        {"$set": {f"categories.{categoryIndex}.content.{linkIndex}.url": newUrl}}
+    )
+
 def newLink(username, categoryIndex, linkName, url):    
     collection.update_one(
         {"username": username},

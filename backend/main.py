@@ -53,6 +53,19 @@ def renameCategoryProcessing():
     renameCategory(current_user.id, data["categoryIndex"], data["newName"])
     return jsonify({"success": True}), 200
 
+@app.route('/api/rename_link', methods=["POST"])
+@login_required
+def renameLinkProcessing():
+    data = request.get_json()
+    renameLink(current_user.id, data["categoryIndex"], data["linkIndex"], data["newName"])
+    return jsonify({"success": True}), 200
+
+@app.route('/api/change_url', methods=["POST"])
+@login_required
+def changeUrlProccessing():
+    data = request.get_json()
+    changeUrl(current_user.id, data["categoryIndex"], data["linkIndex"], data["newUrl"])
+    return jsonify({"success": True}), 200
 
 if __name__ == "__main__":
     app.run(debug=True, port="8000")

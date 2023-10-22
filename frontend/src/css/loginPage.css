@@ -59,6 +59,7 @@ main
     color: var(--primary-bright-color);
     box-sizing: border-box;
     transition: transform 0.1s;
+    outline: none;
 }
 
 .login-window button

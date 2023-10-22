@@ -25,6 +25,14 @@ class HomePage extends React.Component
                     this.setState({
                         userdataContext: updated
                     })
+                },
+
+                changeLinkParameter: (categoryIndex, linkIndex, parameter, newValue) => {
+                    var updated = this.state.userdataContext
+                    updated.userdata[categoryIndex].content[linkIndex][parameter] = newValue
+                    this.setState({
+                        userdataContext: updated
+                    })
                 }
             }
         }
@@ -56,7 +64,7 @@ class HomePage extends React.Component
                                     </CSSTransition>
                                 ))}
                             </TransitionGroup>
-                            <TransitionGroup>
+                            <TransitionGroup component={null}>
                                 {this.state.editing ? (
                                     <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">
                                         <AddCategoryButton />

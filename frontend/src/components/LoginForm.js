@@ -27,7 +27,7 @@ class LoginForm extends React.Component
     Input(event)
     {
         this.setState({
-            [event.target.id]: event.target.value,
+            [event.target.name]: event.target.value,
             invalidInput: false
         })
     }
@@ -69,7 +69,7 @@ class LoginForm extends React.Component
                     className="loginform-item" 
                     type="text"
                     placeholder="Username" 
-                    id="loginInput"
+                    name="loginInput"
                     value={this.state.loginInput} 
                     onChange={this.Input}
                 />
@@ -77,7 +77,7 @@ class LoginForm extends React.Component
                     className={"loginform-item" + this.state.translatePasswordInput} 
                     type="password" 
                     placeholder="Password"
-                    id="passwordInput" 
+                    name="passwordInput" 
                     value={this.state.passwordInput} 
                     onChange={this.Input}
                 />

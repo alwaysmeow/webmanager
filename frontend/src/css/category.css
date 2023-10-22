@@ -18,8 +18,8 @@ input.category-head
     background-color: var(--primary-dark-color);
     color: var(--primary-bright-color);
     border: none;
+    outline: none;
     font-size: 1em;
-    text-align: center;
 }
 
 input.category-head:focus
@@ -34,6 +34,8 @@ input.category-head:focus
     justify-content: center;
     gap: var(--link-list-gap);
     list-style: none;
+
+    overflow: scroll;
 
     transform: translateX(calc(var(--link-list-gap) / 2 + 1px));  /* very bad */
 }
