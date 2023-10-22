@@ -18,6 +18,7 @@ class LinkBlock extends React.Component
 
         this.handleChange = this.handleChange.bind(this)
         this.handleBlur = this.handleBlur.bind(this)
+        this.handleFocus = this.handleFocus.bind(this)
     }
 
     componentDidMount()
@@ -27,6 +28,15 @@ class LinkBlock extends React.Component
             name: item.name,
             url: item.url
         })
+    }
+
+    handleFocus(event)
+    {
+        this.setState({focused: true})
+        if (event.target.name === "url")
+        {
+            event.target.select()
+        }
     }
 
     handleChange(event)
@@ -68,6 +78,18 @@ class LinkBlock extends React.Component
         this.setState({focused: false})
     }
 
+    getIcon()
+    {
+        try
+        {
+            return new URL(this.state.url).origin + '/favicon.ico'
+        }
+        catch
+        {
+            return null
+        }
+    }
+
     render()
     {
         if (this.state.url !== null)
@@ -87,14 +109,14 @@ class LinkBlock extends React.Component
                                             className="url-input"
                                             name="url"
                                             onChange={this.handleChange}
-                                            onFocus={() => (this.setState({focused: true}))}
+                                            onFocus={this.handleFocus}
                                             onBlur={this.handleBlur}
                                             autoComplete="off"
                                         />
                                     </CSSTransition>
                                 :
                                     <CSSTransition key="url-img" timeout={{ enter: 250, exit: 250 }} classNames="url-img">
-                                        <img className="url-img" src={new URL(this.state.url).origin + '/favicon.ico'}/>   
+                                        <img className="url-img" src={this.getIcon()}/>   
                                     </CSSTransition>
                             }
                         </TransitionGroup>
@@ -102,7 +124,7 @@ class LinkBlock extends React.Component
                             className="link-name"
                             name="name"
                             onChange={this.handleChange}
-                            onFocus={() => (this.setState({focused: true}))}
+                            onFocus={this.handleFocus}
                             onBlur={this.handleBlur}
                             autoComplete="off"
                         />
@@ -113,7 +135,7 @@ class LinkBlock extends React.Component
             {
                 return(
                     <a className="link-block" href={this.state.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
-                        <img className="url-img" src={new URL(this.state.url).origin + '/favicon.ico'}/>
+                        <img className="url-img" src={this.getIcon()}/>
                         <div className="link-name">{this.state.name}</div>
                     </a>
                 )
