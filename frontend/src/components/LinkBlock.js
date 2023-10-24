@@ -3,6 +3,7 @@ import "../css/linkBlock.css"
 import UserDataContext from "./UserDataContext";
 import { changeUrlRequest, renameLinkRequest } from "../tools/requests";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { X } from 'react-feather'
 
 class LinkBlock extends React.Component
 {
@@ -35,7 +36,10 @@ class LinkBlock extends React.Component
         this.setState({focused: true})
         if (event.target.name === "url")
         {
-            event.target.select()
+            // this timeout fixes autoselect
+            setTimeout(() => {
+                event.target.select()
+            }, 10)
         }
     }
 
@@ -101,6 +105,9 @@ class LinkBlock extends React.Component
                         onMouseOver={() => {this.setState({mouseover: true})}} 
                         onMouseLeave={() => {this.setState({mouseover: false})}}
                     >
+                        <div className={"delete-link-button" + (this.state.mouseover ? "" : " hidden")}>
+                            <X/>
+                        </div>
                         <TransitionGroup component="div" className="top-element-container">
                             {
                                 this.state.mouseover || this.state.focused ?

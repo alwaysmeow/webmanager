@@ -19,10 +19,11 @@
     text-decoration: none;
     color: var(--primary-dark-color);
 
-    overflow: hidden;
     transition: var(--transition-time);
     max-height: 7vh;
     height: 7vh;
+
+    position: relative;
 }
 
 .link-block *
@@ -119,4 +120,30 @@
 .link-block .url-img-enter
 {
     width: 0;
+}
+
+.delete-link-button
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(45%, -45%);
+    overflow: hidden;
+
+    width: calc(2 * var(--link-list-gap));
+    height: calc(2 * var(--link-list-gap));
+
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--red);
+    border-radius: 50svh;
+
+    display: flex;
+}
+
+.delete-link-button.hidden
+{
+    width: 0;
+    height: 0;
 }

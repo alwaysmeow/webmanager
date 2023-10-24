@@ -35,7 +35,5 @@ input.category-head:focus
     gap: var(--link-list-gap);
     list-style: none;
 
-    overflow: scroll;
-
     transform: translateX(calc(var(--link-list-gap) / 2 + 1px));  /* very bad */
 }
