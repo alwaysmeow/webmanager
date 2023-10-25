@@ -20,6 +20,7 @@ class LinkBlock extends React.Component
         this.handleChange = this.handleChange.bind(this)
         this.handleBlur = this.handleBlur.bind(this)
         this.handleFocus = this.handleFocus.bind(this)
+        this.deleteLink = this.deleteLink.bind(this)
     }
 
     componentDidMount()
@@ -82,6 +83,11 @@ class LinkBlock extends React.Component
         this.setState({focused: false})
     }
 
+    deleteLink()
+    {
+        this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
+    }
+
     getIcon()
     {
         try
@@ -101,11 +107,13 @@ class LinkBlock extends React.Component
             if (this.props.editing)
             {
                 return(
-                    <div className="link-block" 
+                    <div className="link-block"
                         onMouseOver={() => {this.setState({mouseover: true})}} 
                         onMouseLeave={() => {this.setState({mouseover: false})}}
                     >
-                        <div className={"delete-link-button" + (this.state.mouseover ? "" : " hidden")}>
+                        <div className={"delete-link-button" + ((!this.props.minimized & this.state.mouseover) ? "" : " hidden")}
+                            onClick={this.deleteLink}
+                        >
                             <X/>
                         </div>
                         <TransitionGroup component="div" className="top-element-container">

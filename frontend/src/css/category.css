@@ -32,7 +32,6 @@ input.category-head:focus
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: var(--link-list-gap);
     list-style: none;
 
     transform: translateX(calc(var(--link-list-gap) / 2 + 1px));  /* very bad */
