@@ -33,6 +33,12 @@ input.category-head:focus
     flex-direction: row;
     justify-content: center;
     list-style: none;
+    transition: var(--transition-time);
 
     transform: translateX(calc(var(--link-list-gap) / 2 + 1px));  /* very bad */
+}
+
+.editing .link-list
+{
+    transform: none;
 }

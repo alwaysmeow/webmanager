@@ -37,10 +37,16 @@
     margin: 0;
 }
 
-.link-block-enter *,
-.link-block-exit-active *
+.link-block-enter .url-img,
+.link-block-exit-active .url-img
 {
     max-width: 0;
+}
+
+.link-block-enter input,
+.link-block-exit-active input
+{
+    opacity: 0;
 }
 
 .link-block *

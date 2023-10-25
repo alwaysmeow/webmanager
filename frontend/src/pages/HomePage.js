@@ -39,7 +39,6 @@ class HomePage extends React.Component
                     var updated = this.state.userdataContext
                     // empty element in array for correct CSSTransition
                     delete updated.userdata[categoryIndex].content[linkIndex]
-                    console.log(updated.userdata[categoryIndex].content);
                     this.setState({
                         userdataContext: updated
                     })
