@@ -1,7 +1,7 @@
 import React from "react"
 import "../css/linkBlock.css"
 import UserDataContext from "./UserDataContext";
-import { changeUrlRequest, renameLinkRequest } from "../tools/requests";
+import { changeUrlRequest, deleteLinkRequest, renameLinkRequest } from "../tools/requests";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { X } from 'react-feather'
 
@@ -90,6 +90,7 @@ class LinkBlock extends React.Component
     deleteLink()
     {
         this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
+        deleteLinkRequest(this.props.categoryIndex, this.props.linkIndex)
     }
 
     getIcon()

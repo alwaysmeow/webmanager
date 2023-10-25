@@ -99,3 +99,40 @@ export function changeUrlRequest(categoryIndex, linkIndex, newUrl)
 
     fetch("api/change_url", request)
 }
+
+export function deleteLinkRequest(categoryIndex, linkIndex)
+{
+    const postdata = {
+        categoryIndex: categoryIndex,
+        linkIndex: linkIndex
+    }
+
+    const request = {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/delete_link", request)
+}
+
+export function newLinkRequest(categoryIndex)
+{
+    const postdata = {
+        categoryIndex: categoryIndex
+    }
+
+    const request = {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/new_link", request)
+}

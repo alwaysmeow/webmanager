@@ -2,6 +2,7 @@ import React from "react"
 import "../css/addLinkButton.css"
 import { Plus } from 'react-feather'
 import UserDataContext from "./UserDataContext"
+import { newLinkRequest } from "../tools/requests"
 
 class AddLinkButton extends React.Component
 {
@@ -14,6 +15,7 @@ class AddLinkButton extends React.Component
     handleClick()
     {
         this.context.appendLink(this.props.categoryIndex)
+        newLinkRequest(this.props.categoryIndex)
     }
 
     render()

@@ -37,7 +37,7 @@ input.category-head:focus
 
     box-sizing: border-box;
 
-    transform: translateX(calc(var(--link-list-gap) / 2 + 1px));  /* very bad */
+    transform: translateX(calc(var(--link-list-gap) / 2));  /* very bad */
 }
 
 .editing .link-list

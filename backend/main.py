@@ -67,5 +67,19 @@ def changeUrlProccessing():
     changeUrl(current_user.id, data["categoryIndex"], data["linkIndex"], data["newUrl"])
     return jsonify({"success": True}), 200
 
+@app.route('/api/delete_link', methods=["POST"])
+@login_required
+def deleteLinkProcessing():
+    data = request.get_json()
+    deleteLink(current_user.id, data["categoryIndex"], data["linkIndex"])
+    return jsonify({"success": True}), 200
+
+@app.route('/api/new_link', methods=["POST"])
+@login_required
+def newLinkProcessing():
+    data = request.get_json()
+    newLink(current_user.id, data["categoryIndex"], "", "")
+    return jsonify({"success": True}), 200
+
 if __name__ == "__main__":
     app.run(debug=True, port="8000")
