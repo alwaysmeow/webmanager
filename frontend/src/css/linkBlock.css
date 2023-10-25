@@ -1,6 +1,5 @@
 @import 'root.css';
 
-.link-block-enter-active,
 .link-block-exit,
 .link-block
 {
@@ -30,20 +29,20 @@
     height: 7vh;
 }
 
-.link-block-enter,
+.unmounted,
 .link-block-exit-active
 {
     max-width: 0;
     margin: 0;
 }
 
-.link-block-enter .url-img,
+.unmounted .url-img,
 .link-block-exit-active .url-img
 {
     max-width: 0;
 }
 
-.link-block-enter input,
+.unmounted input,
 .link-block-exit-active input
 {
     opacity: 0;
@@ -167,7 +166,7 @@
 }
 
 
-.link-block-enter .delete-link-button,
+.unmounted .delete-link-button,
 .link-block-exit-active .delete-link-button,
 .delete-link-button.hidden
 {

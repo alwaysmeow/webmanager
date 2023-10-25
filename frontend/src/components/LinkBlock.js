@@ -14,7 +14,8 @@ class LinkBlock extends React.Component
             name: "",
             url: null,
             mouseover: false,
-            focused: false
+            focused: false,
+            mounted: this.props.mounted
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -28,8 +29,11 @@ class LinkBlock extends React.Component
         const item = this.context.userdata[this.props.categoryIndex].content[this.props.linkIndex]
         this.setState({
             name: item.name,
-            url: item.url
+            url: item.url,
         })
+        setTimeout(() => {
+            this.setState({mounted: true})
+        }, 0)
     }
 
     handleFocus(event)
@@ -107,7 +111,7 @@ class LinkBlock extends React.Component
             if (this.props.editing)
             {
                 return(
-                    <div className="link-block"
+                    <div className={"link-block" + (this.state.mounted ? "" : " unmounted")}
                         onMouseOver={() => {this.setState({mouseover: true})}} 
                         onMouseLeave={() => {this.setState({mouseover: false})}}
                     >
@@ -127,6 +131,7 @@ class LinkBlock extends React.Component
                                             onFocus={this.handleFocus}
                                             onBlur={this.handleBlur}
                                             autoComplete="off"
+                                            placeholder="URL"
                                         />
                                     </CSSTransition>
                                 :
@@ -142,6 +147,7 @@ class LinkBlock extends React.Component
                             onFocus={this.handleFocus}
                             onBlur={this.handleBlur}
                             autoComplete="off"
+                            placeholder="Name"
                         />
                     </div>
                 )
@@ -149,7 +155,7 @@ class LinkBlock extends React.Component
             else
             {
                 return(
-                    <a className="link-block" href={this.state.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
+                    <a className={"link-block" + (this.state.mounted ? "" : " unmounted")} href={this.state.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
                         <img className="url-img" src={this.getIcon()}/>
                         <div className="link-name">{this.state.name}</div>
                     </a>

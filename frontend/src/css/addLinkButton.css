@@ -18,6 +18,12 @@
     cursor: pointer;
 }
 
+.add-link-button svg
+{
+    height: 2ch;
+    width: 2ch;
+}
+
 .add-link-button.hided
 {
     width: 0;
@@ -25,9 +31,8 @@
     cursor: default;
 }
 
-.add-link-button div
+.add-link-button svg *
 {
-    text-align: center;
     color: var(--contrast);
     cursor: pointer
 }
@@ -39,7 +44,7 @@
     cursor: default;
 }
 
-.add-link-button.minimized div
+.add-link-button.minimized svg *
 {
     opacity: 0%;
     cursor: default;
@@ -50,7 +55,7 @@
     background-color: var(--contrast);
 }
 
-.add-link-button:hover div
+.add-link-button:hover svg *
 {
     color: var(--primary-dark-color)
 }

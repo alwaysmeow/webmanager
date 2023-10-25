@@ -11,6 +11,7 @@ class Category extends React.Component
     constructor(props)
     {
         super(props)
+        this.firstRender = true
         this.state = {
             isOpen: true,
             name: ""
@@ -26,6 +27,7 @@ class Category extends React.Component
         this.setState({
             name: this.context.userdata[this.props.index].name
         })
+        this.firstRender = false
     }
 
     switchVisible()
@@ -72,11 +74,23 @@ class Category extends React.Component
                 <div className="category-content">
                     <TransitionGroup className="link-list" component="ol">
                         {content.map((item, i) => 
-                            <CSSTransition key={i} timeout={{ enter: 0, exit: 500 }} classNames="link-block">
-                                <LinkBlock categoryIndex={this.props.index} linkIndex={i} minimized={!this.state.isOpen} editing={this.props.editing}/>
+                            <CSSTransition
+                                in={true}
+                                appear={true} 
+                                key={i} 
+                                timeout={{ enter: 500, exit: 500 }} 
+                                classNames="link-block"
+                            >
+                                <LinkBlock
+                                    categoryIndex={this.props.index} 
+                                    linkIndex={i} 
+                                    minimized={!this.state.isOpen} 
+                                    editing={this.props.editing}
+                                    mounted={this.firstRender}
+                                />
                             </CSSTransition>
                         )}
-                        <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing}/> 
+                        <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing} categoryIndex={this.props.index}/> 
                     </TransitionGroup>
                 </div>
             </div>
