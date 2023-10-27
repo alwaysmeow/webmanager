@@ -19,11 +19,16 @@
     cursor: pointer;
 }
 
-.add-category-button div
+.add-category-button svg
 {
-    text-align: center;
+    height: 2ch;
+    width: 2ch;
+}
+
+.add-category-button svg *
+{
     color: var(--contrast);
-    cursor: pointer;
+    transition: var(--transition-time);
 }
 
 .add-category-button-enter,
@@ -35,12 +40,18 @@
     transition: var(--transition-time);
 }
 
+.add-category-button-enter svg *,
+.add-category-button-exit-active svg *
+{
+    opacity: 0;
+}
+
 .add-category-button:hover
 {
     background-color: var(--contrast);
 }
 
-.add-category-button:hover div
+.add-category-button:hover svg *
 {
     color: var(--primary-dark-color)
 }

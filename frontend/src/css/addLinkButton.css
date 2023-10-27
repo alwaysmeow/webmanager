@@ -1,20 +1,19 @@
 .add-link-button
 {
     height: 9vh;
-    
     width: 2vw;
-    margin-left: calc(var(--link-list-gap) / 2);
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin-left: calc(var(--link-list-gap) / 2);
 
     border: 1px solid var(--contrast);
     border-radius: 5px;
 
     transition: var(--transition-time);
     overflow: hidden;
-
     cursor: pointer;
 }
 
@@ -34,7 +33,6 @@
 .add-link-button svg *
 {
     color: var(--contrast);
-    cursor: pointer
 }
 
 .add-link-button.minimized

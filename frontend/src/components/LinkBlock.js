@@ -22,6 +22,7 @@ class LinkBlock extends React.Component
         this.handleBlur = this.handleBlur.bind(this)
         this.handleFocus = this.handleFocus.bind(this)
         this.deleteLink = this.deleteLink.bind(this)
+        this.trueIndex = this.trueIndex.bind(this)
     }
 
     componentDidMount()
@@ -71,7 +72,7 @@ class LinkBlock extends React.Component
             {
                 changeUrlRequest(
                     this.props.categoryIndex, 
-                    this.props.linkIndex, 
+                    this.trueIndex(), 
                     this.state[event.target.name]
                 )
             }
@@ -79,7 +80,7 @@ class LinkBlock extends React.Component
             {
                 renameLinkRequest(
                     this.props.categoryIndex, 
-                    this.props.linkIndex, 
+                    this.trueIndex(), 
                     this.state[event.target.name]
                 )
             }
@@ -90,7 +91,16 @@ class LinkBlock extends React.Component
     deleteLink()
     {
         this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
-        deleteLinkRequest(this.props.categoryIndex, this.props.linkIndex)
+        deleteLinkRequest(this.props.categoryIndex, this.trueIndex())
+    }
+
+    trueIndex()
+    {
+        let index = 0
+        for (let i = 0; i < this.props.linkIndex; i++)
+            if (this.context.userdata[this.props.categoryIndex].content[i] != null)
+                index++
+        return index
     }
 
     getIcon()
