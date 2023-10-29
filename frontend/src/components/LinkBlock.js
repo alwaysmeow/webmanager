@@ -15,12 +15,14 @@ class LinkBlock extends React.Component
             url: null,
             mouseover: false,
             focused: false,
-            mounted: this.props.mounted
+            mounted: this.props.mounted,
+            iconError: false
         }
 
         this.handleChange = this.handleChange.bind(this)
         this.handleBlur = this.handleBlur.bind(this)
         this.handleFocus = this.handleFocus.bind(this)
+        this.handleIconError = this.handleIconError.bind(this)
         this.deleteLink = this.deleteLink.bind(this)
         this.trueIndex = this.trueIndex.bind(this)
     }
@@ -52,6 +54,13 @@ class LinkBlock extends React.Component
     handleChange(event)
     {
         this.setState({[event.target.name]: event.target.value})
+    }
+
+    handleIconError(event)
+    {
+        this.setState({iconError: true})
+        event.target.src = "./favicon.ico"
+        console.log(this.state.name, this.state.iconError);
     }
 
     handleBlur(event)
@@ -148,8 +157,8 @@ class LinkBlock extends React.Component
                                 :
                                     <CSSTransition key="url-img" timeout={{ enter: 250, exit: 250 }} classNames="url-img">
                                         <img className="url-img"
-                                            src={this.getIcon()}
-                                            onError={(event) => {event.target.src = "./favicon.ico"}}
+                                            src={this.state.iconError ? "./favicon.ico" : this.getIcon()}
+                                            onError={this.handleIconError}
                                             alt="icon"
                                         />   
                                     </CSSTransition>
@@ -172,8 +181,8 @@ class LinkBlock extends React.Component
                 return(
                     <a className={"link-block" + (this.state.mounted ? "" : " unmounted")} href={this.state.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
                         <img className="url-img" 
-                            src={this.getIcon()} 
-                            onError={(event) => {event.target.src = "./favicon.ico"}}
+                            src={this.state.iconError ? "./favicon.ico" : this.getIcon()}
+                            onError={this.handleIconError}
                             alt="icon"
                         />
                         <div className="link-name">{this.state.name}</div>
