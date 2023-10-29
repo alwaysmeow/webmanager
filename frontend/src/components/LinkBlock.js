@@ -111,7 +111,7 @@ class LinkBlock extends React.Component
         }
         catch
         {
-            return null
+            return "./favicon.ico"
         }
     }
 
@@ -147,7 +147,11 @@ class LinkBlock extends React.Component
                                     </CSSTransition>
                                 :
                                     <CSSTransition key="url-img" timeout={{ enter: 250, exit: 250 }} classNames="url-img">
-                                        <img className="url-img" src={this.getIcon()}/>   
+                                        <img className="url-img"
+                                            src={this.getIcon()}
+                                            onError={(event) => {event.target.src = "./favicon.ico"}}
+                                            alt="icon"
+                                        />   
                                     </CSSTransition>
                             }
                         </TransitionGroup>
@@ -167,7 +171,11 @@ class LinkBlock extends React.Component
             {
                 return(
                     <a className={"link-block" + (this.state.mounted ? "" : " unmounted")} href={this.state.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
-                        <img className="url-img" src={this.getIcon()}/>
+                        <img className="url-img" 
+                            src={this.getIcon()} 
+                            onError={(event) => {event.target.src = "./favicon.ico"}}
+                            alt="icon"
+                        />
                         <div className="link-name">{this.state.name}</div>
                     </a>
                 )
