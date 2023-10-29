@@ -4,7 +4,7 @@
 {
     width: max(10vw, 10vh);
     min-width: max(10vw, 10vh);
-    height: 4vh;
+    height: max(2vw, 2vh);
     
     display: flex;
     align-items: center;

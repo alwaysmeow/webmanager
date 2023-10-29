@@ -14,7 +14,7 @@ class Category extends React.Component
         this.firstRender = true
         this.state = {
             isOpen: true,
-            name: ""
+            name: "",
         }
 
         this.switchVisible = this.switchVisible.bind(this)
@@ -44,17 +44,29 @@ class Category extends React.Component
     {
         if (this.state.name !== this.context.userdata[this.props.index].name)
         {
-            renameCategoryRequest(this.props.index, this.state.name)
+            renameCategoryRequest(this.trueIndex(), this.state.name)
             this.context.renameCategory(this.props.index, this.state.name)
         }
+    }
+
+    trueIndex()
+    {
+        let index = 0
+        for (let i = 0; i < this.props.index; i++)
+            if (this.context.userdata[i] != null)
+                index++
+        return index
     }
 
     render()
     {
         const content = this.context.userdata[this.props.index].content
+        const empty = this.context.userdata[this.props.index].content.filter(item => item !== null).length === 0
 
         return(
-            <div className={"category" + (this.state.isOpen ? "" : " minimized")} onClick={() => {if (!this.state.isOpen) this.switchVisible()}}>
+            <div className={"category" + (this.state.isOpen ? "" : " minimized") + (empty ? " empty" : "")} 
+                onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
+            >
                 {
                     this.props.editing
                     ?
@@ -62,13 +74,23 @@ class Category extends React.Component
                             value={this.state.name} 
                             onChange={this.inputCategoryName} 
                             onBlur={this.renameCategory}
+                            placeholder="Category"
+                            disabled={!this.props.editing}
                         />
                     :
-                        <div className="category-head" 
-                            onClick={() => {if (this.state.isOpen) this.switchVisible()}}
-                        >
-                            {this.state.name}
-                        </div>
+                        this.state.name === ""
+                        ?
+                            <div className="category-head no-text" 
+                                onClick={() => {if (this.state.isOpen) this.switchVisible()}}
+                            >
+                                Category
+                            </div>
+                        :
+                            <div className="category-head" 
+                                onClick={() => {if (this.state.isOpen) this.switchVisible()}}
+                            >
+                                {this.state.name}
+                            </div>
                 }
                 
                 <TransitionGroup className="link-list" component="div">
@@ -89,7 +111,7 @@ class Category extends React.Component
                             />
                         </CSSTransition>
                     )}
-                    <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing} categoryIndex={this.props.index}/> 
+                    <AddLinkButton minimized={!this.state.isOpen} hide={!(this.props.editing || empty)} categoryIndex={this.props.index}/> 
                 </TransitionGroup>
             </div>
         )

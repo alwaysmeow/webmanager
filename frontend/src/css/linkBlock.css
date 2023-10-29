@@ -123,6 +123,7 @@
 .minimized .link-block *
 {
     opacity: 0%;
+    overflow: hidden;
 }
 
 .editing .link-block

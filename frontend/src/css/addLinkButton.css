@@ -18,6 +18,12 @@
     cursor: pointer;
 }
 
+.empty .add-link-button
+{
+    min-width: max(10vw, 10vh);
+    width: max(10vw, 10vh);
+}
+
 .add-link-button svg
 {
     height: 2ch;

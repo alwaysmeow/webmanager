@@ -13,6 +13,11 @@
     background-color: var(--secondary-bright);
 }
 
+::placeholder
+{
+    color: var(--secondary-dark);
+}
+
 body
 {
     background-color: var(--primary-dark-color);

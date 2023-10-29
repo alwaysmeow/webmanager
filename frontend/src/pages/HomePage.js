@@ -53,6 +53,17 @@ class HomePage extends React.Component
                     this.setState({
                         userdataContext: updated
                     })
+                },
+
+                appendCategory: () => {
+                    var updated = this.state.userdataContext
+                    updated.userdata.push({
+                        content: [],
+                        name: "",
+                    })
+                    this.setState({
+                        userdataContext: updated
+                    })
                 }
             }
         }

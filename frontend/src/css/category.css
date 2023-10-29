@@ -15,6 +15,11 @@
     width: 50%;
 }
 
+.category-head.no-text
+{
+    color: var(--secondary-dark);
+}
+
 input.category-head
 {
     background-color: var(--primary-dark-color);
@@ -40,10 +45,11 @@ input.category-head:focus
 
     overflow-x: scroll;
     
-    transform: translateX(calc(var(--link-list-gap) / 2));  /* very bad */
+    transform: translateX(calc(var(--link-list-gap) / 2 - 1px));  /* very bad */
 }
 
-.editing .link-list
+.editing .link-list,
+.empty .link-list
 {
     transform: none;
 }
