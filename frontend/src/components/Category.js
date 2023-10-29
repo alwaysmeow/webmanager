@@ -71,28 +71,26 @@ class Category extends React.Component
                         </div>
                 }
                 
-                <div className="category-content">
-                    <TransitionGroup className="link-list" component="ol">
-                        {content.map((item, i) => 
-                            <CSSTransition
-                                in={true}
-                                appear={true} 
-                                key={i} 
-                                timeout={{ enter: 500, exit: 500 }} 
-                                classNames="link-block"
-                            >
-                                <LinkBlock
-                                    categoryIndex={this.props.index} 
-                                    linkIndex={i} 
-                                    minimized={!this.state.isOpen} 
-                                    editing={this.props.editing}
-                                    mounted={this.firstRender}
-                                />
-                            </CSSTransition>
-                        )}
-                        <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing} categoryIndex={this.props.index}/> 
-                    </TransitionGroup>
-                </div>
+                <TransitionGroup className="link-list" component="div">
+                    {content.map((item, i) => 
+                        <CSSTransition
+                            in={true}
+                            appear={true} 
+                            key={i} 
+                            timeout={{ enter: 500, exit: 500 }} 
+                            classNames="link-block"
+                        >
+                            <LinkBlock
+                                categoryIndex={this.props.index} 
+                                linkIndex={i} 
+                                minimized={!this.state.isOpen} 
+                                editing={this.props.editing}
+                                mounted={this.firstRender}
+                            />
+                        </CSSTransition>
+                    )}
+                    <AddLinkButton minimized={!this.state.isOpen} hide={!this.props.editing} categoryIndex={this.props.index}/> 
+                </TransitionGroup>
             </div>
         )
     }

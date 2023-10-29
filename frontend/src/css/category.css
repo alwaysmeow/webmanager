@@ -3,7 +3,8 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    gap: 1vh;
+    justify-content: center;
+    align-items: center;
     width: 100%;
 }
 
@@ -11,6 +12,7 @@
 {
     color: var(--primary-bright-color);
     padding: 5px;
+    width: 50%;
 }
 
 input.category-head
@@ -29,14 +31,15 @@ input.category-head:focus
 
 .link-list
 {
+    padding-top: var(--link-list-gap);
+    max-width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     list-style: none;
     transition: var(--transition-time);
 
-    box-sizing: border-box;
-
+    overflow-x: scroll;
+    
     transform: translateX(calc(var(--link-list-gap) / 2));  /* very bad */
 }
 

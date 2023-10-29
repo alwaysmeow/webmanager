@@ -3,8 +3,9 @@
 .link-block-exit,
 .link-block
 {
-    width: 10vw;
-    max-width: 10vw;
+    width: max(10vw, 10vh);
+    min-width: max(10vw, 10vh);
+    max-width: max(10vw, 10vh);
     padding-top: 1vh;
     padding-bottom: 1vh;
     background-color: var(--primary-bright-color);
@@ -33,6 +34,7 @@
 .link-block-exit-active
 {
     max-width: 0;
+    min-width: 0;
     margin: 0;
 }
 

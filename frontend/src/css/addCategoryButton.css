@@ -2,7 +2,8 @@
 .add-category-button-exit,
 .add-category-button
 {
-    width: 10vw;
+    width: max(10vw, 10vh);
+    min-width: max(10vw, 10vh);
     height: 4vh;
     
     display: flex;

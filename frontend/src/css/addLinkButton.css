@@ -1,7 +1,8 @@
 .add-link-button
 {
     height: 9vh;
-    width: 2vw;
+    min-width: max(2vw, 2vh);
+    width: max(2vw, 2vh);
 
     display: flex;
     align-items: center;
@@ -25,6 +26,7 @@
 
 .add-link-button.hided
 {
+    min-width: 0;
     width: 0;
     border-color: var(--primary-dark-color);
     cursor: default;
