@@ -16,8 +16,6 @@
     width: max(10vw, 10vh);
     min-width: max(10vw, 10vh);
     max-width: max(10vw, 10vh);
-    padding-top: 1vh;
-    padding-bottom: 1vh;
 
     background-color: var(--primary-bright-color);
     color: var(--primary-dark-color);
@@ -35,8 +33,8 @@
     text-decoration: none;
 
     transition: var(--transition-time);
-    max-height: 7vh;
-    height: 7vh;
+    max-height: 9vh;
+    height: 9vh;
 }
 
 .unmounted .link-block,
@@ -44,6 +42,11 @@
 {
     max-width: 0;
     min-width: 0;
+}
+
+.unmounted,
+.link-block-container-exit-active
+{
     margin: 0;
 }
 
@@ -125,8 +128,6 @@
 {
     cursor: default;
     max-height: 0;
-    gap: 0;
-    padding: 0;
 }
 
 .minimized .link-block *

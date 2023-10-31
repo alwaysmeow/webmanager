@@ -122,7 +122,7 @@ class LinkBlock extends React.Component
                     onMouseOver={() => {this.setState({mouseover: true})}} 
                     onMouseLeave={() => {this.setState({mouseover: false})}}
                 >
-                    <div className={"link-block"}>
+                    <div className="link-block">
                         <TransitionGroup component="div" className="top-element-container">
                             {
                                 this.state.mouseover || this.state.focused ?
