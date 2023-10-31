@@ -100,7 +100,7 @@ class Category extends React.Component
                             appear={true} 
                             key={i} 
                             timeout={{ enter: 500, exit: 500 }} 
-                            classNames="link-block"
+                            classNames="link-block-container"
                         >
                             <LinkBlock
                                 categoryIndex={this.props.index}

@@ -1,6 +1,16 @@
 @import 'root.css';
 
-.link-block-exit,
+
+.link-block-container,
+.link-block-container-exit
+{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin-left: calc(var(--link-list-gap) / 2);
+    margin-right: calc(var(--link-list-gap) / 2);
+}
+
 .link-block
 {
     width: max(10vw, 10vh);
@@ -8,14 +18,14 @@
     max-width: max(10vw, 10vh);
     padding-top: 1vh;
     padding-bottom: 1vh;
+
     background-color: var(--primary-bright-color);
+    color: var(--primary-dark-color);
     border: 1px var(--primary-bright-color) solid;
     border-radius: 5px;
-    margin-left: calc(var(--link-list-gap) / 2);
-    margin-right: calc(var(--link-list-gap) / 2);
 
     display: flex;
-    position: relative;
+    overflow: hidden;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -23,29 +33,28 @@
     text-align: center;
     cursor: pointer;
     text-decoration: none;
-    color: var(--primary-dark-color);
 
     transition: var(--transition-time);
     max-height: 7vh;
     height: 7vh;
 }
 
-.unmounted,
-.link-block-exit-active
+.unmounted .link-block,
+.link-block-container-exit-active .link-block
 {
     max-width: 0;
     min-width: 0;
     margin: 0;
 }
 
-.unmounted .url-img,
-.link-block-exit-active .url-img
+.unmounted .link-block .url-img,
+.link-block-container-exit-active .link-block .url-img
 {
     max-width: 0;
 }
 
 .unmounted input,
-.link-block-exit-active input
+.link-block-container-exit-active input
 {
     opacity: 0;
 }
@@ -145,16 +154,20 @@
     width: 0;
 }
 
-.delete-link-button
+.delete-link-button-container
 {
     position: absolute;
     right: 0;
     top: 0;
-    transform: translate(45%, -45%);
 
-    width: calc(var(--link-list-gap) * 3 / 2);
-    height: calc(var(--link-list-gap) * 3 / 2);
-    padding: calc(var(--link-list-gap) / 4);
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-link-button
+{
+    width: calc(var(--link-list-gap) * 2);
+    height: calc(var(--link-list-gap) * 2);
 
     justify-content: center;
     align-items: center;
@@ -166,11 +179,18 @@
 
     transition: var(--transition-time);
     cursor: pointer;
+
+    transform: translate(50%, -50%);
 }
 
+.delete-link-button svg
+{
+    height: 75%;
+    width: 75%;
+}
 
 .unmounted .delete-link-button,
-.link-block-exit-active .delete-link-button,
+.link-block-container-exit-active .delete-link-button,
 .delete-link-button.hidden
 {
     width: 0;
