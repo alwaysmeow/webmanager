@@ -27,6 +27,25 @@ class HomePage extends React.Component
                     })
                 },
 
+                deleteCategory: (categoryIndex) => {
+                    var updated = this.state.userdataContext
+                    delete updated.userdata[categoryIndex]
+                    this.setState({
+                        userdataContext: updated
+                    })
+                },
+
+                appendCategory: () => {
+                    var updated = this.state.userdataContext
+                    updated.userdata.push({
+                        content: [],
+                        name: "",
+                    })
+                    this.setState({
+                        userdataContext: updated
+                    })
+                },
+
                 changeLinkParameter: (categoryIndex, linkIndex, parameter, newValue) => {
                     var updated = this.state.userdataContext
                     updated.userdata[categoryIndex].content[linkIndex][parameter] = newValue
@@ -53,17 +72,6 @@ class HomePage extends React.Component
                     this.setState({
                         userdataContext: updated
                     })
-                },
-
-                appendCategory: () => {
-                    var updated = this.state.userdataContext
-                    updated.userdata.push({
-                        content: [],
-                        name: "",
-                    })
-                    this.setState({
-                        userdataContext: updated
-                    })
                 }
             }
         }
@@ -81,6 +89,7 @@ class HomePage extends React.Component
 
     render()
     {
+        console.log(this.state.userdataContext.userdata)
         if (this.state.loaded)
         {
             return(

@@ -3,8 +3,9 @@ import { CSSTransition, TransitionGroup } from "react-transition-group"
 import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
 import "../css/category.css"
-import { renameCategoryRequest } from "../tools/requests"
+import { deleteCategoryRequest, renameCategoryRequest } from "../tools/requests"
 import UserDataContext from "./UserDataContext"
+import { X } from "react-feather"
 
 class Category extends React.Component
 {
@@ -20,6 +21,7 @@ class Category extends React.Component
         this.switchVisible = this.switchVisible.bind(this)
         this.inputCategoryName = this.inputCategoryName.bind(this)
         this.renameCategory = this.renameCategory.bind(this)
+        this.deleteCategory = this.deleteCategory.bind(this)
     }
 
     componentDidMount()
@@ -49,6 +51,12 @@ class Category extends React.Component
         }
     }
 
+    deleteCategory()
+    {
+        this.context.deleteCategory(this.props.index)
+        deleteCategoryRequest(this.trueIndex())
+    }
+
     trueIndex()
     {
         let index = 0
@@ -60,6 +68,10 @@ class Category extends React.Component
 
     render()
     {
+        const item = this.context.userdata[this.props.index]
+        if (item == null)
+            return <></>
+        
         const content = this.context.userdata[this.props.index].content
         const empty = this.context.userdata[this.props.index].content.filter(item => item !== null).length === 0
 
@@ -67,16 +79,18 @@ class Category extends React.Component
             <div className={"category" + (this.state.isOpen ? "" : " minimized") + (empty ? " empty" : "")} 
                 onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
             >
+
+                <div className="category-head-container">
                 {
                     this.props.editing
                     ?
-                        <input className="category-head" 
-                            value={this.state.name} 
-                            onChange={this.inputCategoryName} 
-                            onBlur={this.renameCategory}
-                            placeholder="Category"
-                            disabled={!this.props.editing}
-                        />
+                            <input className="category-head" 
+                                value={this.state.name} 
+                                onChange={this.inputCategoryName} 
+                                onBlur={this.renameCategory}
+                                placeholder="Category"
+                                disabled={!this.props.editing}
+                            />
                     :
                         this.state.name === ""
                         ?
@@ -92,6 +106,14 @@ class Category extends React.Component
                                 {this.state.name}
                             </div>
                 }
+                    <div className="delete-category-button-container">
+                        <div className="delete-category-button"
+                            onClick={this.deleteCategory}
+                        >
+                            <X/>
+                        </div>
+                    </div>
+                </div>
                 
                 <TransitionGroup className="link-list" component="div">
                     {content.map((item, i) => 

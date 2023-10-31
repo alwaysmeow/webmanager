@@ -60,7 +60,6 @@ class LinkBlock extends React.Component
     {
         this.setState({iconError: true})
         event.target.src = "./favicon.ico"
-        console.log(this.state.name, this.state.iconError);
     }
 
     handleBlur(event)
@@ -126,72 +125,67 @@ class LinkBlock extends React.Component
 
     render()
     {
-        if (this.state.url !== null)
+        if (this.props.editing)
         {
-            if (this.props.editing)
-            {
-                return(
-                    <div className={"link-block" + (this.state.mounted ? "" : " unmounted")}
-                        onMouseOver={() => {this.setState({mouseover: true})}} 
-                        onMouseLeave={() => {this.setState({mouseover: false})}}
+            return(
+                <div className={"link-block" + (this.state.mounted ? "" : " unmounted")}
+                    onMouseOver={() => {this.setState({mouseover: true})}} 
+                    onMouseLeave={() => {this.setState({mouseover: false})}}
+                >
+                    <div className={"delete-link-button" + ((!this.props.minimized & this.state.mouseover) ? "" : " hidden")}
+                        onClick={this.deleteLink}
                     >
-                        <div className={"delete-link-button" + ((!this.props.minimized & this.state.mouseover) ? "" : " hidden")}
-                            onClick={this.deleteLink}
-                        >
-                            <X/>
-                        </div>
-                        <TransitionGroup component="div" className="top-element-container">
-                            {
-                                this.state.mouseover || this.state.focused ?
-                                    <CSSTransition key="url-input" timeout={{ enter: 250, exit: 250 }} classNames="url-input">
-                                        <input value={this.state.url}
-                                            className="url-input"
-                                            name="url"
-                                            onChange={this.handleChange}
-                                            onFocus={this.handleFocus}
-                                            onBlur={this.handleBlur}
-                                            autoComplete="off"
-                                            placeholder="URL"
-                                        />
-                                    </CSSTransition>
-                                :
-                                    <CSSTransition key="url-img" timeout={{ enter: 250, exit: 250 }} classNames="url-img">
-                                        <img className="url-img"
-                                            src={this.state.iconError ? "./favicon.ico" : this.getIcon()}
-                                            onError={this.handleIconError}
-                                            alt="icon"
-                                        />   
-                                    </CSSTransition>
-                            }
-                        </TransitionGroup>
-                        <input value={this.state.name}
-                            className="link-name"
-                            name="name"
-                            onChange={this.handleChange}
-                            onFocus={this.handleFocus}
-                            onBlur={this.handleBlur}
-                            autoComplete="off"
-                            placeholder="Name"
-                        />
+                        <X/>
                     </div>
-                )
-            }
-            else
-            {
-                return(
-                    <a className={"link-block" + (this.state.mounted ? "" : " unmounted")} href={this.state.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
-                        <img className="url-img" 
-                            src={this.state.iconError ? "./favicon.ico" : this.getIcon()}
-                            onError={this.handleIconError}
-                            alt="icon"
-                        />
-                        <div className="link-name">{this.state.name}</div>
-                    </a>
-                )
-            }
+                    <TransitionGroup component="div" className="top-element-container">
+                        {
+                            this.state.mouseover || this.state.focused ?
+                                <CSSTransition key="url-input" timeout={{ enter: 250, exit: 250 }} classNames="url-input">
+                                    <input value={this.state.url}
+                                        className="url-input"
+                                        name="url"
+                                        onChange={this.handleChange}
+                                        onFocus={this.handleFocus}
+                                        onBlur={this.handleBlur}
+                                        autoComplete="off"
+                                        placeholder="URL"
+                                    />
+                                </CSSTransition>
+                            :
+                                <CSSTransition key="url-img" timeout={{ enter: 250, exit: 250 }} classNames="url-img">
+                                    <img className="url-img"
+                                        src={this.state.iconError ? "./favicon.ico" : this.getIcon()}
+                                        onError={this.handleIconError}
+                                        alt="icon"
+                                    />   
+                                </CSSTransition>
+                        }
+                    </TransitionGroup>
+                    <input value={this.state.name}
+                        className="link-name"
+                        name="name"
+                        onChange={this.handleChange}
+                        onFocus={this.handleFocus}
+                        onBlur={this.handleBlur}
+                        autoComplete="off"
+                        placeholder="Name"
+                    />
+                </div>
+            )
         }
         else
-            return <></>
+        {
+            return(
+                <a className={"link-block" + (this.state.mounted ? "" : " unmounted")} href={this.state.url} onClick={(event) => {if (this.props.minimized) {event.preventDefault()}}}>
+                    <img className="url-img" 
+                        src={this.state.iconError ? "./favicon.ico" : this.getIcon()}
+                        onError={this.handleIconError}
+                        alt="icon"
+                    />
+                    <div className="link-name">{this.state.name}</div>
+                </a>
+            )
+        }
     }
 }
 

@@ -60,6 +60,34 @@ export function renameCategoryRequest(categoryIndex, newName)
     fetch("api/rename_category", request)
 }
 
+export function deleteCategoryRequest(categoryIndex)
+{
+    const postdata = {
+        categoryIndex: categoryIndex
+    }
+
+    const request = {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/delete_category", request)
+}
+
+export function newCategoryRequest()
+{
+    const request = {
+        method: "POST",
+        credentials: 'include'
+    }
+
+    fetch("api/new_category", request)
+}
+
 export function renameLinkRequest(categoryIndex, linkIndex, newName)
 {
     const postdata = {

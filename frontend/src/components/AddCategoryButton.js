@@ -2,6 +2,7 @@ import React from "react"
 import "../css/addCategoryButton.css"
 import { Plus } from 'react-feather'
 import UserDataContext from "./UserDataContext"
+import { newCategoryRequest } from "../tools/requests"
 
 class AddCategoryButton extends React.Component
 {
@@ -14,6 +15,7 @@ class AddCategoryButton extends React.Component
     handleClick()
     {
         this.context.appendCategory()
+        newCategoryRequest()
     }
 
     render()

@@ -53,6 +53,19 @@ def renameCategoryProcessing():
     renameCategory(current_user.id, data["categoryIndex"], data["newName"])
     return jsonify({"success": True}), 200
 
+@app.route('/api/delete_category', methods=["POST"])
+@login_required
+def deleteCategoryProcessing():
+    data = request.get_json()
+    deleteCategory(current_user.id, data["categoryIndex"])
+    return jsonify({"success": True}), 200
+
+@app.route('/api/new_category', methods=["POST"])
+@login_required
+def newCategoryProcessing():
+    newCategory(current_user.id, "")
+    return jsonify({"success": True}), 200
+
 @app.route('/api/rename_link', methods=["POST"])
 @login_required
 def renameLinkProcessing():
