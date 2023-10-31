@@ -24,8 +24,6 @@ class LinkBlock extends React.Component
         this.handleFocus = this.handleFocus.bind(this)
         this.handleIconError = this.handleIconError.bind(this)
         this.deleteLink = this.deleteLink.bind(this)
-        this.trueLinkIndex = this.trueLinkIndex.bind(this)
-        this.trueCategoryIndex = this.trueCategoryIndex.bind(this)
     }
 
     componentDidMount()
@@ -80,16 +78,16 @@ class LinkBlock extends React.Component
             if (event.target.name === "url")
             {
                 changeUrlRequest(
-                    this.trueCategoryIndex(), 
-                    this.trueLinkIndex(), 
+                    this.props.trueCategoryIndex, 
+                    this.props.trueLinkIndex, 
                     this.state[event.target.name]
                 )
             }
             else
             {
                 renameLinkRequest(
-                    this.trueCategoryIndex(), 
-                    this.trueLinkIndex(), 
+                    this.props.trueCategoryIndex, 
+                    this.props.trueLinkIndex, 
                     this.state[event.target.name]
                 )
             }
@@ -100,17 +98,7 @@ class LinkBlock extends React.Component
     deleteLink()
     {
         this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
-        deleteLinkRequest(this.trueCategoryIndex(), this.trueLinkIndex())
-    }
-
-    trueLinkIndex()
-    {
-        return this.context.trueLinkIndex(this.props.categoryIndex, this.props.linkIndex)
-    }
-
-    trueCategoryIndex()
-    {
-        return this.context.trueCategoryIndex(this.props.categoryIndex)
+        deleteLinkRequest(this.props.trueCategoryIndex, this.props.trueLinkIndex)
     }
 
     getIcon()

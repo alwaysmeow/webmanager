@@ -15,12 +15,7 @@ class AddLinkButton extends React.Component
     handleClick()
     {
         this.context.appendLink(this.props.categoryIndex)
-        newLinkRequest(this.trueCategoryIndex())
-    }
-
-    trueCategoryIndex()
-    {
-        return this.context.trueCategoryIndex(this.props.categoryIndex)
+        newLinkRequest(this.props.trueCategoryIndex)
     }
 
     render()

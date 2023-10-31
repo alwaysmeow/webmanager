@@ -46,7 +46,7 @@ class Category extends React.Component
     {
         if (this.state.name !== this.context.userdata[this.props.index].name)
         {
-            renameCategoryRequest(this.trueIndex(), this.state.name)
+            renameCategoryRequest(this.props.trueCategoryIndex, this.state.name)
             this.context.renameCategory(this.props.index, this.state.name)
         }
     }
@@ -54,12 +54,7 @@ class Category extends React.Component
     deleteCategory()
     {
         this.context.deleteCategory(this.props.index)
-        deleteCategoryRequest(this.trueIndex())
-    }
-
-    trueIndex()
-    {
-        return this.context.trueCategoryIndex(this.props.index)
+        deleteCategoryRequest(this.props.trueCategoryIndex)
     }
 
     render()
@@ -67,9 +62,8 @@ class Category extends React.Component
         const item = this.context.userdata[this.props.index]
         if (item == null)
             return <></>
-        
-        const content = this.context.userdata[this.props.index].content
-        const empty = this.context.userdata[this.props.index].content.filter(item => item !== null).length === 0
+        const content = item.content
+        const empty = item.content.filter(item => item !== null).length === 0
 
         return(
             <div className={"category" + (this.state.isOpen ? "" : " minimized") + (empty ? " empty" : "")} 
@@ -121,15 +115,24 @@ class Category extends React.Component
                             classNames="link-block"
                         >
                             <LinkBlock
-                                categoryIndex={this.props.index} 
+                                categoryIndex={this.props.index}
+                                trueCategoryIndex={this.props.trueCategoryIndex}
                                 linkIndex={i} 
+                                trueLinkIndex={this.context.userdata[this.props.index].content
+                                    .slice(0, i)
+                                    .filter(item => item !== null).length}
                                 minimized={!this.state.isOpen} 
                                 editing={this.props.editing}
                                 mounted={this.firstRender}
                             />
                         </CSSTransition>
                     )}
-                    <AddLinkButton minimized={!this.state.isOpen} hide={!(this.props.editing || empty)} categoryIndex={this.props.index}/> 
+                    <AddLinkButton 
+                        minimized={!this.state.isOpen} 
+                        hide={!(this.props.editing || empty)} 
+                        categoryIndex={this.props.index}
+                        trueCategoryIndex={this.props.trueCategoryIndex}
+                    /> 
                 </TransitionGroup>
             </div>
         )

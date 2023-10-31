@@ -72,22 +72,6 @@ class HomePage extends React.Component
                     this.setState({
                         userdataContext: updated
                     })
-                },
-
-                trueCategoryIndex: (categoryIndex) =>{
-                    let index = 0
-                    for (let i = 0; i < categoryIndex; i++)
-                        if (this.state.userdataContext.userdata[i] != null)
-                            index++
-                    return index
-                },
-
-                trueLinkIndex: (categoryIndex, linkIndex) =>{
-                    let index = 0
-                    for (let i = 0; i < linkIndex; i++)
-                        if (this.state.userdataContext.userdata[categoryIndex].content[i] != null)
-                            index++
-                    return index
                 }
             }
         }
@@ -105,7 +89,6 @@ class HomePage extends React.Component
 
     render()
     {
-        console.log(this.state.userdataContext.userdata)
         if (this.state.loaded)
         {
             return(
@@ -116,7 +99,13 @@ class HomePage extends React.Component
                             <TransitionGroup className="category-list" component="div">
                                 {this.state.userdataContext.userdata.map((item, i) => (
                                     <CSSTransition key={i} timeout={500} classNames="link-block">
-                                        <Category index={i} editing={this.state.editing}/>
+                                        <Category 
+                                            index={i}
+                                            trueCategoryIndex={this.state.userdataContext.userdata
+                                                .slice(0, i)
+                                                .filter(item => item !== null).length}
+                                            editing={this.state.editing}
+                                        />
                                     </CSSTransition>
                                 ))}
                             </TransitionGroup>
