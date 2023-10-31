@@ -1,8 +1,9 @@
 import React from "react"
-import "../css/addLinkButton.css"
 import { Plus } from 'react-feather'
 import UserDataContext from "./UserDataContext"
 import { newLinkRequest } from "../tools/requests"
+import "../css/linkListButton.css"
+import "../css/addLinkButton.css"
 
 class AddLinkButton extends React.Component
 {
@@ -14,14 +15,17 @@ class AddLinkButton extends React.Component
 
     handleClick()
     {
-        this.context.appendLink(this.props.categoryIndex)
-        newLinkRequest(this.props.trueCategoryIndex)
+        if (!(this.props.minimized || this.props.hide))
+        {
+            this.context.appendLink(this.props.categoryIndex)
+            newLinkRequest(this.props.trueCategoryIndex)
+        }
     }
 
     render()
     {
         return(
-            <div className={"add-link-button" + (this.props.minimized ? " minimized" : "") + (this.props.hide ? " hided" : "")}
+            <div className={"link-list-button add-link-button" + (this.props.minimized ? " minimized" : "") + (this.props.hide ? " hided" : "")}
                 onClick={this.handleClick}
             >
                 <Plus/>

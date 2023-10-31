@@ -1,0 +1,50 @@
+.link-list-button
+{
+    height: 9vh;
+    min-width: 2em;
+    width: 2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+
+    transition: var(--transition-time);
+    overflow: hidden;
+    cursor: pointer;
+
+    background-color: var(--primary-dark-color);
+}
+
+.link-list-button svg
+{
+    height: 2ch;
+    width: 2ch;
+}
+
+.link-list-button.hided
+{
+    min-width: 0;
+    width: 0;
+    border-color: var(--primary-dark-color);
+    cursor: default;
+}
+
+.link-list-button.minimized
+{
+    height: 0;
+    padding: 0;
+    cursor: default;
+}
+
+.link-list-button.minimized svg *
+{
+    opacity: 0%;
+    cursor: default;
+}
+
+.link-list-button:hover svg *
+{
+    color: var(--primary-dark-color)
+}

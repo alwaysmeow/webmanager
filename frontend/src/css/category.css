@@ -12,7 +12,7 @@
 {
     color: var(--primary-bright-color);
     padding: 5px;
-    width: 100%;
+    width: 40%;
 }
 
 .category-head.no-text
@@ -44,56 +44,10 @@ input.category-head:focus
     transition: var(--transition-time);
 
     overflow-x: scroll;
-    
-    transform: translateX(calc(var(--link-list-gap) / 2 - 1px));  /* very bad */
 }
 
 .editing .link-list,
 .empty .link-list
 {
     transform: none;
-}
-
-.category-head-container
-{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 30%;
-}
-
-.delete-category-button-container
-{
-    width: 0;
-    justify-content: center;
-    align-items: center;
-}
-
-.delete-category-button
-{
-    background-color: var(--red);
-    border-radius: 50svh;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 0;
-    width: 0;
-    margin-left: 0.5em;
-    transition: var(--transition-time);
-}
-
-.editing .category:hover .delete-category-button
-{
-    height: 1em;
-    width: 1em;
-    margin-left: 0;
-    cursor: pointer;
-}
-
-.delete-category-button svg
-{
-    width: 75%;
-    height: 75%
 }

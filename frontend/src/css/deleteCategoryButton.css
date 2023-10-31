@@ -1,0 +1,15 @@
+.delete-category-button
+{
+    margin-right: calc(var(--link-list-gap) / 2);
+    border: 1px solid var(--red);
+}
+
+.delete-category-button svg *
+{
+    color: var(--red);
+}
+
+.delete-category-button:hover
+{
+    background-color: var(--red);
+}

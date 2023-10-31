@@ -2,10 +2,10 @@ import React from "react"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
+import DeleteCategoryButton from "./DeleteCategoryButton"
 import "../css/category.css"
-import { deleteCategoryRequest, renameCategoryRequest } from "../tools/requests"
+import { renameCategoryRequest } from "../tools/requests"
 import UserDataContext from "./UserDataContext"
-import { X } from "react-feather"
 
 class Category extends React.Component
 {
@@ -21,7 +21,6 @@ class Category extends React.Component
         this.switchVisible = this.switchVisible.bind(this)
         this.inputCategoryName = this.inputCategoryName.bind(this)
         this.renameCategory = this.renameCategory.bind(this)
-        this.deleteCategory = this.deleteCategory.bind(this)
     }
 
     componentDidMount()
@@ -51,12 +50,6 @@ class Category extends React.Component
         }
     }
 
-    deleteCategory()
-    {
-        this.context.deleteCategory(this.props.index)
-        deleteCategoryRequest(this.props.trueCategoryIndex)
-    }
-
     render()
     {
         const item = this.context.userdata[this.props.index]
@@ -69,43 +62,38 @@ class Category extends React.Component
             <div className={"category" + (this.state.isOpen ? "" : " minimized") + (empty ? " empty" : "")} 
                 onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
             >
-
-                <div className="category-head-container">
-                {
-                    this.props.editing
+            {
+                this.props.editing
+                ?
+                        <input className="category-head" 
+                            value={this.state.name} 
+                            onChange={this.inputCategoryName} 
+                            onBlur={this.renameCategory}
+                            placeholder="Category"
+                            disabled={!this.props.editing}
+                        />
+                :
+                    this.state.name === ""
                     ?
-                            <input className="category-head" 
-                                value={this.state.name} 
-                                onChange={this.inputCategoryName} 
-                                onBlur={this.renameCategory}
-                                placeholder="Category"
-                                disabled={!this.props.editing}
-                            />
-                    :
-                        this.state.name === ""
-                        ?
-                            <div className="category-head no-text" 
-                                onClick={() => {if (this.state.isOpen) this.switchVisible()}}
-                            >
-                                Category
-                            </div>
-                        :
-                            <div className="category-head" 
-                                onClick={() => {if (this.state.isOpen) this.switchVisible()}}
-                            >
-                                {this.state.name}
-                            </div>
-                }
-                    <div className="delete-category-button-container">
-                        <div className="delete-category-button"
-                            onClick={this.deleteCategory}
+                        <div className="category-head no-text" 
+                            onClick={() => {if (this.state.isOpen) this.switchVisible()}}
                         >
-                            <X/>
+                            Category
                         </div>
-                    </div>
-                </div>
-                
+                    :
+                        <div className="category-head" 
+                            onClick={() => {if (this.state.isOpen) this.switchVisible()}}
+                        >
+                            {this.state.name}
+                        </div>
+            }
                 <TransitionGroup className="link-list" component="div">
+                    <DeleteCategoryButton 
+                        minimized={!this.state.isOpen} 
+                        hide={!this.props.editing} 
+                        categoryIndex={this.props.index}
+                        trueCategoryIndex={this.props.trueCategoryIndex}
+                    /> 
                     {content.map((item, i) => 
                         <CSSTransition
                             in={true}

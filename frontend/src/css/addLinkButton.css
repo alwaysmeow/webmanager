@@ -1,41 +1,14 @@
 .add-link-button
 {
-    height: 9vh;
-    min-width: max(2vw, 2vh);
-    width: max(2vw, 2vh);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     margin-left: calc(var(--link-list-gap) / 2);
-
     border: 1px solid var(--contrast);
-    border-radius: 5px;
-
-    transition: var(--transition-time);
-    overflow: hidden;
-    cursor: pointer;
 }
 
 .empty .add-link-button
 {
     min-width: max(10vw, 10vh);
     width: max(10vw, 10vh);
-}
-
-.add-link-button svg
-{
-    height: 2ch;
-    width: 2ch;
-}
-
-.add-link-button.hided
-{
-    min-width: 0;
-    width: 0;
-    border-color: var(--primary-dark-color);
-    cursor: default;
+    margin: 0;
 }
 
 .add-link-button svg *
@@ -43,25 +16,7 @@
     color: var(--contrast);
 }
 
-.add-link-button.minimized
-{
-    height: 0;
-    padding: 0;
-    cursor: default;
-}
-
-.add-link-button.minimized svg *
-{
-    opacity: 0%;
-    cursor: default;
-}
-
 .add-link-button:hover
 {
     background-color: var(--contrast);
-}
-
-.add-link-button:hover svg *
-{
-    color: var(--primary-dark-color)
 }
