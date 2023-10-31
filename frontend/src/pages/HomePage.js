@@ -72,6 +72,22 @@ class HomePage extends React.Component
                     this.setState({
                         userdataContext: updated
                     })
+                },
+
+                trueCategoryIndex: (categoryIndex) =>{
+                    let index = 0
+                    for (let i = 0; i < categoryIndex; i++)
+                        if (this.state.userdataContext.userdata[i] != null)
+                            index++
+                    return index
+                },
+
+                trueLinkIndex: (categoryIndex, linkIndex) =>{
+                    let index = 0
+                    for (let i = 0; i < linkIndex; i++)
+                        if (this.state.userdataContext.userdata[categoryIndex].content[i] != null)
+                            index++
+                    return index
                 }
             }
         }

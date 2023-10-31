@@ -59,11 +59,7 @@ class Category extends React.Component
 
     trueIndex()
     {
-        let index = 0
-        for (let i = 0; i < this.props.index; i++)
-            if (this.context.userdata[i] != null)
-                index++
-        return index
+        return this.context.trueCategoryIndex(this.props.index)
     }
 
     render()
