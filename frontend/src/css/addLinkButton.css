@@ -9,6 +9,7 @@
     min-width: max(10vw, 10vh);
     width: max(10vw, 10vh);
     margin: 0;
+    transform: translateX(calc(-1 * var(--link-list-gap) / 2 + 1px));
 }
 
 .editing .empty .add-link-button
