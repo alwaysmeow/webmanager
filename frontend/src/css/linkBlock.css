@@ -9,13 +9,14 @@
     flex-direction: row;
     margin-left: calc(var(--link-list-gap) / 2);
     margin-right: calc(var(--link-list-gap) / 2);
+    z-index: 0;
 }
 
 .link-block
 {
-    width: max(10vw, 10vh);
-    min-width: max(10vw, 10vh);
-    max-width: max(10vw, 10vh);
+    width: var(--link-block-width);
+    min-width: var(--link-block-width);
+    max-width: var(--link-block-width);
 
     background-color: var(--primary-bright-color);
     color: var(--primary-dark-color);
@@ -33,30 +34,30 @@
     text-decoration: none;
 
     transition: var(--transition-time);
-    max-height: 9vh;
-    height: 9vh;
+    max-height: var(--link-block-height);
+    height: var(--link-block-height);
 }
 
-.unmounted .link-block,
+.link-block-container.unmounted .link-block,
 .link-block-container-exit-active .link-block
 {
     max-width: 0;
     min-width: 0;
 }
 
-.unmounted,
+.link-block-container.unmounted,
 .link-block-container-exit-active
 {
     margin: 0;
 }
 
-.unmounted .link-block .url-img,
+.link-block-container.unmounted .link-block .url-img,
 .link-block-container-exit-active .link-block .url-img
 {
     max-width: 0;
 }
 
-.unmounted input,
+.link-block-container.unmounted input,
 .link-block-container-exit-active input
 {
     opacity: 0;
@@ -190,7 +191,7 @@
     width: 75%;
 }
 
-.unmounted .delete-link-button,
+.link-block-container.unmounted .delete-link-button,
 .link-block-container-exit-active .delete-link-button,
 .delete-link-button.hidden
 {

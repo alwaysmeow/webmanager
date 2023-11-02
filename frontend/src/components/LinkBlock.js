@@ -15,7 +15,7 @@ class LinkBlock extends React.Component
             url: null,
             mouseover: false,
             focused: false,
-            mounted: this.props.mounted,
+            mounted: false,
             iconError: false
         }
 

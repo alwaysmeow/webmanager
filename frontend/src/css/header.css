@@ -18,13 +18,15 @@ header
     gap: 1%;
     justify-content: right;
     align-items: center;
+    
+    z-index: 1;
 }
 
 header *
 {
     color: var(--primary-bright-color);;
     transition: var(--transition-time);
-    z-index: 1;
+    z-index: 2;
 }
 
 .blank

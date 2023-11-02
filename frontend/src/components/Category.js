@@ -5,6 +5,7 @@ import AddLinkButton from "./AddLinkButton"
 import DeleteCategoryButton from "./DeleteCategoryButton"
 import "../css/category.css"
 import { renameCategoryRequest } from "../tools/requests"
+import { deleteCategoryRequest } from "../tools/requests"
 import UserDataContext from "./UserDataContext"
 
 class Category extends React.Component
@@ -12,23 +13,26 @@ class Category extends React.Component
     constructor(props)
     {
         super(props)
-        this.firstRender = true
         this.state = {
             isOpen: true,
+            mounted: this.props.mounted,
             name: "",
         }
 
         this.switchVisible = this.switchVisible.bind(this)
         this.inputCategoryName = this.inputCategoryName.bind(this)
         this.renameCategory = this.renameCategory.bind(this)
+        this.deleteCategory = this.deleteCategory.bind(this)
     }
 
     componentDidMount()
     {
         this.setState({
-            name: this.context.userdata[this.props.index].name
+            name: this.context.userdata[this.props.categoryIndex].name,
         })
-        this.firstRender = false
+        setTimeout(() => this.setState({
+            mounted: true
+        }), 0)
     }
 
     switchVisible()
@@ -43,23 +47,40 @@ class Category extends React.Component
 
     renameCategory()
     {
-        if (this.state.name !== this.context.userdata[this.props.index].name)
+        if (this.state.name !== this.context.userdata[this.props.categoryIndex].name)
         {
             renameCategoryRequest(this.props.trueCategoryIndex, this.state.name)
-            this.context.renameCategory(this.props.index, this.state.name)
+            this.context.renameCategory(this.props.categoryIndex, this.state.name)
+        }
+    }
+
+    deleteCategory()
+    {
+        if (this.props.editing && this.state.isOpen)
+        {
+            deleteCategoryRequest(this.props.trueCategoryIndex)
+            this.setState({
+                mounted: false
+            })
+            setTimeout(() => {
+                this.context.deleteCategory(this.props.categoryIndex)
+            }, 500)
         }
     }
 
     render()
     {
-        const item = this.context.userdata[this.props.index]
+        const item = this.context.userdata[this.props.categoryIndex]
         if (item == null)
             return <></>
         const content = item.content
         const empty = item.content.filter(item => item !== null).length === 0
 
         return(
-            <div className={"category" + (this.state.isOpen ? "" : " minimized") + (empty ? " empty" : "")} 
+            <div className={"category" 
+                + (!this.state.isOpen ? " minimized" : "") 
+                + (empty ? " empty" : "") 
+                + (!this.state.mounted ? " unmounted" : "")} 
                 onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
             >
             {
@@ -90,35 +111,31 @@ class Category extends React.Component
                 <TransitionGroup className="link-list" component="div">
                     <DeleteCategoryButton 
                         minimized={!this.state.isOpen} 
-                        hide={!this.props.editing} 
-                        categoryIndex={this.props.index}
-                        trueCategoryIndex={this.props.trueCategoryIndex}
+                        hide={!this.props.editing}
+                        onClick={this.deleteCategory}
                     /> 
                     {content.map((item, i) => 
                         <CSSTransition
-                            in={true}
-                            appear={true} 
                             key={i} 
-                            timeout={{ enter: 500, exit: 500 }} 
+                            timeout={{ exit: 500 }} 
                             classNames="link-block-container"
                         >
                             <LinkBlock
-                                categoryIndex={this.props.index}
+                                categoryIndex={this.props.categoryIndex}
                                 trueCategoryIndex={this.props.trueCategoryIndex}
                                 linkIndex={i} 
-                                trueLinkIndex={this.context.userdata[this.props.index].content
+                                trueLinkIndex={this.context.userdata[this.props.categoryIndex].content
                                     .slice(0, i)
                                     .filter(item => item !== null).length}
                                 minimized={!this.state.isOpen} 
                                 editing={this.props.editing}
-                                mounted={this.firstRender}
                             />
                         </CSSTransition>
                     )}
                     <AddLinkButton 
                         minimized={!this.state.isOpen} 
                         hide={!(this.props.editing || empty)} 
-                        categoryIndex={this.props.index}
+                        categoryIndex={this.props.categoryIndex}
                         trueCategoryIndex={this.props.trueCategoryIndex}
                     /> 
                 </TransitionGroup>

@@ -2,7 +2,7 @@
 .add-category-button-exit,
 .add-category-button
 {
-    width: max(10vw, 10vh);
+    width: var(--link-block-width);;
     min-width: max(10vw, 10vh);
     height: 2em;
     

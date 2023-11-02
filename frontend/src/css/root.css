@@ -9,5 +9,7 @@
     
     --transition-time: 0.5s;
 
-    --link-list-gap: 1vh
+    --link-list-gap: 1vh;
+    --link-block-width: max(10vw, 10vh);
+    --link-block-height: 9vh;
 }

@@ -76,8 +76,15 @@ class HomePage extends React.Component
             }
         }
         this.getData()
+        this.firstRender = true
 
         this.toggleEditState = this.toggleEditState.bind(this)
+    }
+
+    componentDidUpdate()
+    {
+        if (this.state.loaded)
+            this.firstRender = false
     }
 
     toggleEditState()
@@ -98,13 +105,17 @@ class HomePage extends React.Component
                         <UserDataContext.Provider value={this.state.userdataContext}>
                             <TransitionGroup className="category-list" component="div">
                                 {this.state.userdataContext.userdata.map((item, i) => (
-                                    <CSSTransition key={i} timeout={500} classNames="link-block">
-                                        <Category 
-                                            index={i}
+                                    <CSSTransition key={i} 
+                                        timeout={{ enter: 0, exit: 500 }} 
+                                        classNames="category"
+                                    >
+                                        <Category
+                                            categoryIndex={i}
                                             trueCategoryIndex={this.state.userdataContext.userdata
                                                 .slice(0, i)
                                                 .filter(item => item !== null).length}
                                             editing={this.state.editing}
+                                            mounted={this.firstRender}
                                         />
                                     </CSSTransition>
                                 ))}
