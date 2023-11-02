@@ -108,29 +108,23 @@ class Category extends React.Component
                             {this.state.name}
                         </div>
             }
-                <TransitionGroup className="link-list" component="div">
+                <div className="link-list" component="div">
                     <DeleteCategoryButton 
                         minimized={!this.state.isOpen} 
                         hide={!this.props.editing}
                         onClick={this.deleteCategory}
                     /> 
                     {content.map((item, i) => 
-                        <CSSTransition
-                            key={i} 
-                            timeout={{ exit: 500 }} 
-                            classNames="link-block-container"
-                        >
-                            <LinkBlock
-                                categoryIndex={this.props.categoryIndex}
-                                trueCategoryIndex={this.props.trueCategoryIndex}
-                                linkIndex={i} 
-                                trueLinkIndex={this.context.userdata[this.props.categoryIndex].content
-                                    .slice(0, i)
-                                    .filter(item => item !== null).length}
-                                minimized={!this.state.isOpen} 
-                                editing={this.props.editing}
-                            />
-                        </CSSTransition>
+                        <LinkBlock
+                            categoryIndex={this.props.categoryIndex}
+                            trueCategoryIndex={this.props.trueCategoryIndex}
+                            linkIndex={i} 
+                            trueLinkIndex={this.context.userdata[this.props.categoryIndex].content
+                                .slice(0, i)
+                                .filter(item => item !== null).length}
+                            minimized={!this.state.isOpen} 
+                            editing={this.props.editing}
+                        />
                     )}
                     <AddLinkButton 
                         minimized={!this.state.isOpen} 
@@ -138,7 +132,7 @@ class Category extends React.Component
                         categoryIndex={this.props.categoryIndex}
                         trueCategoryIndex={this.props.trueCategoryIndex}
                     /> 
-                </TransitionGroup>
+                </div>
             </div>
         )
     }

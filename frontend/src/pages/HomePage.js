@@ -103,23 +103,18 @@ class HomePage extends React.Component
                     <Header showPanel={true} editing={this.state.editing} toggleEditState={this.toggleEditState}/>
                     <main className={"home" + (this.state.editing ? " editing" : "")}>
                         <UserDataContext.Provider value={this.state.userdataContext}>
-                            <TransitionGroup className="category-list" component="div">
+                            <div className="category-list">
                                 {this.state.userdataContext.userdata.map((item, i) => (
-                                    <CSSTransition key={i} 
-                                        timeout={{ enter: 0, exit: 500 }} 
-                                        classNames="category"
-                                    >
-                                        <Category
-                                            categoryIndex={i}
-                                            trueCategoryIndex={this.state.userdataContext.userdata
-                                                .slice(0, i)
-                                                .filter(item => item !== null).length}
-                                            editing={this.state.editing}
-                                            mounted={this.firstRender}
-                                        />
-                                    </CSSTransition>
+                                    <Category
+                                        categoryIndex={i}
+                                        trueCategoryIndex={this.state.userdataContext.userdata
+                                            .slice(0, i)
+                                            .filter(item => item !== null).length}
+                                        editing={this.state.editing}
+                                        mounted={this.firstRender}
+                                    />
                                 ))}
-                            </TransitionGroup>
+                            </div>
                             <TransitionGroup component={null}>
                                 {this.state.editing ? (
                                     <CSSTransition key="addCategoryButton" timeout={{ enter: 0, exit: 500 }} classNames="add-category-button">

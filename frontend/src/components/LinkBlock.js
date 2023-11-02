@@ -97,8 +97,13 @@ class LinkBlock extends React.Component
 
     deleteLink()
     {
-        this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
         deleteLinkRequest(this.props.trueCategoryIndex, this.props.trueLinkIndex)
+        this.setState({
+            mounted: false
+        })
+        setTimeout(() => {
+            this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
+        }, 500)
     }
 
     getIcon()
