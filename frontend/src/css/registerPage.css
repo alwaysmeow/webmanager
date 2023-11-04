@@ -1,0 +1,34 @@
+@import 'root.css';
+
+.register-container
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    width: 100%;
+    gap: 2vh;
+    height: calc(8ch + 4em + 10vh);
+
+    transition: var(--transition-time);
+}
+
+.separating-line.start
+{
+    position: absolute;
+    top: 0;
+}
+
+.separating-line.end
+{
+    position: absolute;
+    bottom: 0;
+}
+
+.register-container.closed
+{
+    height: 2px;
+}

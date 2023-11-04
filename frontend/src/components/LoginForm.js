@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/form.css'
 import '../css/loginPage.css'
 import hash from '../tools/hash.js'
 import { loginRequest } from '../tools/requests';
@@ -66,7 +67,7 @@ class LoginForm extends React.Component
             <form className={"login-window" + (this.state.invalidInput ? " invalid" : "")} id="form" autoComplete="off">
                 <h1>WebManager</h1>
                 <input 
-                    className="loginform-item" 
+                    className="form-item" 
                     type="text"
                     placeholder="Username" 
                     name="loginInput"
@@ -74,16 +75,23 @@ class LoginForm extends React.Component
                     onChange={this.Input}
                 />
                 <input 
-                    className={"loginform-item" + this.state.translatePasswordInput} 
+                    className={"form-item" + this.state.translatePasswordInput} 
                     type="password" 
                     placeholder="Password"
                     name="passwordInput" 
                     value={this.state.passwordInput} 
                     onChange={this.Input}
                 />
-                <button className="loginform-item login-button" type="submit" onClick={this.submit}>Log In</button>
+                <button className="form-item login-button" type="submit" onClick={this.submit}>Log In</button>
                 <div className="separating-line"/>
-                <button className="loginform-item register-button">Register</button>
+                <button className="form-item"
+                    onClick={(event) => {
+                        event.preventDefault()
+                        window.location.href = "/register"
+                    }}
+                >
+                    Register
+                </button>
             </form>
         )
     }

@@ -1,5 +1,4 @@
 import React from "react"
-import { CSSTransition, TransitionGroup } from "react-transition-group"
 import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
 import DeleteCategoryButton from "./DeleteCategoryButton"

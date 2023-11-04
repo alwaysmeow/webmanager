@@ -8,83 +8,8 @@ main
     height: 100vh;
 }
 
-.login-window
-{
-    background-color: var(--primary-dark-color);
-
-    padding-top: 3vh;
-    padding-bottom: 5vh;
-    padding-left: calc(max(3vh, 3vw));
-    padding-right: calc(max(3vh, 3vw));
-
-    border-radius: 10px;
-    border: 2px solid var(--primary-bright-color);
-
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 2vh;
-}
-
-.loginform-item
-{
-    text-align: center;
-    width: 90%;
-    padding: 1ch;
-    border-radius: 50svh;
-    transition: var(--transition-time);
-}
-
-.loginform-item.left
-{
-    transform: translateX(-5px);
-}
-
-.loginform-item.right
-{
-    transform: translateX(7px);
-}
-
-.login-window h1
-{
-    color: var(--primary-bright-color);
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-}
-
-.login-window input
-{
-    background-color: var(--primary-dark-color);
-    border: 1px solid var(--primary-bright-color);
-    color: var(--primary-bright-color);
-    box-sizing: border-box;
-    transition: transform 0.1s;
-    outline: none;
-}
-
-.login-window button
-{
-    background-color: var(--primary-bright-color);
-    color: var(--primary-dark-color);
-    border: none;
-    cursor: pointer;
-}
-
-.login-window button:hover
-{
-    background-color: var(--contrast);
-}
-
 .invalid .login-button,
 .invalid .login-button:hover
 {
     background-color: var(--red);
-}
-
-.separating-line
-{
-    height: 0;
-    border: 1px solid var(--secondary-bright);
-    border-radius: 50svh;
-    width: 90%
 }
