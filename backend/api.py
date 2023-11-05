@@ -1,24 +1,12 @@
-from flask import Flask, request, jsonify
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from flask_cors import CORS
+from flask import jsonify, request
+from flask_login import login_required, login_user, logout_user, current_user
+from flask_mail import Message
 
-from dotenv import load_dotenv
-from os import getenv
-
+from app import app, mail
 from user import User
 from dbinterface import *
 
-load_dotenv()
-
-app = Flask(__name__)
-CORS(app, supports_credentials=True)
-app.secret_key = getenv("KEY")
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-@login_manager.user_loader
-def loadUser(user_id):
-    return User(user_id)
+# User Requests
 
 @app.route('/api/login', methods=["POST"])
 def authorization():
@@ -46,6 +34,8 @@ def logoutCurrentUser():
 def throwData():
     return getUserData(current_user.id), 200
 
+# Category Requests
+
 @app.route('/api/rename_category', methods=["POST"])
 @login_required
 def renameCategoryProcessing():
@@ -65,6 +55,8 @@ def deleteCategoryProcessing():
 def newCategoryProcessing():
     newCategory(current_user.id, "")
     return jsonify({"success": True}), 200
+
+# Link Requests
 
 @app.route('/api/rename_link', methods=["POST"])
 @login_required
@@ -94,5 +86,26 @@ def newLinkProcessing():
     newLink(current_user.id, data["categoryIndex"], "", "")
     return jsonify({"success": True}), 200
 
-if __name__ == "__main__":
-    app.run(debug=True, port="8000")
+# Key Requests
+
+@app.route('/api/send_key', methods=["POST"])
+def sendKey():
+    data = request.get_json()
+    """
+    msg = Message("Hello, World!", recipients=[data["email"]])
+    mail.send(msg)
+    """
+    return jsonify({"success": True}), 200
+
+@app.route('/api/create_account', methods=["POST"])
+def createAccount():
+    data = request.get_json()
+    if not findKey(data["key"]):
+        return jsonify({"success": False, "code": 1}), 200
+    elif not isNameFree(data["username"]):
+        return jsonify({"success": False, "code": 2}), 200
+    else:
+        registerAccount(data["username"], data["passwordHash"])
+        #deleteKey(data["key"])
+        login_user(User(data["username"]))
+        return jsonify({"success": True, "redirect_url": "/"}), 200

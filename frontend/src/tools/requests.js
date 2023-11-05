@@ -1,3 +1,5 @@
+// User Requests
+
 export async function loginRequest(login, passwordHash)
 {
     const postdata = {
@@ -40,6 +42,8 @@ export async function getUserDataRequest()
     .then(response => response.json())
     .catch(() => null)
 }
+
+// Category Requests
 
 export function renameCategoryRequest(categoryIndex, newName)
 {
@@ -87,6 +91,8 @@ export function newCategoryRequest()
 
     fetch("api/new_category", request)
 }
+
+// Link Requests
 
 export function renameLinkRequest(categoryIndex, linkIndex, newName)
 {
@@ -163,4 +169,45 @@ export function newLinkRequest(categoryIndex)
     }
 
     fetch("api/new_link", request)
+}
+
+// Key Requests
+
+export function sendKeyRequest(email)
+{
+    const postdata = {
+        email: email
+    }
+
+    const request = {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/send_key", request)
+}
+
+export async function createAccountRequest(key, username, passwordHash)
+{
+    const postdata = {
+        key: key,
+        username: username,
+        passwordHash: passwordHash
+    }
+
+    const request = {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    return await fetch("api/create_account", request)
+    .then(response => response.json())
 }

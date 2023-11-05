@@ -1,6 +1,8 @@
 import React from 'react';
 import '../css/form.css'
 import '../css/registerPage.css'
+import { sendKeyRequest, createAccountRequest } from '../tools/requests';
+import hash from '../tools/hash'
 
 class RegisterForm extends React.Component
 {
@@ -25,22 +27,48 @@ class RegisterForm extends React.Component
     {
         this.setState({
             [event.target.name]: event.target.value,
-            invalidInput: false,
-            keySended: event.target.value == "emailInput"
+            invalidInput: false
         })
+        if (event.target.name === "emailInput")
+        {
+            this.setState({
+                keyInput: '',
+                usernameInput: '',
+                passwordInput: '',
+                keySended: false
+            })
+        }
     }
 
     sendKey(event)
     {
         event.preventDefault()
+        sendKeyRequest(this.state.emailInput)
         this.setState({
             keySended: true
         })
     }
 
-    register()
+    async register(event)
     {
-
+        event.preventDefault()
+        if (this.state.usernameInput.length < 6)
+        {
+            console.log("Username is too short");
+        }
+        else if (this.state.passwordInput.length < 8)
+        {
+            console.log("Password is too short");
+        }
+        else
+        {
+            const response = await createAccountRequest(
+                this.state.keyInput, 
+                this.state.usernameInput, 
+                await hash(this.state.passwordInput)
+            )
+            console.log(response);
+        }
     }
 
     render()
@@ -89,7 +117,8 @@ class RegisterForm extends React.Component
                             onChange={this.Input}
                         />
                         <button className="form-item send-message-button"
-                            type="submit" 
+                            type="submit"
+                            onClick={this.register}
                         >
                             Register
                         </button>
