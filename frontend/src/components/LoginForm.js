@@ -13,12 +13,13 @@ class LoginForm extends React.Component
             loginInput: '',
             passwordInput: '',
             invalidInput: false,
+            paintRed: false,
             translatePasswordInput: ""
         }
 
         this.Input = this.Input.bind(this)
         this.submit = this.submit.bind(this)
-        this.unsetInvalidInput = this.unsetInvalidInput.bind(this)
+        this.unsetPaintRed = this.unsetPaintRed.bind(this)
         this.waveLeft = this.waveLeft.bind(this)
         this.waveRight = this.waveRight.bind(this)
         this.endWaving = this.endWaving.bind(this)
@@ -29,13 +30,14 @@ class LoginForm extends React.Component
     {
         this.setState({
             [event.target.name]: event.target.value,
-            invalidInput: false
+            invalidInput: false,
+            paintRed: false,
         })
     }
 
-    unsetInvalidInput()
+    unsetPaintRed()
     {
-        this.setState({invalidInput: false})
+        this.setState({paintRed: false})
     }
 
     waveLeft()
@@ -55,7 +57,7 @@ class LoginForm extends React.Component
 
     wave()
     {
-        const timing = 100;
+        const timing = 150;
         this.waveLeft()
         setTimeout(this.waveRight, timing)
         setTimeout(this.endWaving, timing * 2)
@@ -82,7 +84,12 @@ class LoginForm extends React.Component
                     value={this.state.passwordInput} 
                     onChange={this.Input}
                 />
-                <button className="form-item login-button" type="submit" onClick={this.submit}>Log In</button>
+                <button className={"form-item login-button" + (this.state.paintRed ? " red" : "")} 
+                    type="submit" 
+                    onClick={this.submit}
+                >
+                    Log In
+                </button>
                 <div className="separating-line"/>
                 <button className="form-item"
                     onClick={(event) => {
@@ -106,9 +113,10 @@ class LoginForm extends React.Component
         {
             this.setState({
                 invalidInput: true,
+                paintRed: true,
                 passwordInput: ""
             })
-            setTimeout(this.unsetInvalidInput, 500)
+            setTimeout(this.unsetPaintRed, 500)
             this.wave()
         }
     }

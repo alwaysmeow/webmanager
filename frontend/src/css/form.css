@@ -55,6 +55,16 @@ form button:hover
     transition: var(--transition-time);
 }
 
+.invalid input.red
+{
+    border-color: var(--red);
+}
+
+.invalid button.red
+{
+    background-color: var(--red);
+}
+
 .form-item.left
 {
     transform: translateX(-5px);

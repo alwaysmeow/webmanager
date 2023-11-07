@@ -1,5 +1,10 @@
 @import 'root.css';
 
+form.closed
+{
+    cursor: pointer;
+}
+
 .register-container
 {
     position: relative;
@@ -10,10 +15,14 @@
     overflow: hidden;
 
     width: 100%;
-    gap: 2vh;
-    height: calc(8ch + 4em + 10vh);
+    height: calc((2ch + 0.95em + 2vh) * 4 + 2vh);
 
     transition: var(--transition-time);
+}
+
+.invalid .register-container
+{
+    height: calc((2ch + 0.95em + 2vh) * 4 + 2vh + (0.8em + 2vh));
 }
 
 .separating-line.start
@@ -28,7 +37,44 @@
     bottom: 0;
 }
 
-.register-container.closed
+.closed .register-container
 {
     height: 2px;
+    cursor: pointer;
+}
+
+.closed .register-container *
+{
+    cursor: pointer;
+}
+
+.register-container .form-item
+{
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.invalid-string
+{
+    color: var(--red);
+    font-size: 0.8em;
+    height: 0.8em;
+    height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transition: var(--transition-time);
+}
+
+.invalid .invalid-string
+{
+    opacity: 1;
+    height: 1em;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+.invalid .register-button:hover
+{
+    background-color: var(--red);
 }

@@ -8,7 +8,6 @@ main
     height: 100vh;
 }
 
-.invalid .login-button,
 .invalid .login-button:hover
 {
     background-color: var(--red);
