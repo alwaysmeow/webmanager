@@ -35,7 +35,10 @@ export async function getUserDataRequest()
 {
     const request = {
         method: "GET",
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+            'Cache-Control': 'no-cache, no-store'
+        },
     }
     
     return await fetch("api/userdata", request)

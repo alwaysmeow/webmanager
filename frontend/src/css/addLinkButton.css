@@ -14,7 +14,7 @@
 
 .editing .empty .add-link-button
 {
-    margin-left: calc(var(--link-list-gap));
+    margin-left: var(--link-list-gap);
 }
 
 .add-link-button svg *
