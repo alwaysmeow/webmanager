@@ -2,7 +2,8 @@
 
 
 .link-block-container,
-.link-block-container-exit
+.link-block-container-exit,
+.link-block-container-enter-active
 {
     display: flex;
     position: relative;
@@ -10,6 +11,7 @@
     margin-left: calc(var(--link-list-gap) / 2);
     margin-right: calc(var(--link-list-gap) / 2);
     z-index: 0;
+    transition: var(--transition-time);
 }
 
 .link-block
@@ -39,7 +41,8 @@
 }
 
 .link-block-container.unmounted .link-block,
-.link-block-container-exit-active .link-block
+.link-block-container-exit-active .link-block,
+.link-block-container-enter .link-block
 {
     max-width: 0;
     min-width: 0;
@@ -52,13 +55,15 @@
 }
 
 .link-block-container.unmounted .link-block .url-img,
-.link-block-container-exit-active .link-block .url-img
+.link-block-container-exit-active .link-block .url-img,
+.link-block-container-enter .link-block .url-img
 {
     max-width: 0;
 }
 
 .link-block-container.unmounted input,
-.link-block-container-exit-active input
+.link-block-container-exit-active input,
+.link-block-container-enter input
 {
     opacity: 0;
 }
@@ -193,6 +198,7 @@
 
 .link-block-container.unmounted .delete-link-button,
 .link-block-container-exit-active .delete-link-button,
+.link-block-container-enter .delete-link-button,
 .delete-link-button.hidden
 {
     width: 0;

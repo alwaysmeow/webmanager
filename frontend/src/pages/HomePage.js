@@ -106,6 +106,7 @@ class HomePage extends React.Component
                             <div className="category-list">
                                 {this.state.userdataContext.userdata.map((item, i) => (
                                     <Category
+                                        key={i}
                                         categoryIndex={i}
                                         trueCategoryIndex={this.state.userdataContext.userdata
                                             .slice(0, i)

@@ -101,9 +101,7 @@ class LinkBlock extends React.Component
         this.setState({
             mounted: false
         })
-        setTimeout(() => {
-            this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
-        }, 500)
+        this.context.deleteLink(this.props.categoryIndex, this.props.linkIndex)
     }
 
     getIcon()
