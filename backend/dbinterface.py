@@ -32,6 +32,10 @@ def deleteAccount(username):
 
 # Category Interface
 
+def countCategories(username):
+    userdata = userDataCollection.find_one({"username": username})
+    return len(userdata["categories"])
+
 def deleteCategory(username, categoryIndex):
     userDataCollection.update_one(
         {"username": username}, 
@@ -63,7 +67,16 @@ def newCategory(username, categoryName):
         }
     )
 
+def categoryExist(username, categoryIndex):
+    if categoryIndex >= countCategories(username):
+        return False
+    return True
+
 # Link Interface
+
+def countLinks(username, categoryIndex):
+    userdata = userDataCollection.find_one({"username": username})
+    return len(userdata["categories"][categoryIndex]["content"])
 
 def deleteLink(username, categoryIndex, linkIndex):
     userDataCollection.update_one(
@@ -101,6 +114,13 @@ def newLink(username, categoryIndex, linkName, url):
             }
         }
     )
+
+def linkExist(username, categoryIndex, linkIndex):
+    if categoryIndex >= countCategories(username):
+        return False
+    if linkIndex >= countLinks(username, categoryIndex):
+        return False
+    return True
 
 # Key Interface
 

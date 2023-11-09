@@ -40,15 +40,27 @@ def throwData():
 @login_required
 def renameCategoryProcessing():
     data = request.get_json()
-    renameCategory(current_user.id, data["categoryIndex"], data["newName"])
-    return jsonify({"success": True}), 200
+    if categoryExist(current_user.id, data["categoryIndex"]):
+        renameCategory(current_user.id, data["categoryIndex"], data["newName"])
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
 
 @app.route('/api/delete_category', methods=["POST"])
 @login_required
 def deleteCategoryProcessing():
     data = request.get_json()
-    deleteCategory(current_user.id, data["categoryIndex"])
-    return jsonify({"success": True}), 200
+    if categoryExist(current_user.id, data["categoryIndex"]):
+        deleteCategory(current_user.id, data["categoryIndex"])
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
 
 @app.route('/api/new_category', methods=["POST"])
 @login_required
@@ -62,29 +74,53 @@ def newCategoryProcessing():
 @login_required
 def renameLinkProcessing():
     data = request.get_json()
-    renameLink(current_user.id, data["categoryIndex"], data["linkIndex"], data["newName"])
-    return jsonify({"success": True}), 200
+    if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
+        renameLink(current_user.id, data["categoryIndex"], data["linkIndex"], data["newName"])
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
 
 @app.route('/api/change_url', methods=["POST"])
 @login_required
 def changeUrlProccessing():
     data = request.get_json()
-    changeUrl(current_user.id, data["categoryIndex"], data["linkIndex"], data["newUrl"])
-    return jsonify({"success": True}), 200
+    if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
+        changeUrl(current_user.id, data["categoryIndex"], data["linkIndex"], data["newUrl"])
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
 
 @app.route('/api/delete_link', methods=["POST"])
 @login_required
 def deleteLinkProcessing():
     data = request.get_json()
-    deleteLink(current_user.id, data["categoryIndex"], data["linkIndex"])
-    return jsonify({"success": True}), 200
+    if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
+        deleteLink(current_user.id, data["categoryIndex"], data["linkIndex"])
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
 
 @app.route('/api/new_link', methods=["POST"])
 @login_required
 def newLinkProcessing():
     data = request.get_json()
-    newLink(current_user.id, data["categoryIndex"], "", "")
-    return jsonify({"success": True}), 200
+    if categoryExist(current_user.id, data["categoryIndex"]):
+        newLink(current_user.id, data["categoryIndex"], "", "")
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
 
 # Key Requests
 
