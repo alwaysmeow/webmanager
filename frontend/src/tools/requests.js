@@ -176,7 +176,7 @@ export function newLinkRequest(categoryIndex)
 
 // Key Requests
 
-export function sendKeyRequest(email)
+export async function sendKeyRequest(email)
 {
     const postdata = {
         email: email
@@ -191,7 +191,8 @@ export function sendKeyRequest(email)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/send_key", request)
+    return await fetch("api/send_key", request)
+    .then(response => response.json())
 }
 
 export async function createAccountRequest(key, username, passwordHash)

@@ -20,7 +20,7 @@ form.closed
     transition: var(--transition-time);
 }
 
-.invalid .register-container
+.register-container.invalid 
 {
     height: calc((2ch + 0.95em + 2vh) * 4 + 2vh + (0.8em + 2vh));
 }
@@ -66,15 +66,27 @@ form.closed
     transition: var(--transition-time);
 }
 
-.invalid .invalid-string
+.invalid-string.appeared
 {
     opacity: 1;
     height: 1em;
     margin-top: 1vh;
     margin-bottom: 1vh;
+    transition: var(--transition-time);
 }
 
 .invalid .register-button:hover
 {
     background-color: var(--red);
+}
+
+button.disabled
+{
+    background-color: var(--secondary-dark);
+    cursor: default;
+}
+
+button.disabled:hover
+{
+    background-color: var(--secondary-dark);
 }

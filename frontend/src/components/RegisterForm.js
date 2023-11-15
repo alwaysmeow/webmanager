@@ -3,6 +3,7 @@ import '../css/form.css'
 import '../css/registerPage.css'
 import { sendKeyRequest, createAccountRequest } from '../tools/requests';
 import hash from '../tools/hash'
+import isValidEmail from '../tools/isValidEmail';
 
 class RegisterForm extends React.Component
 {
@@ -17,13 +18,18 @@ class RegisterForm extends React.Component
             openContainer: true,
             invalidInput: false,
             paintRed: false,
-            invalidCode: 0
+            invalidCode: 0,
+            invalidString: '',
+            keySended: false,
+            emailError: false,
+            disabledEmailInput: false
         }
 
         this.Input = this.Input.bind(this)
         this.openContainer = this.openContainer.bind(this)
         this.sendKey = this.sendKey.bind(this)
         this.register = this.register.bind(this)
+        this.paintRed = this.paintRed.bind(this)
     }
 
     Input(event)
@@ -38,7 +44,9 @@ class RegisterForm extends React.Component
                 keyInput: '',
                 usernameInput: '',
                 passwordInput: '',
-                openContainer: false
+                openContainer: false,
+                keySended: false,
+                emailError: false
             })
         }
         else
@@ -49,9 +57,12 @@ class RegisterForm extends React.Component
         }
     }
 
-    unsetpaintRed()
+    paintRed()
     {
-        this.setState({paintRed: false})
+        this.setState({paintRed: true})
+        setTimeout(() => {this.setState({
+            paintRed: false
+        })}, 500)
     }
 
     openContainer()
@@ -64,8 +75,49 @@ class RegisterForm extends React.Component
     sendKey(event)
     {
         event.preventDefault()
-        sendKeyRequest(this.state.emailInput)
-        this.openContainer()
+        if (!this.state.disabledEmailInput)
+        {
+            if (isValidEmail(this.state.emailInput))
+            {
+                var success = true;
+                this.setState({disabledEmailInput: true})
+                sendKeyRequest(this.state.emailInput)
+                .then(response => {
+                    if (!response.success)
+                    {
+                        this.setState({
+                            invalidInput: true,
+                            invalidCode: 5,
+                            emailInput: '',
+                            keySended: false,
+                            disabledEmailInput: false
+                        })
+                        this.paintRed()
+                        success = false
+                    }
+                })
+                setTimeout(() =>{
+                    if (success)
+                    {
+                        this.setState({
+                            keySended: true
+                        })
+                        this.openContainer()
+                        setTimeout(() => {
+                            this.setState({disabledEmailInput: false})
+                        }, 10000)
+                    }
+                }, 500)
+            }
+            else
+            {
+                this.setState({
+                    invalidInput: true,
+                    invalidCode: 5
+                })
+                this.paintRed()
+            }
+        }
     }
 
     async register(event)
@@ -75,18 +127,20 @@ class RegisterForm extends React.Component
         {
             this.setState({
                 invalidInput: true,
-                paintRed: true,
-                invalidCode: 3
+                invalidCode: 3,
+                invalidString: "Username is too short"
             })
+            this.paintRed()
         }
         else if (this.state.passwordInput.length < 8)
         {
             this.setState({
                 invalidInput: true,
-                paintRed: true,
                 passwordInput: '',
-                invalidCode: 4
+                invalidCode: 4,
+                invalidString: "Password is too short"
             })
+            this.paintRed()
         }
         else
         {
@@ -99,55 +153,63 @@ class RegisterForm extends React.Component
             {
                 this.setState({
                     invalidInput: true,
-                    paintRed: true,
                     invalidCode: response.code
                 })
+                this.paintRed()
                 if (response.code === 1)
-                    this.setState({keyInput: ''})
+                {
+                    this.setState({
+                        keyInput: '',
+                        invalidString: "No such key exist"
+                    })
+                }
+                else
+                    this.setState({invalidString: "Username is already taken"})
             }
             console.log(response);
         }
-        setTimeout(() => {this.setState({
-            paintRed: false
-        })}, 500)
     }
 
     render()
     {
-        var invalidString
-        if (this.state.invalidCode === 1)
-            invalidString = "No such key exist"
-        else if (this.state.invalidCode === 2)
-            invalidString = "Username is already taken"
-        else if (this.state.invalidCode === 3)
-            invalidString = "Username is too short"
-        else if (this.state.invalidCode === 4)
-            invalidString = "Password is too short"
-        else
-            invalidString = ""
-
         return(
             <>
-                <form className={"register-window" + (this.state.invalidInput ? " invalid" : "") + (this.state.openContainer ? "" : " closed")} 
+                <form 
+                    className={"register-window" 
+                    + (this.state.openContainer ? "" : " closed") 
+                    + (this.state.invalidInput ? " invalid" : "")} 
                     id="form" 
                     autoComplete="off"
-                    onClick={this.openContainer}
+                    onClick={(event) => {
+                        if (!event.target.classList.contains('form-item'))
+                            this.openContainer()
+                    }}
                 >
                     <h1>Sign Up</h1>
                     <input 
-                        className="form-item" 
+                        className={"form-item"
+                        + ((this.state.paintRed && this.state.invalidCode === 5) ? " red" : "")
+                        + (this.state.keySended ? " blue" : "")}
                         type="text"
                         placeholder="Email" 
                         name="emailInput"
                         value={this.state.emailInput} 
                         onChange={this.Input}
+                        disabled={this.state.disabledEmailInput}
                     />
-                    <button className="form-item send-message-button"
+                    <button 
+                        className={"form-item send-message-button"
+                        + ((this.state.paintRed && this.state.invalidCode === 5) ? " red" : "")
+                        + (this.state.disabledEmailInput ? " disabled" : "")}
                         onClick={this.sendKey}
+                        disabled={this.state.disabledEmailInput}
                     >
                         Send Key
                     </button>
-                    <div className={"register-container"}>
+                    <div 
+                        className={"register-container"
+                        + ((this.state.invalidInput && this.state.invalidCode < 5) ? " invalid" : "")}
+                    >
                         <div className="separating-line start"/>
                         <input 
                             className={"form-item" 
@@ -176,8 +238,15 @@ class RegisterForm extends React.Component
                             value={this.state.passwordInput} 
                             onChange={this.Input}
                         />
-                        <div className="invalid-string">{invalidString}</div>
-                        <button className={"form-item register-button" + (this.state.paintRed ? " red" : "")}
+                        <div 
+                            className={"invalid-string"
+                            + ((this.state.invalidCode < 5 && this.state.invalidInput) ? " appeared" : "")}
+                        >
+                            {this.state.invalidString}
+                        </div>
+                        <button 
+                            className={"form-item register-button" 
+                            + ((this.state.paintRed && this.state.invalidCode < 5) ? " red" : "")}
                             type="submit"
                             onClick={this.register}
                         >

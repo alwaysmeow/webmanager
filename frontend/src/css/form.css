@@ -55,12 +55,19 @@ form button:hover
     transition: var(--transition-time);
 }
 
-.invalid input.red
+form input.red
 {
     border-color: var(--red);
 }
 
-.invalid button.red
+form input.blue
+{
+    background-color: var(--contrast);
+    border-color: var(--contrast);
+    color: var(--primary-dark-color);
+}
+
+form button.red
 {
     background-color: var(--red);
 }

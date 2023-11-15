@@ -19,6 +19,9 @@ def authentication(username, passwordHash):
 def isNameFree(username):
     return userDataCollection.find_one({"username": username}) is None
 
+def isEmailFree(email):
+    return userDataCollection.find_one({"email": email}) is None
+
 def registerAccount(username, passwordHash):
     userData = {
         "username": username,
@@ -129,3 +132,9 @@ def findKey(key):
 
 def deleteKey(key):
     keyCollection.delete_one({"key": key})
+
+def newKey(email, key):
+    keyCollection.insert_one({
+        "email": email,
+        "key": key
+    })

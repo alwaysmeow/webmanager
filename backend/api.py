@@ -127,11 +127,15 @@ def newLinkProcessing():
 @app.route('/api/send_key', methods=["POST"])
 def sendKey():
     data = request.get_json()
-    msg = Message("Hello, World!", recipients=[data["email"]])
-    msg.sender = 'webmanagerbot@gmail.com'
-    msg.body = 'This is a test email sent from Flask-Mail.'
-    mail.send(msg)
-    return jsonify({"success": True}), 200
+    if isEmailFree(data["email"]):
+        msg = Message("Hello, World!", recipients=[data["email"]])
+        msg.sender = 'webmanagerbot@gmail.com'
+        msg.body = 'This is a test email sent from Flask-Mail.'
+        #mail.send(msg)
+        response = {"success": True}
+    else:
+        response = {"success": False}
+    return jsonify(response), 200
 
 @app.route('/api/create_account', methods=["POST"])
 def createAccount():
