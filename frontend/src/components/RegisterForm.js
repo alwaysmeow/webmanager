@@ -149,7 +149,11 @@ class RegisterForm extends React.Component
                 this.state.usernameInput, 
                 await hash(this.state.passwordInput)
             )
-            if (!response.success)
+            if (response.success)
+            {
+                window.location.href = response.redirect_url
+            }
+            else
             {
                 this.setState({
                     invalidInput: true,

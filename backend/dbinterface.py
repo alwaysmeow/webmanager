@@ -11,7 +11,7 @@ keyCollection = db['Keys']
 # Account Interface
 
 def getUserData(username):
-    return userDataCollection.find_one({"username" : username}, {"_id": False, "passwordHash": False})
+    return userDataCollection.find_one({"username" : username}, {"_id": False, "passwordHash": False, "email": False})
 
 def authentication(username, passwordHash):
     return not userDataCollection.find_one({"username": username, "passwordHash": passwordHash}) is None
@@ -22,9 +22,10 @@ def isNameFree(username):
 def isEmailFree(email):
     return userDataCollection.find_one({"email": email}) is None
 
-def registerAccount(username, passwordHash):
+def registerAccount(username, passwordHash, email):
     userData = {
         "username": username,
+        "email": email,
         "passwordHash": passwordHash,
         "categories": []
     }
@@ -138,3 +139,15 @@ def newKey(email, key):
         "email": email,
         "key": key
     })
+
+def keySendedOnEmail(email):
+    return not keyCollection.find_one({"email": email}) is None
+
+def updateKey(email, key):
+    keyCollection.update_one(
+        {"email": email},
+        {"$set": {"key": key}}
+    )
+
+def getEmailByKey(key):
+    return keyCollection.find_one({"key": key})["email"]

@@ -6,3 +6,4 @@ def generateKey():
     key = ''
     for i in range(16):
         key += random.choice(characters)
+    return key

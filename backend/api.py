@@ -5,6 +5,7 @@ from flask_mail import Message
 from app import app, mail
 from user import User
 from dbinterface import *
+from keygen import generateKey
 
 # User Requests
 
@@ -128,10 +129,17 @@ def newLinkProcessing():
 def sendKey():
     data = request.get_json()
     if isEmailFree(data["email"]):
-        msg = Message("Hello, World!", recipients=[data["email"]])
+        key = generateKey()
+        while findKey(key):
+            key = generateKey()
+        if keySendedOnEmail(data["email"]):
+            updateKey(data["email"], key)
+        else:
+            newKey(data["email"], key)
+        msg = Message("Key for WebManager", recipients=[data["email"]])
         msg.sender = 'webmanagerbot@gmail.com'
-        msg.body = 'This is a test email sent from Flask-Mail.'
-        #mail.send(msg)
+        msg.body = f'Your registration key: {key}'
+        mail.send(msg)
         response = {"success": True}
     else:
         response = {"success": False}
@@ -145,7 +153,7 @@ def createAccount():
     elif not isNameFree(data["username"]):
         return jsonify({"success": False, "code": 2}), 200
     else:
-        registerAccount(data["username"], data["passwordHash"])
-        #deleteKey(data["key"])
+        registerAccount(data["username"], data["passwordHash"], getEmailByKey(data["key"]))
+        deleteKey(data["key"])
         login_user(User(data["username"]))
         return jsonify({"success": True, "redirect_url": "/"}), 200
