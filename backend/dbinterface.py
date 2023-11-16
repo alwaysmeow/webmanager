@@ -34,6 +34,12 @@ def registerAccount(username, passwordHash, email):
 def deleteAccount(username):
     userDataCollection.delete_one({"username": username})
 
+def renameUser(username, newName):
+    userDataCollection.update_one(
+        {"username": username},
+        {"$set": {"username": newName}}
+    )
+
 # Category Interface
 
 def countCategories(username):

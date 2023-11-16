@@ -35,6 +35,38 @@ def logoutCurrentUser():
 def throwData():
     return getUserData(current_user.id), 200
 
+@app.route('/api/delete_account', methods=['POST'])
+@login_required
+def deleteAccountProcessing():
+    try:
+        logout_user()
+        deleteAccount(current_user.id)
+        response = {"success": True, "redirect_url": "/login"}
+    except:
+        response = {"success": False}
+    return jsonify(response), 200
+
+@app.route('/api/rename_user', methods=['POST'])
+@login_required
+def renameUserProcessing():
+    data = request.get_json()
+    if not authentication(current_user.id, data["passwordHash"]):
+        response = {
+            "success": False,
+            "code": 1
+        }
+    elif not isNameFree(data["newName"]):
+        response = {
+            "success": False,
+            "code": 2
+        }
+    else:
+        renameUser(current_user.id, data["newName"])
+        response = {
+            "success": True
+        }
+    return jsonify(response), 200
+
 # Category Requests
 
 @app.route('/api/rename_category', methods=["POST"])
