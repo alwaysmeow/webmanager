@@ -12,6 +12,7 @@ from keygen import generateKey
 @app.route('/api/login', methods=["POST"])
 def authorization():
     data = request.get_json()
+    updateUserTiming(data['login'])
     if authentication(data['login'], data['passwordHash']):
         response = {"success": True, "redirect_url": "/"}
         login_user(User(data['login']))
@@ -23,6 +24,7 @@ def authorization():
 @app.route('/api/logout', methods=["GET"])
 @login_required
 def logoutCurrentUser():
+    updateUserTiming(current_user.id)
     try:
         logout_user()
         response = {"success": True, "redirect_url": "/login"}
@@ -33,6 +35,7 @@ def logoutCurrentUser():
 @app.route('/api/userdata', methods=["GET"])
 @login_required
 def throwData():
+    updateUserTiming(current_user.id)
     return getUserData(current_user.id), 200
 
 @app.route('/api/delete_account', methods=['POST'])
@@ -50,6 +53,7 @@ def deleteAccountProcessing():
 @login_required
 def renameUserProcessing():
     data = request.get_json()
+    updateUserTiming(current_user.id)
     if not authentication(current_user.id, data["passwordHash"]):
         response = {
             "success": False,
@@ -73,6 +77,7 @@ def renameUserProcessing():
 @login_required
 def renameCategoryProcessing():
     data = request.get_json()
+    updateUserTiming(current_user.id)
     if categoryExist(current_user.id, data["categoryIndex"]):
         renameCategory(current_user.id, data["categoryIndex"], data["newName"])
         response = {"success": True}
@@ -86,6 +91,7 @@ def renameCategoryProcessing():
 @login_required
 def deleteCategoryProcessing():
     data = request.get_json()
+    updateUserTiming(current_user.id)
     if categoryExist(current_user.id, data["categoryIndex"]):
         deleteCategory(current_user.id, data["categoryIndex"])
         response = {"success": True}
@@ -98,6 +104,7 @@ def deleteCategoryProcessing():
 @app.route('/api/new_category', methods=["POST"])
 @login_required
 def newCategoryProcessing():
+    updateUserTiming(current_user.id)
     newCategory(current_user.id, "")
     return jsonify({"success": True}), 200
 
@@ -107,6 +114,7 @@ def newCategoryProcessing():
 @login_required
 def renameLinkProcessing():
     data = request.get_json()
+    updateUserTiming(current_user.id)
     if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
         renameLink(current_user.id, data["categoryIndex"], data["linkIndex"], data["newName"])
         response = {"success": True}
@@ -120,6 +128,7 @@ def renameLinkProcessing():
 @login_required
 def changeUrlProccessing():
     data = request.get_json()
+    updateUserTiming(current_user.id)
     if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
         changeUrl(current_user.id, data["categoryIndex"], data["linkIndex"], data["newUrl"])
         response = {"success": True}
@@ -133,6 +142,7 @@ def changeUrlProccessing():
 @login_required
 def deleteLinkProcessing():
     data = request.get_json()
+    updateUserTiming(current_user.id)
     if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
         deleteLink(current_user.id, data["categoryIndex"], data["linkIndex"])
         response = {"success": True}
@@ -146,6 +156,7 @@ def deleteLinkProcessing():
 @login_required
 def newLinkProcessing():
     data = request.get_json()
+    updateUserTiming(current_user.id)
     if categoryExist(current_user.id, data["categoryIndex"]):
         newLink(current_user.id, data["categoryIndex"], "", "")
         response = {"success": True}
@@ -168,7 +179,7 @@ def sendKey():
             updateKey(data["email"], key)
         else:
             newKey(data["email"], key)
-        updateTiming(data["email"])
+        updateKeyTiming(data["email"])
         msg = Message("Key for WebManager", recipients=[data["email"]])
         msg.sender = 'webmanagerbot@gmail.com'
         msg.body = f'Your registration key: {key}'

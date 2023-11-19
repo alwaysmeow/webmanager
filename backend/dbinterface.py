@@ -10,11 +10,20 @@ userDataCollection = db['UserData']
 keyCollection = db['Keys']
 
 keyLifetime = timedelta(weeks=1)
+inactiveUserLifetime = timedelta(days=365)
 
 # Account Interface
 
 def getUserData(username):
-    return userDataCollection.find_one({"username" : username}, {"_id": False, "passwordHash": False, "email": False})
+    return userDataCollection.find_one(
+        {"username" : username}, 
+        {
+            "_id": False, 
+            "passwordHash": False, 
+            "email": False,
+            "timing": False
+        }
+    )
 
 def authentication(username, passwordHash):
     return not userDataCollection.find_one({"username": username, "passwordHash": passwordHash}) is None
@@ -30,7 +39,8 @@ def registerAccount(username, passwordHash, email):
         "username": username,
         "email": email,
         "passwordHash": passwordHash,
-        "categories": []
+        "categories": [],
+        "timing": datetime.utcnow()
     }
     userDataCollection.insert_one(userData)
 
@@ -42,6 +52,15 @@ def renameUser(username, newName):
         {"username": username},
         {"$set": {"username": newName}}
     )
+
+def updateUserTiming(username):
+    userDataCollection.update_one(
+        {"username": username},
+        {"$set": {"timing": datetime.utcnow()}}
+    )
+
+def deleteInactiveUsers():
+    userDataCollection.delete_many({"timing": {"$lt": datetime.utcnow() - inactiveUserLifetime}})
 
 # Category Interface
 
@@ -158,18 +177,17 @@ def updateKey(email, key):
         {"$set": {"key": key}}
     )
 
-def updateTiming(email):
+def getEmailByKey(key):
+    return keyCollection.find_one({"key": key})["email"]
+
+def updateKeyTiming(email):
     keyCollection.update_one(
         {"email": email},
         {"$set": {"timing": datetime.utcnow()}}
     )
 
-
-def getEmailByKey(key):
-    return keyCollection.find_one({"key": key})["email"]
-
-def getTiming(email):
-    return keyCollection.find_one({"email": email})["timing"]
-
 def deleteExpiredKeys():
     keyCollection.delete_many({"timing": {"$lt": datetime.utcnow() - keyLifetime}})
+
+if __name__ == "__main__":
+    deleteInactiveUsers()
