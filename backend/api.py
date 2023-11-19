@@ -168,6 +168,7 @@ def sendKey():
             updateKey(data["email"], key)
         else:
             newKey(data["email"], key)
+        updateTiming(data["email"])
         msg = Message("Key for WebManager", recipients=[data["email"]])
         msg.sender = 'webmanagerbot@gmail.com'
         msg.body = f'Your registration key: {key}'

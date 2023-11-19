@@ -1,4 +1,5 @@
 from pymongo.mongo_client import MongoClient
+from datetime import datetime, timedelta
 
 uri = "mongodb://localhost:27017"
 
@@ -7,6 +8,8 @@ client = MongoClient('localhost', 27017)
 db = client['WebManagerDB']
 userDataCollection = db['UserData']
 keyCollection = db['Keys']
+
+keyLifetime = timedelta(weeks=1)
 
 # Account Interface
 
@@ -155,5 +158,18 @@ def updateKey(email, key):
         {"$set": {"key": key}}
     )
 
+def updateTiming(email):
+    keyCollection.update_one(
+        {"email": email},
+        {"$set": {"timing": datetime.utcnow()}}
+    )
+
+
 def getEmailByKey(key):
     return keyCollection.find_one({"key": key})["email"]
+
+def getTiming(email):
+    return keyCollection.find_one({"email": email})["timing"]
+
+def deleteExpiredKeys():
+    keyCollection.delete_many({"timing": {"$lt": datetime.utcnow() - keyLifetime}})
