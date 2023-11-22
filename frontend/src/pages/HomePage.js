@@ -100,7 +100,7 @@ class HomePage extends React.Component
         {
             return(
                 <>
-                    <Header showPanel={true} editing={this.state.editing} toggleEditState={this.toggleEditState}/>
+                    <Header panel="home" editing={this.state.editing} toggleEditState={this.toggleEditState}/>
                     <main className={"home" + (this.state.editing ? " editing" : "")}>
                         <UserDataContext.Provider value={this.state.userdataContext}>
                             <div className="category-list">

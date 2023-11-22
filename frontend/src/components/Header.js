@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/header.css'
 import { logoutRequest } from '../tools/requests'
-import { LogOut, Edit, User } from 'react-feather'
+import { LogOut, Edit, User, Grid } from 'react-feather'
 
 class Header extends React.Component
 {
@@ -12,9 +12,9 @@ class Header extends React.Component
                 <div className="blank"/>
                 <h2 className="appname">WebManager</h2>
                 {
-                    this.props.showPanel ?
+                    this.props.panel === "home" ?
                     <>
-                        <div className="icon-button">
+                        <div className="icon-button" onClick={() => {window.location.href = "/account"}}>
                             <User/>
                         </div>
                         <div className={"icon-button" + (this.props.editing ? " active" : "")} onClick={this.props.toggleEditState}>
@@ -23,7 +23,17 @@ class Header extends React.Component
                         <div className="icon-button" onClick={this.logout}>
                             <LogOut/>
                         </div>
-                    </> : <></>
+                    </> : 
+                    this.props.panel === "account" ?
+                    <>
+                        <div className="icon-button" onClick={() => {window.location.href = "/"}}>
+                            <Grid/>
+                        </div>
+                        <div className="icon-button" onClick={this.logout}>
+                            <LogOut/>
+                        </div>
+                    </> :
+                    <></>
                 }
             </header>
         )
