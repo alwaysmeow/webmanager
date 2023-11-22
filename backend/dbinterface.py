@@ -188,6 +188,3 @@ def updateKeyTiming(email):
 
 def deleteExpiredKeys():
     keyCollection.delete_many({"timing": {"$lt": datetime.utcnow() - keyLifetime}})
-
-if __name__ == "__main__":
-    deleteInactiveUsers()
