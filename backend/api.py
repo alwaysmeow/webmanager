@@ -44,12 +44,14 @@ def logoutCurrentUser():
 
 @app.route('/api/userdata', methods=["GET"])
 @login_required
+@swag_from('./docs/userdata.yml')
 def throwData():
     updateUserTiming(current_user.id)
     return getUserData(current_user.id), 200
 
 @app.route('/api/delete_account', methods=['POST'])
 @login_required
+@swag_from('./docs/delete_account.yml')
 def deleteAccountProcessing():
     try:
         logout_user()
@@ -61,25 +63,26 @@ def deleteAccountProcessing():
 
 @app.route('/api/rename_user', methods=['POST'])
 @login_required
+@swag_from('./docs/rename_user.yml')
 def renameUserProcessing():
     data = request.get_json()
     updateUserTiming(current_user.id)
     if not authentication(current_user.id, data["passwordHash"]):
         response = {
-            "success": False,
-            "code": 1
+            "success": False
         }
+        status_code = 401
     elif not isNameFree(data["newName"]):
         response = {
-            "success": False,
-            "code": 2
+            "success": False
         }
+        status_code = 409
     else:
         renameUser(current_user.id, data["newName"])
         response = {
             "success": True
         }
-    return jsonify(response), 200
+    return jsonify(response), 409
 
 # Category Requests
 

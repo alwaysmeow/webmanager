@@ -1,7 +1,9 @@
-Login User
+Rename User
 ---
 tags:
   - User Requests
+security:
+  - JWT: []
 parameters:
   - name: body
     in: body
@@ -9,9 +11,9 @@ parameters:
     schema:
       type: object
       properties:
-        login:
+        newName:
           type: string
-          description: User login
+          description: New username
           example: "johndoe"
         passwordHash:
           type: string
@@ -19,24 +21,29 @@ parameters:
           example: "qwertyuiop2bd3b9b9b7fc8a8cb5f14f23eaf04cc53c5542d175fbbeab547d"
 responses:
   200:
-    description: Authentication success
+    description: Rename success
     schema:
       type: object
       properties:
         success:
           type: boolean
-          description: Authentication success status
+          description: Rename success status
           example: true
-        redirect_url:
-          type: string
-          description: Redirect URL
-          example: /
   401:
-    description: Authentication failure
+    description: Wrong password
     schema:
       type: object
       properties:
         success:
           type: boolean
-          description: Authentication failure status
+          description: Rename failure status
+          example: false
+  409:
+    description: Username is already taken
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Rename failure status
           example: false

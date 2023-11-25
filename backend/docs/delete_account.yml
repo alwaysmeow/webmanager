@@ -1,4 +1,4 @@
-Logout User
+Delete Account
 ---
 tags:
   - User Requests
@@ -6,13 +6,13 @@ security:
   - JWT: []
 responses:
   200:
-    description: Logout success
+    description: Delete success
     schema:
       type: object
       properties:
         success:
           type: boolean
-          description: Logout success status
+          description: Delete success status
           example: true
         redirect_url:
           type: string

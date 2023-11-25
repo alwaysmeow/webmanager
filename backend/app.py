@@ -28,4 +28,4 @@ app.secret_key = getenv("KEY")
 
 mail = Mail(app)
 
-swagger = Swagger(app, )
+swagger = Swagger(app)

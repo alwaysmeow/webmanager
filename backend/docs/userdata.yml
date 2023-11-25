@@ -1,0 +1,46 @@
+Get Userdata
+---
+tags:
+  - User Requests
+security:
+  - JWT: []
+responses:
+  200:
+    description: Getting data success
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username
+          example: "johndoe"
+        categories:
+          type: array
+          items:
+            type: object
+            properties: 
+              name:
+                type: string
+                description: Category name
+              content:
+                type: array
+                description: Link array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Link name
+                    url:
+                      type: string
+                      description: Link URL
+          description: Categories
+          example: [
+            {
+              'name': 'Videos', 
+              'content': [
+                {'name': 'Rickroll', 'url': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'},
+                {'name': 'Radiohead', 'url': 'https://www.youtube.com/watch?v=DWuAn6C8Mfc'}
+              ]
+            }
+          ]
