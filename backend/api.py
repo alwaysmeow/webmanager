@@ -1,15 +1,22 @@
 from flask import jsonify, request
 from flask_login import login_required, login_user, logout_user, current_user
 from flask_mail import Message
+from flasgger.utils import swag_from
 
 from app import app, mail
 from user import User
 from dbinterface import *
 from keygen import generateKey
 
+def load_yaml_doc(doc_path):
+    import yaml
+    with open(doc_path, 'r') as file:
+        return yaml.safe_load(file)
+
 # User Requests
 
 @app.route('/api/login', methods=["POST"])
+@swag_from('./docs/login.yml')
 def authorization():
     data = request.get_json()
     updateUserTiming(data['login'])
@@ -19,18 +26,21 @@ def authorization():
         return jsonify(response), 200
     else:
         response = {"success": False}
-        return jsonify(response), 200
+        return jsonify(response), 401
 
 @app.route('/api/logout', methods=["GET"])
 @login_required
+@swag_from('./docs/logout.yml')
 def logoutCurrentUser():
     updateUserTiming(current_user.id)
     try:
         logout_user()
         response = {"success": True, "redirect_url": "/login"}
+        statusCode = 200
     except:
         response = {"success": False}
-    return jsonify(response), 200
+        statusCode = 500
+    return jsonify(response), statusCode
 
 @app.route('/api/userdata', methods=["GET"])
 @login_required

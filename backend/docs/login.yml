@@ -1,0 +1,44 @@
+Login User.
+---
+tags:
+  - User Requests
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        login:
+          type: string
+          description: User login
+          example: "john_doe"
+        passwordHash:
+          type: string
+          description: User password hash
+          example: "8508f1792bd3b9b9b7fc8a8cb5f14f23eaf04cc53c5542d175fbbeab547d609"
+responses:
+  200:
+    description: Authentication success
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Authentication success status
+          example: true
+        redirect_url:
+          type: string
+          description: Redirect URL
+          example: /
+  401:
+    description: Authentication failure
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Authentication failure status
+          example: false
+  400:
+    description: Bad request

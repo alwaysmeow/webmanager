@@ -1,0 +1,18 @@
+Logout User.
+---
+tags:
+  - User Requests
+responses:
+  200:
+    description: Logout success
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Authentication success status
+          example: true
+        redirect_url:
+          type: string
+          description: Redirect URL
+          example: /login
