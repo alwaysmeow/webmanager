@@ -15,10 +15,10 @@ parameters:
           type: string
           description: New username
           example: "johndoe"
-        passwordHash:
+        password:
           type: string
           description: User password hash
-          example: "qwertyuiop2bd3b9b9b7fc8a8cb5f14f23eaf04cc53c5542d175fbbeab547d"
+          example: "qwerty"
 responses:
   200:
     description: Rename success

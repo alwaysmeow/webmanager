@@ -9,11 +9,6 @@ from dbinterface import *
 from tools.keygen import generateKey
 from tools.hash import hash
 
-def load_yaml_doc(doc_path):
-    import yaml
-    with open(doc_path, 'r') as file:
-        return yaml.safe_load(file)
-
 # User Requests
 
 @app.route('/api/login', methods=["POST"])
@@ -54,13 +49,22 @@ def throwData():
 @login_required
 @swag_from('./docs/delete_account.yml')
 def deleteAccountProcessing():
-    try:
-        logout_user()
-        deleteAccount(current_user.id)
-        response = {"success": True, "redirect_url": "/login"}
-    except:
-        response = {"success": False}
-    return jsonify(response), 200
+    data = request.get_json()
+    if not authentication(current_user.id, hash(data["password"])):
+        response = {
+            "success": False
+        }
+        status_code = 401
+    else:
+        try:
+            logout_user()
+            deleteAccount(current_user.id)
+            response = {"success": True, "redirect_url": "/login"}
+            status_code = 200
+        except:
+            response = {"success": False}
+            status_code = 500
+    return jsonify(response), status_code
 
 @app.route('/api/rename_user', methods=['POST'])
 @login_required
@@ -68,7 +72,7 @@ def deleteAccountProcessing():
 def renameUserProcessing():
     data = request.get_json()
     updateUserTiming(current_user.id)
-    if not authentication(current_user.id, data["passwordHash"]):
+    if not authentication(current_user.id, hash(data["password"])):
         response = {
             "success": False
         }

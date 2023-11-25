@@ -4,6 +4,17 @@ tags:
   - User Requests
 security:
   - JWT: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        password:
+          type: string
+          description: User password hash
+          example: "qwerty"
 responses:
   200:
     description: Delete success
@@ -18,3 +29,12 @@ responses:
           type: string
           description: Redirect URL
           example: /login
+  401:
+    description: Wrong password
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Rename failure status
+          example: false
