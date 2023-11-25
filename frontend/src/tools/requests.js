@@ -1,10 +1,10 @@
 // User Requests
 
-export async function loginRequest(login, passwordHash)
+export async function loginRequest(login, password)
 {
     const postdata = {
         login: login,
-        passwordHash: passwordHash
+        password: password
     }
 
     const request = {

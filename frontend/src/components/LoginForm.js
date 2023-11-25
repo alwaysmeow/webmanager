@@ -1,7 +1,6 @@
 import React from 'react';
 import '../css/form.css'
 import '../css/loginPage.css'
-import hash from '../tools/hash.js'
 import { loginRequest } from '../tools/requests';
 
 class LoginForm extends React.Component
@@ -13,17 +12,12 @@ class LoginForm extends React.Component
             loginInput: '',
             passwordInput: '',
             invalidInput: false,
-            paintRed: false,
-            translatePasswordInput: ""
+            paintRed: false
         }
 
         this.Input = this.Input.bind(this)
         this.submit = this.submit.bind(this)
         this.unsetPaintRed = this.unsetPaintRed.bind(this)
-        this.waveLeft = this.waveLeft.bind(this)
-        this.waveRight = this.waveRight.bind(this)
-        this.endWaving = this.endWaving.bind(this)
-        this.wave = this.wave.bind(this)
     }
 
     Input(event)
@@ -40,29 +34,6 @@ class LoginForm extends React.Component
         this.setState({paintRed: false})
     }
 
-    waveLeft()
-    {
-        this.setState({translatePasswordInput: " left"})
-    }
-
-    waveRight()
-    {
-        this.setState({translatePasswordInput: " right"})
-    }
-
-    endWaving()
-    {
-        this.setState({translatePasswordInput: ""})
-    }
-
-    wave()
-    {
-        const timing = 150;
-        this.waveLeft()
-        setTimeout(this.waveRight, timing)
-        setTimeout(this.endWaving, timing * 2)
-    }
-
     render()
     {
         return(
@@ -77,7 +48,7 @@ class LoginForm extends React.Component
                     onChange={this.Input}
                 />
                 <input 
-                    className={"form-item" + this.state.translatePasswordInput} 
+                    className={"form-item" + (this.state.paintRed ? " red" : "")} 
                     type="password" 
                     placeholder="Password"
                     name="passwordInput" 
@@ -106,7 +77,7 @@ class LoginForm extends React.Component
     async submit(event)
     {
         event.preventDefault()
-        const response = await loginRequest(this.state.loginInput, await hash(this.state.passwordInput))
+        const response = await loginRequest(this.state.loginInput, this.state.passwordInput)
         if (response.success)
             window.location.href = response.redirect_url
         else
@@ -117,7 +88,6 @@ class LoginForm extends React.Component
                 passwordInput: ""
             })
             setTimeout(this.unsetPaintRed, 500)
-            this.wave()
         }
     }
 }

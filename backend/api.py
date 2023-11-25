@@ -6,7 +6,8 @@ from flasgger.utils import swag_from
 from app import app, mail
 from user import User
 from dbinterface import *
-from keygen import generateKey
+from tools.keygen import generateKey
+from tools.hash import hash
 
 def load_yaml_doc(doc_path):
     import yaml
@@ -20,7 +21,7 @@ def load_yaml_doc(doc_path):
 def authorization():
     data = request.get_json()
     updateUserTiming(data['login'])
-    if authentication(data['login'], data['passwordHash']):
+    if authentication(data['login'], hash(data['password'])):
         response = {"success": True, "redirect_url": "/"}
         login_user(User(data['login']))
         return jsonify(response), 200
