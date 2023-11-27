@@ -1,0 +1,16 @@
+New Category
+---
+tags:
+  - Category Requests
+security:
+  - JWT: []
+responses:
+  200:
+    description: Category successfully created
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success status
+          example: true

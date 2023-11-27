@@ -1,7 +1,7 @@
-Delete Account
+Delete Category
 ---
 tags:
-  - User Requests
+  - Category Requests
 security:
   - JWT: []
 parameters:
@@ -11,10 +11,10 @@ parameters:
     schema:
       type: object
       properties:
-        password:
-          type: string
-          description: User password hash
-          example: "qwerty"
+        categoryIndex:
+          type: integer
+          description: Index of category to delete
+          example: 1
 responses:
   200:
     description: Successfully deleted
@@ -25,16 +25,12 @@ responses:
           type: boolean
           description: Delete success status
           example: true
-        redirect_url:
-          type: string
-          description: Redirect URL
-          example: /login
-  401:
-    description: Wrong password
+  400:
+    description: Failure, no such category exists
     schema:
       type: object
       properties:
         success:
           type: boolean
-          description: Rename failure status
+          description: Delete failure status
           example: false

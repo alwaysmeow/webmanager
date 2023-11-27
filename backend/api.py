@@ -93,6 +93,7 @@ def renameUserProcessing():
 
 @app.route('/api/rename_category', methods=["POST"])
 @login_required
+@swag_from('./docs/rename_category.yml')
 def renameCategoryProcessing():
     data = request.get_json()
     updateUserTiming(current_user.id)
@@ -107,6 +108,7 @@ def renameCategoryProcessing():
 
 @app.route('/api/delete_category', methods=["POST"])
 @login_required
+@swag_from('./docs/delete_category.yml')
 def deleteCategoryProcessing():
     data = request.get_json()
     updateUserTiming(current_user.id)
@@ -121,6 +123,7 @@ def deleteCategoryProcessing():
 
 @app.route('/api/new_category', methods=["POST"])
 @login_required
+@swag_from('./docs/new_category.yml')
 def newCategoryProcessing():
     updateUserTiming(current_user.id)
     newCategory(current_user.id, "")
@@ -130,6 +133,7 @@ def newCategoryProcessing():
 
 @app.route('/api/rename_link', methods=["POST"])
 @login_required
+@swag_from('./docs/rename_link.yml')
 def renameLinkProcessing():
     data = request.get_json()
     updateUserTiming(current_user.id)
@@ -144,6 +148,7 @@ def renameLinkProcessing():
 
 @app.route('/api/change_url', methods=["POST"])
 @login_required
+@swag_from('./docs/change_url.yml')
 def changeUrlProccessing():
     data = request.get_json()
     updateUserTiming(current_user.id)
@@ -158,6 +163,7 @@ def changeUrlProccessing():
 
 @app.route('/api/delete_link', methods=["POST"])
 @login_required
+@swag_from('./docs/delete_link.yml')
 def deleteLinkProcessing():
     data = request.get_json()
     updateUserTiming(current_user.id)
@@ -172,6 +178,7 @@ def deleteLinkProcessing():
 
 @app.route('/api/new_link', methods=["POST"])
 @login_required
+@swag_from('./docs/new_link.yml')
 def newLinkProcessing():
     data = request.get_json()
     updateUserTiming(current_user.id)

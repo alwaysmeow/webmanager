@@ -1,0 +1,44 @@
+Change Link URL
+---
+tags:
+  - Link Requests
+security:
+  - JWT: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        categoryIndex:
+          type: integer
+          description: Index of category of link
+          example: 1
+        linkIndex:
+          type: integer
+          description: Index of link in category
+          example: 2
+        newUrl:
+          type: string
+          description: New URL
+          example: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+responses:
+  200:
+    description: URL successfully changed
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Changing URL success status
+          example: true
+  400:
+    description: Failure, no such link exists
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Changing URL failure status
+          example: false

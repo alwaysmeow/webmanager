@@ -1,7 +1,7 @@
-Delete Account
+Delete Link
 ---
 tags:
-  - User Requests
+  - Link Requests
 security:
   - JWT: []
 parameters:
@@ -11,10 +11,14 @@ parameters:
     schema:
       type: object
       properties:
-        password:
-          type: string
-          description: User password hash
-          example: "qwerty"
+        categoryIndex:
+          type: integer
+          description: Index of category of link
+          example: 1
+        linkIndex:
+          type: integer
+          description: Index of link in category
+          example: 2
 responses:
   200:
     description: Successfully deleted
@@ -23,14 +27,10 @@ responses:
       properties:
         success:
           type: boolean
-          description: Delete success status
+          description: Rename success status
           example: true
-        redirect_url:
-          type: string
-          description: Redirect URL
-          example: /login
-  401:
-    description: Wrong password
+  400:
+    description: Failure, no such link exists
     schema:
       type: object
       properties:

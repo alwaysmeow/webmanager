@@ -6,7 +6,7 @@ security:
   - JWT: []
 responses:
   200:
-    description: Getting data success
+    description: Getting data
     schema:
       type: object
       properties:

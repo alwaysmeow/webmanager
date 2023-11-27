@@ -1,0 +1,36 @@
+New Link
+---
+tags:
+  - Link Requests
+security:
+  - JWT: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        categoryIndex:
+          type: integer
+          description: Index of category
+          example: 1
+responses:
+  200:
+    description: Link successfully created
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Creating link success status
+          example: true
+  400:
+    description: Failure, no such category exists
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Creating link failure status
+          example: false

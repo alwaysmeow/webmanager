@@ -1,7 +1,7 @@
-Rename User
+Rename Link
 ---
 tags:
-  - User Requests
+  - Link Requests
 security:
   - JWT: []
 parameters:
@@ -11,17 +11,21 @@ parameters:
     schema:
       type: object
       properties:
+        categoryIndex:
+          type: integer
+          description: Index of category of link
+          example: 1
+        linkIndex:
+          type: integer
+          description: Index of link in category
+          example: 2
         newName:
           type: string
-          description: New username
-          example: "johndoe"
-        password:
-          type: string
-          description: User password hash
-          example: "qwerty"
+          description: New link name
+          example: "Kate's trip vlog"
 responses:
   200:
-    description: User successfully renamed
+    description: Link successfully renamed
     schema:
       type: object
       properties:
@@ -29,17 +33,8 @@ responses:
           type: boolean
           description: Rename success status
           example: true
-  401:
-    description: Wrong password
-    schema:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Rename failure status
-          example: false
-  409:
-    description: Username is already taken
+  400:
+    description: Failure, no such link exists
     schema:
       type: object
       properties:
