@@ -1,0 +1,25 @@
+Send Key
+---
+tags:
+  - Key Requests
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Recipient's Email
+          example: "example@email.com"
+responses:
+  200:
+    description: Key sended
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success status
+          example: true

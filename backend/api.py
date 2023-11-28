@@ -45,7 +45,7 @@ def throwData():
     updateUserTiming(current_user.id)
     return getUserData(current_user.id), 200
 
-@app.route('/api/delete_account', methods=['POST'])
+@app.route('/api/delete_account', methods=['DELETE'])
 @login_required
 @swag_from('./docs/delete_account.yml')
 def deleteAccountProcessing():
@@ -66,7 +66,7 @@ def deleteAccountProcessing():
             status_code = 500
     return jsonify(response), status_code
 
-@app.route('/api/rename_user', methods=['POST'])
+@app.route('/api/rename_user', methods=['PUT'])
 @login_required
 @swag_from('./docs/rename_user.yml')
 def renameUserProcessing():
@@ -91,7 +91,7 @@ def renameUserProcessing():
 
 # Category Requests
 
-@app.route('/api/rename_category', methods=["POST"])
+@app.route('/api/rename_category', methods=["PUT"])
 @login_required
 @swag_from('./docs/rename_category.yml')
 def renameCategoryProcessing():
@@ -106,7 +106,7 @@ def renameCategoryProcessing():
         statusCode = 400
     return jsonify(response), statusCode
 
-@app.route('/api/delete_category', methods=["POST"])
+@app.route('/api/delete_category', methods=["DELETE"])
 @login_required
 @swag_from('./docs/delete_category.yml')
 def deleteCategoryProcessing():
@@ -131,7 +131,7 @@ def newCategoryProcessing():
 
 # Link Requests
 
-@app.route('/api/rename_link', methods=["POST"])
+@app.route('/api/rename_link', methods=["PUT"])
 @login_required
 @swag_from('./docs/rename_link.yml')
 def renameLinkProcessing():
@@ -146,7 +146,7 @@ def renameLinkProcessing():
         statusCode = 400
     return jsonify(response), statusCode
 
-@app.route('/api/change_url', methods=["POST"])
+@app.route('/api/change_url', methods=["PUT"])
 @login_required
 @swag_from('./docs/change_url.yml')
 def changeUrlProccessing():
@@ -161,7 +161,7 @@ def changeUrlProccessing():
         statusCode = 400
     return jsonify(response), statusCode
 
-@app.route('/api/delete_link', methods=["POST"])
+@app.route('/api/delete_link', methods=["DELETE"])
 @login_required
 @swag_from('./docs/delete_link.yml')
 def deleteLinkProcessing():
@@ -194,6 +194,7 @@ def newLinkProcessing():
 # Key Requests
 
 @app.route('/api/send_key', methods=["POST"])
+@swag_from('./docs/send_key.yml')
 def sendKey():
     data = request.get_json()
     if isEmailFree(data["email"]):
@@ -210,17 +211,20 @@ def sendKey():
         msg.body = f'Your registration key: {key}'
         mail.send(msg)
         response = {"success": True}
+        statusCode = 200
     else:
         response = {"success": False}
-    return jsonify(response), 200
+        statusCode = 400
+    return jsonify(response), statusCode
 
 @app.route('/api/create_account', methods=["POST"])
+@swag_from('./docs/create_account.yml')
 def createAccount():
     data = request.get_json()
     if not findKey(data["key"]):
-        return jsonify({"success": False, "code": 1}), 200
+        return jsonify({"success": False, "code": 1}), 401
     elif not isNameFree(data["username"]):
-        return jsonify({"success": False, "code": 2}), 200
+        return jsonify({"success": False, "code": 2}), 409
     else:
         registerAccount(data["username"], data["passwordHash"], getEmailByKey(data["key"]))
         deleteKey(data["key"])

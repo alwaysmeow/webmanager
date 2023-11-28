@@ -56,7 +56,7 @@ export function renameCategoryRequest(categoryIndex, newName)
     }
 
     const request = {
-        method: "POST",
+        method: "PUT",
         credentials: 'include',
         headers: {
             "Content-Type": "application/json"
@@ -74,7 +74,7 @@ export function deleteCategoryRequest(categoryIndex)
     }
 
     const request = {
-        method: "POST",
+        method: "DELETE",
         credentials: 'include',
         headers: {
             "Content-Type": "application/json"
@@ -106,7 +106,7 @@ export function renameLinkRequest(categoryIndex, linkIndex, newName)
     }
 
     const request = {
-        method: "POST",
+        method: "PUT",
         credentials: 'include',
         headers: {
             "Content-Type": "application/json"
@@ -126,7 +126,7 @@ export function changeUrlRequest(categoryIndex, linkIndex, newUrl)
     }
 
     const request = {
-        method: "POST",
+        method: "PUT",
         credentials: 'include',
         headers: {
             "Content-Type": "application/json"
@@ -145,7 +145,7 @@ export function deleteLinkRequest(categoryIndex, linkIndex)
     }
 
     const request = {
-        method: "POST",
+        method: "DELETE",
         credentials: 'include',
         headers: {
             "Content-Type": "application/json"

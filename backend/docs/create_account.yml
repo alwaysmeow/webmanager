@@ -1,0 +1,63 @@
+Create Account
+---
+tags:
+  - Key Requests
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        key:
+          type: string
+          description: Register Key
+          example: "a4qwrR13"
+        username:
+          type: string
+          description: Username
+          example: "johndoe"
+        passwordHash:
+          type: string
+          description: Hash code of user's password
+          example: "792b7fc0d61893cab5542deab54775fbb8508f1f23ed609f031af04cc5bd3b9b"
+responses:
+  200:
+    description: Account created
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success status
+          example: true
+        redirect_url:
+          type: string
+          description: Redirect URL
+          example: "/"
+  401:
+    description: No such key exists
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Failure status
+          example: false
+        code:
+          type: integer
+          description: Error code
+          example: 1
+  409:
+    description: Username is already taken
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Failure status
+          example: false
+        code:
+          type: integer
+          description: Error code
+          example: 2
