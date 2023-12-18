@@ -46,6 +46,23 @@ class HomePage extends React.Component
                     })
                 },
 
+                moveCategory: (indexFrom, indexTo) => {
+                    const updated = { ...this.state.userdataContext }
+                    const categories = [...updated.userdata]
+
+                    const category = categories[indexFrom];
+                    categories.splice(indexFrom, 1); // Remove the category from the original position
+                    categories.splice(indexTo, 0, category); // Insert the category at the new position
+
+                    updated.userdata = categories;
+
+                    console.log(updated.userdata);
+                    
+                    this.setState({
+                        userdataContext: updated,
+                    });
+                },
+
                 changeLinkParameter: (categoryIndex, linkIndex, parameter, newValue) => {
                     var updated = this.state.userdataContext
                     updated.userdata[categoryIndex].content[linkIndex][parameter] = newValue

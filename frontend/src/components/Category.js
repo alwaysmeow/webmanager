@@ -7,6 +7,7 @@ import "../css/category.css"
 import { renameCategoryRequest } from "../tools/requests"
 import { deleteCategoryRequest } from "../tools/requests"
 import UserDataContext from "./UserDataContext"
+import findCategory from "../tools/findCategory"
 
 class Category extends React.Component
 {
@@ -23,6 +24,8 @@ class Category extends React.Component
         this.inputCategoryName = this.inputCategoryName.bind(this)
         this.renameCategory = this.renameCategory.bind(this)
         this.deleteCategory = this.deleteCategory.bind(this)
+        this.handleDragStart = this.handleDragStart.bind(this)
+        this.handleDrop = this.handleDrop.bind(this)
     }
 
     componentDidMount()
@@ -68,6 +71,41 @@ class Category extends React.Component
         }
     }
 
+    handleDragStart(event)
+    {
+        if (event.target.className === "category" || event.target.className === "category-head")
+        {
+            event.dataTransfer.setData("widget", "category")
+            event.dataTransfer.setData("index", this.props.categoryIndex)
+        }
+    }
+
+    handleDrop(event)
+    {
+        if (event.dataTransfer.getData("widget") === "category")
+        {
+            let droppedIn = findCategory(event.target)
+            let targetIndex = parseInt(droppedIn.getAttribute("index"))
+            let draggedIndex = parseInt(event.dataTransfer.getData("index"))
+            let newIndex = draggedIndex
+            if (targetIndex !== draggedIndex)
+            {
+                if (Math.abs(targetIndex - draggedIndex) === 1)
+                    newIndex = targetIndex
+                else
+                {
+                    if ((event.pageY - droppedIn.offsetTop) / droppedIn.offsetHeight < 0.5)
+                        newIndex = targetIndex
+                    else
+                        newIndex = targetIndex + 1
+                }
+                this.context.moveCategory(draggedIndex, newIndex)
+            }
+            console.log(draggedIndex, ' > ', newIndex);
+            event.dataTransfer.clearData()
+        }
+    }
+
     render()
     {
         const item = this.context.userdata[this.props.categoryIndex]
@@ -82,6 +120,11 @@ class Category extends React.Component
                 + (empty ? " empty" : "") 
                 + (!this.state.mounted ? " unmounted" : "")} 
                 onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
+                index={this.props.categoryIndex}
+                draggable
+                onDragStart={this.handleDragStart}
+                onDragOver={(e) => {e.preventDefault()}}
+                onDrop={this.handleDrop}
             >
             {
                 this.props.editing
