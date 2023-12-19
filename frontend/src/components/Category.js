@@ -30,12 +30,16 @@ class Category extends React.Component
 
     componentDidMount()
     {
-        this.setState({
-            name: this.context.userdata[this.props.categoryIndex].name,
-        })
         setTimeout(() => this.setState({
             mounted: true
         }), 0)
+    }
+
+    componentDidUpdate()
+    {
+        const item = this.context.userdata[this.props.categoryIndex]
+        if (!this.props.editing && item.name !== this.state.name)
+            this.setState({ name: item.name })
     }
 
     switchVisible()

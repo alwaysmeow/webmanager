@@ -16,7 +16,7 @@ class LinkBlock extends React.Component
             mouseover: false,
             focused: false,
             mounted: false,
-            iconError: false
+            iconError: false,
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -31,11 +31,24 @@ class LinkBlock extends React.Component
         const item = this.context.userdata[this.props.categoryIndex].content[this.props.linkIndex]
         this.setState({
             name: item.name,
-            url: item.url,
+            url: item.url
         })
         setTimeout(() => {
             this.setState({mounted: true})
         }, 0)
+    }
+
+    componentDidUpdate()
+    {
+        const item = this.context.userdata[this.props.categoryIndex].content[this.props.linkIndex]
+        if (item != null && !this.props.editing && (this.state.name !== item.name || this.state.url !== item.url))
+        {
+            this.setState({
+                name: item.name,
+                url: item.url,
+                iconError: false
+            })
+        }
     }
 
     handleFocus(event)
@@ -118,6 +131,11 @@ class LinkBlock extends React.Component
 
     render()
     {
+        const item = this.context.userdata[this.props.categoryIndex].content[this.props.linkIndex]
+        if (item == null)
+            return <></>
+
+        console.log(this.state.name, item.url, this.state.iconError);
         if (this.props.editing)
         {
             return(
