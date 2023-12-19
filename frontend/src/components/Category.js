@@ -7,7 +7,7 @@ import "../css/category.css"
 import { renameCategoryRequest } from "../tools/requests"
 import { deleteCategoryRequest } from "../tools/requests"
 import UserDataContext from "./UserDataContext"
-import findCategory from "../tools/findCategory"
+import { blockCategoriesAnimation, findCategory } from "../tools/dragAndDropTools"
 
 class Category extends React.Component
 {
@@ -18,6 +18,7 @@ class Category extends React.Component
             isOpen: true,
             mounted: this.props.mounted,
             name: "",
+            dragging: 0,
         }
 
         this.switchVisible = this.switchVisible.bind(this)
@@ -25,6 +26,8 @@ class Category extends React.Component
         this.renameCategory = this.renameCategory.bind(this)
         this.deleteCategory = this.deleteCategory.bind(this)
         this.handleDragStart = this.handleDragStart.bind(this)
+        this.handleDragEnd = this.handleDragEnd.bind(this)
+        this.handleDragEnter = this.handleDragEnter.bind(this)
         this.handleDrop = this.handleDrop.bind(this)
     }
 
@@ -82,30 +85,74 @@ class Category extends React.Component
             event.dataTransfer.setData("widget", "category")
             event.dataTransfer.setData("index", this.props.categoryIndex)
         }
+        this.setState({dragging: 1})
+        console.log(parseInt(event.dataTransfer.getData("index")));
+    }
+
+    handleDragEnd(event)
+    {
+        event.preventDefault()
+        this.setState({dragging: 2})
+
+        blockCategoriesAnimation()
+
+        const categoryList = document.getElementsByClassName("category-list")[0]
+        categoryList.classList.remove("move-up")
+        categoryList.classList.add("moved-up")
+        setTimeout(() => {
+            categoryList.classList.remove("moved-up")
+            this.setState({dragging: 0})
+        }, 500)
+
+        const oldOver = document.querySelectorAll(".space-down, .space-up")[0]
+        if (oldOver != null)
+        {
+            oldOver.classList.remove("space-down")
+            oldOver.classList.remove("space-up")
+            oldOver.classList.add("dragged")
+            setTimeout(() => {
+                oldOver.classList.remove("dragged")
+            }, 500)
+        }
+        
+        this.setState({mounted: true})
+    }
+
+    handleDragEnter(event)
+    {
+        const targetCategory = findCategory(event.target)
+        const targetIndex = this.props.categoryIndex
+        const draggedIndex = parseInt(document.getElementsByClassName("category dragging")[0].getAttribute("index"))
+        const categoryList = document.getElementsByClassName("category-list")[0]
+        const oldOver = document.querySelectorAll(".space-down, .space-up")[0]
+        
+        if (oldOver != null)
+        {
+            oldOver.classList.remove("space-down")
+            oldOver.classList.remove("space-up")
+        }
+        categoryList.classList.remove("move-up")
+        
+        if (draggedIndex > targetIndex)
+            targetCategory.classList.add("space-up")
+        else if (draggedIndex < targetIndex)
+        {
+            targetCategory.classList.add("space-down")
+            categoryList.classList.add("move-up")
+        }
     }
 
     handleDrop(event)
     {
         if (event.dataTransfer.getData("widget") === "category")
         {
-            let droppedIn = findCategory(event.target)
-            let targetIndex = parseInt(droppedIn.getAttribute("index"))
-            let draggedIndex = parseInt(event.dataTransfer.getData("index"))
-            let newIndex = draggedIndex
+            const targetIndex = this.props.categoryIndex
+            const draggedIndex = parseInt(event.dataTransfer.getData("index"))
             if (targetIndex !== draggedIndex)
             {
-                if (Math.abs(targetIndex - draggedIndex) === 1)
-                    newIndex = targetIndex
-                else
-                {
-                    if ((event.pageY - droppedIn.offsetTop) / droppedIn.offsetHeight < 0.5)
-                        newIndex = targetIndex
-                    else
-                        newIndex = targetIndex + 1
-                }
-                this.context.moveCategory(draggedIndex, newIndex)
+                this.context.moveCategory(draggedIndex, targetIndex)
             }
-            console.log(draggedIndex, ' > ', newIndex);
+            console.log(draggedIndex, '>', targetIndex);
             event.dataTransfer.clearData()
         }
     }
@@ -122,12 +169,16 @@ class Category extends React.Component
             <div className={"category" 
                 + (!this.state.isOpen ? " minimized" : "") 
                 + (empty ? " empty" : "") 
-                + (!this.state.mounted ? " unmounted" : "")} 
+                + (!this.state.mounted ? " unmounted" : "")
+                + (this.state.dragging === 1 ? " dragging" : "")
+                + (this.state.dragging === 2 ? " no-animation" : "")}
                 onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
                 index={this.props.categoryIndex}
-                draggable
+                draggable={!this.props.editing}
                 onDragStart={this.handleDragStart}
-                onDragOver={(e) => {e.preventDefault()}}
+                onDragEnd={this.handleDragEnd}
+                onDragOver={(event) => {event.preventDefault()}}
+                onDragEnter={this.handleDragEnter}
                 onDrop={this.handleDrop}
             >
             {

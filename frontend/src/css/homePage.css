@@ -22,4 +22,15 @@
     flex-direction: column;
     width: 100%;
     margin-bottom: 2vh;
+    transition: var(--transition-time);
+}
+
+.category-list.move-up
+{
+    transform: translateY(calc(-1 * (var(--link-block-height) + var(--link-list-gap) + 1em + 15px)));
+}
+
+.category-list.moved-up
+{
+    transition: 0s;
 }

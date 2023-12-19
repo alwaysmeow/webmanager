@@ -70,3 +70,35 @@ input.category-head:focus
     opacity: 0;
     transition: var(--transition-time);
 }
+
+.category.space-up
+{
+    padding-top: calc(var(--link-block-height) + var(--link-list-gap) * 2 + 1em + 15px);
+}
+
+.category.space-down
+{
+    padding-bottom: calc(var(--link-block-height) + var(--link-list-gap) * 2 + 1em + 15px);
+}
+
+.category.dragging
+{
+    opacity: 40%;
+}
+
+.category.dragged
+{
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: padding 0s;
+}
+
+.category.was-dragging
+{
+    transition: opasity 0s;
+}
+
+.category.no-animation, .category.no-animation *
+{
+    transition: 0s;
+}
