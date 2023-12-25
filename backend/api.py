@@ -129,6 +129,21 @@ def newCategoryProcessing():
     newCategory(current_user.id, "")
     return jsonify({"success": True}), 200
 
+@app.route('/api/move_category', methods=["POST"])
+@login_required
+@swag_from('./docs/move_category.yml')
+def moveCategoryProcessing():
+    data = request.get_json()
+    updateUserTiming(current_user.id)
+    if categoryExist(current_user.id, data["oldCategoryIndex"]) and categoryExist(current_user.id, data["newCategoryIndex"]):
+        moveCategory(current_user.id, data["oldCategoryIndex"], data["newCategoryIndex"])
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
+
 # Link Requests
 
 @app.route('/api/rename_link', methods=["PUT"])

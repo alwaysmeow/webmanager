@@ -1,0 +1,40 @@
+Move Category
+---
+tags:
+  - Category Requests
+security:
+  - JWT: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        oldCategoryIndex:
+          type: integer
+          description: Index of category to move
+          example: 1
+        newCategoryIndex:
+          type: integer
+          description: Category will be moved to this index
+          example: 3
+responses:
+  200:
+    description: Successfully moved
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Moving success status
+          example: true
+  400:
+    description: Failure, no such category exists
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Moving failure status
+          example: false

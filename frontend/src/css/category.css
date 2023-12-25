@@ -93,11 +93,6 @@ input.category-head:focus
     transition: padding 0s;
 }
 
-.category.was-dragging
-{
-    transition: opasity 0s;
-}
-
 .category.no-animation, .category.no-animation *
 {
     transition: 0s;

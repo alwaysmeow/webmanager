@@ -99,6 +99,24 @@ def newCategory(username, categoryName):
         }
     )
 
+def moveCategory(username, oldCategoryIndex, newCategoryIndex):
+    if oldCategoryIndex == newCategoryIndex:
+        return
+    else:
+        categories = userDataCollection.find_one(
+            {"username": username}
+        )["categories"]
+
+        if oldCategoryIndex < newCategoryIndex:
+            categories = categories[:oldCategoryIndex] + categories[oldCategoryIndex+1:newCategoryIndex+1] + [categories[oldCategoryIndex]] + categories[newCategoryIndex+1:]
+        else:
+            categories = categories[:newCategoryIndex] + [categories[oldCategoryIndex]] + categories[newCategoryIndex:oldCategoryIndex] + categories[oldCategoryIndex+1:]
+        
+        userDataCollection.update_one(
+            {"username": username},
+            {"$set": {"categories": categories}}
+        )
+
 def categoryExist(username, categoryIndex):
     if categoryIndex >= countCategories(username):
         return False

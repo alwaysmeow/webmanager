@@ -6,8 +6,6 @@ from flasgger import Swagger
 from dotenv import load_dotenv
 from os import getenv
 
-from dbinterface import *
-
 load_dotenv()
 
 app = Flask(__name__)
