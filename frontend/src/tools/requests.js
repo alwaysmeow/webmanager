@@ -95,6 +95,25 @@ export function newCategoryRequest()
     fetch("api/new_category", request)
 }
 
+export function moveCategoryRequest(oldCategoryIndex, newCategoryIndex)
+{
+    const postdata = {
+        oldCategoryIndex: oldCategoryIndex,
+        newCategoryIndex: newCategoryIndex
+    }
+
+    const request = {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/move_category", request)
+}
+
 // Link Requests
 
 export function renameLinkRequest(categoryIndex, linkIndex, newName)

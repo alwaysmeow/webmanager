@@ -4,8 +4,7 @@ import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
 import DeleteCategoryButton from "./DeleteCategoryButton"
 import "../css/category.css"
-import { renameCategoryRequest } from "../tools/requests"
-import { deleteCategoryRequest } from "../tools/requests"
+import { renameCategoryRequest, deleteCategoryRequest, moveCategoryRequest } from "../tools/requests"
 import UserDataContext from "./UserDataContext"
 import { blockCategoriesAnimation, findCategory } from "../tools/dragAndDropTools"
 
@@ -151,6 +150,7 @@ class Category extends React.Component
             if (targetIndex !== draggedIndex)
             {
                 this.context.moveCategory(draggedIndex, targetIndex)
+                moveCategoryRequest(draggedIndex, targetIndex)
             }
             console.log(draggedIndex, '>', targetIndex);
             event.dataTransfer.clearData()
