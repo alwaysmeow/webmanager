@@ -32,15 +32,15 @@ class Category extends React.Component
 
     componentDidMount()
     {
-        setTimeout(() => this.setState({
+        setTimeout(() => {this.setState({
             mounted: true
-        }), 0)
+        })}, 0)
     }
 
     componentDidUpdate()
     {
         const item = this.context.userdata[this.props.categoryIndex]
-        if (!this.props.editing && item.name !== this.state.name)
+        if (item != null && !this.props.editing && item.name !== this.state.name)
             this.setState({ name: item.name })
     }
 
@@ -79,10 +79,11 @@ class Category extends React.Component
 
     handleDragStart(event)
     {
-        if (event.target.className === "category" || event.target.className === "category-head")
+        if (event.target.classList.contains("category") || event.target.classList.contains("category"))
         {
             event.dataTransfer.setData("widget", "category")
             event.dataTransfer.setData("index", this.props.categoryIndex)
+            event.dataTransfer.setData("trueIndex", this.props.trueCategoryIndex)
         }
         this.setState({dragging: 1})
         console.log(parseInt(event.dataTransfer.getData("index")));
@@ -104,6 +105,7 @@ class Category extends React.Component
         }, 500)
 
         const oldOver = document.querySelectorAll(".space-down, .space-up")[0]
+        console.log(document.querySelectorAll(".category"));
         if (oldOver != null)
         {
             oldOver.classList.remove("space-down")
@@ -149,8 +151,10 @@ class Category extends React.Component
             const draggedIndex = parseInt(event.dataTransfer.getData("index"))
             if (targetIndex !== draggedIndex)
             {
+                const trueDraggedIndex = parseInt(event.dataTransfer.getData("trueIndex"))
                 this.context.moveCategory(draggedIndex, targetIndex)
-                moveCategoryRequest(draggedIndex, targetIndex)
+                console.log(trueDraggedIndex, this.props.trueCategoryIndex);
+                moveCategoryRequest(trueDraggedIndex, this.props.trueCategoryIndex)
             }
             console.log(draggedIndex, '>', targetIndex);
             event.dataTransfer.clearData()
@@ -170,8 +174,7 @@ class Category extends React.Component
                 + (!this.state.isOpen ? " minimized" : "") 
                 + (empty ? " empty" : "") 
                 + (!this.state.mounted ? " unmounted" : "")
-                + (this.state.dragging === 1 ? " dragging" : "")
-                + (this.state.dragging === 2 ? " no-animation" : "")}
+                + (this.state.dragging === 1 ? " dragging" : "")}
                 onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
                 index={this.props.categoryIndex}
                 draggable={!this.props.editing}

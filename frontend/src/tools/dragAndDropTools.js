@@ -10,13 +10,10 @@ export function findCategory(object)
 
 export async function blockCategoriesAnimation()
 {
-    const categoryList = document.querySelectorAll(".category");
-    const categoryArray = Array.from(categoryList);
+    const categoryList = document.querySelectorAll(".category-list")[0]
 
-    categoryArray.forEach((element) => {
-        element.classList.add("no-animation");
-        setTimeout(() => {
-            element.classList.remove("no-animation");
-        }, 500);
-    });
+    categoryList.classList.add("no-animation");
+    setTimeout(() => {
+        categoryList.classList.remove("no-animation");
+    }, 500);
 }

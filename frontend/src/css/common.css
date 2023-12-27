@@ -39,3 +39,8 @@ h1, h2, h3
     font-weight: normal;
     transition: var(--transition-time);
 }
+
+.no-animation *
+{
+    transition: 0s !important;
+}

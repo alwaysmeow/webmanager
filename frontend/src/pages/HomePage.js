@@ -127,7 +127,7 @@ class HomePage extends React.Component
                                         categoryIndex={i}
                                         trueCategoryIndex={this.state.userdataContext.userdata
                                             .slice(0, i)
-                                            .filter(item => item !== null).length}
+                                            .filter(item => item != null).length}
                                         editing={this.state.editing}
                                         mounted={this.firstRender}
                                     />
