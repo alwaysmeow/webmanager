@@ -90,5 +90,5 @@ input.category-head:focus
 {
     padding-top: 0;
     padding-bottom: 0;
-    transition: 0s;
+    transition: padding 0s;
 }
