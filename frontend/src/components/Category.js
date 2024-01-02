@@ -94,8 +94,6 @@ class Category extends React.Component
         event.preventDefault()
         this.setState({dragging: 0})
 
-        blockCategoriesAnimation()
-
         const categoryList = document.querySelectorAll(".category-list")[0]
         categoryList.classList.remove("move-up")
         categoryList.classList.add("moved-up")
@@ -156,6 +154,8 @@ class Category extends React.Component
             const targetIndex = this.props.categoryIndex
             const draggedIndex = parseInt(event.dataTransfer.getData("index"))
 
+            blockCategoriesAnimation()
+            
             this.setState({dragging: 2})
             setTimeout(() => {
                 this.setState({dragging: 0})

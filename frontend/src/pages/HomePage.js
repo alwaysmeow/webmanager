@@ -55,8 +55,6 @@ class HomePage extends React.Component
                     categories.splice(indexTo, 0, category); // Insert the category at the new position
 
                     updated.userdata = categories;
-
-                    console.log(updated.userdata);
                     
                     this.setState({
                         userdataContext: updated,
