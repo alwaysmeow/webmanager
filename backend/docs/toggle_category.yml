@@ -1,0 +1,36 @@
+Toggle Category
+---
+tags:
+  - Category Requests
+security:
+  - JWT: []
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        categoryIndex:
+          type: integer
+          description: Index of category to toggle
+          example: 1
+responses:
+  200:
+    description: Successfully toggled
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Toggle success status
+          example: true
+  400:
+    description: Failure, no such category exists
+    schema:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Toggle failure status
+          example: false

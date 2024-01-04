@@ -144,6 +144,21 @@ def moveCategoryProcessing():
         statusCode = 400
     return jsonify(response), statusCode
 
+@app.route('/api/toggle_category', methods=["PUT"])
+@login_required
+@swag_from('./docs/toggle_category.yml')
+def toggleCategoryProcessing():
+    data = request.get_json()
+    updateUserTiming(current_user.id)
+    if categoryExist(current_user.id, data["categoryIndex"]):
+        toggleCategory(current_user.id, data["categoryIndex"])
+        response = {"success": True}
+        statusCode = 200
+    else:
+        response = {"success": False}
+        statusCode = 400
+    return jsonify(response), statusCode
+
 # Link Requests
 
 @app.route('/api/rename_link', methods=["PUT"])

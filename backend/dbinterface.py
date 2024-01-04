@@ -93,7 +93,8 @@ def newCategory(username, categoryName):
                 "categories": 
                 {
                     "name": categoryName, 
-                    "content": []
+                    "content": [],
+                    "hided": False
                 }
             }
         }
@@ -116,6 +117,13 @@ def moveCategory(username, oldCategoryIndex, newCategoryIndex):
             {"username": username},
             {"$set": {"categories": categories}}
         )
+
+def toggleCategory(username, categoryIndex):
+    state = userDataCollection.find_one({"username" : username})["categories"][categoryIndex]["hided"]
+    userDataCollection.update_one(
+        {"username": username},
+        {"$set": {f"categories.{categoryIndex}.hided": not state}}
+    )
 
 def categoryExist(username, categoryIndex):
     if categoryIndex >= countCategories(username):
