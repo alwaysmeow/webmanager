@@ -39,6 +39,7 @@ class HomePage extends React.Component
                     var updated = this.state.userdataContext
                     updated.userdata.push({
                         content: [],
+                        hided: false,
                         name: "",
                     })
                     this.setState({
