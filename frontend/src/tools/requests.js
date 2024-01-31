@@ -114,6 +114,24 @@ export function moveCategoryRequest(oldCategoryIndex, newCategoryIndex)
     fetch("api/move_category", request)
 }
 
+export function toggleCategoryRequest(categoryIndex)
+{
+    const postdata = {
+        categoryIndex: categoryIndex
+    }
+
+    const request = {
+        method: "PUT",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/toggle_category", request)
+}
+
 // Link Requests
 
 export function renameLinkRequest(categoryIndex, linkIndex, newName)

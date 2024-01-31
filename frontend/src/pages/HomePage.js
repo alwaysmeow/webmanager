@@ -61,6 +61,14 @@ class HomePage extends React.Component
                     });
                 },
 
+                toggleCategory: (categoryIndex) => {
+                    var updated = this.state.userdataContext
+                    updated.userdata[categoryIndex].hided = !updated.userdata[categoryIndex].hided
+                    this.setState({
+                        userdataContext: updated
+                    })
+                },
+
                 changeLinkParameter: (categoryIndex, linkIndex, parameter, newValue) => {
                     var updated = this.state.userdataContext
                     updated.userdata[categoryIndex].content[linkIndex][parameter] = newValue
@@ -111,6 +119,7 @@ class HomePage extends React.Component
 
     render()
     {
+        console.log(this.state.userdataContext.userdata);
         if (this.state.loaded)
         {
             return(
@@ -128,6 +137,7 @@ class HomePage extends React.Component
                                             .filter(item => item != null).length}
                                         editing={this.state.editing}
                                         mounted={this.firstRender}
+                                        hided={item.hided}
                                     />
                                 ))}
                             </div>
@@ -154,7 +164,6 @@ class HomePage extends React.Component
     async getData()
     {
         const response = await getUserDataRequest()
-        console.log(response)
         if (response === null)
             window.location.href = '/login'
         else

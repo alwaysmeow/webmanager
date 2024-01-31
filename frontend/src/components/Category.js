@@ -4,7 +4,7 @@ import LinkBlock from "./LinkBlock"
 import AddLinkButton from "./AddLinkButton"
 import DeleteCategoryButton from "./DeleteCategoryButton"
 import "../css/category.css"
-import { renameCategoryRequest, deleteCategoryRequest, moveCategoryRequest } from "../tools/requests"
+import { renameCategoryRequest, deleteCategoryRequest, moveCategoryRequest, toggleCategoryRequest } from "../tools/requests"
 import UserDataContext from "./UserDataContext"
 import { blockCategoriesAnimation, findCategory } from "../tools/dragAndDropTools"
 
@@ -47,7 +47,8 @@ class Category extends React.Component
 
     switchVisible()
     {
-        this.setState({isOpen: !this.state.isOpen})
+        toggleCategoryRequest(this.props.trueCategoryIndex)
+        this.context.toggleCategory(this.props.categoryIndex)
     }
 
     inputCategoryName(event)
@@ -66,7 +67,7 @@ class Category extends React.Component
 
     deleteCategory()
     {
-        if (this.props.editing && this.state.isOpen)
+        if (this.props.editing && !this.props.hided)
         {
             deleteCategoryRequest(this.props.trueCategoryIndex)
             this.setState({
@@ -181,12 +182,12 @@ class Category extends React.Component
 
         return(
             <div className={"category" 
-                + (!this.state.isOpen ? " minimized" : "") 
+                + (this.props.hided ? " minimized" : "") 
                 + (empty ? " empty" : "") 
                 + (!this.state.mounted ? " unmounted" : "")
                 + (this.state.dragging === 1 ? " dragging" : "")
                 + (this.state.dragging === 2 ? " dragged" : "")}
-                onClick={() => {if (!this.state.isOpen) this.switchVisible()}}
+                onClick={() => {if (this.props.hided) this.switchVisible()}}
                 index={this.props.categoryIndex}
                 draggable={!this.props.editing}
                 onDragStart={this.handleDragStart}
@@ -209,20 +210,20 @@ class Category extends React.Component
                     this.state.name === ""
                     ?
                         <div className="category-head no-text" 
-                            onClick={() => {if (this.state.isOpen) this.switchVisible()}}
+                            onClick={() => {if (!this.props.hided) this.switchVisible()}}
                         >
                             Category
                         </div>
                     :
                         <div className="category-head" 
-                            onClick={() => {if (this.state.isOpen) this.switchVisible()}}
+                            onClick={() => {if (!this.props.hided) this.switchVisible()}}
                         >
                             {this.state.name}
                         </div>
             }
                 <TransitionGroup className="link-list" component="div">
                     <DeleteCategoryButton 
-                        minimized={!this.state.isOpen} 
+                        minimized={this.props.hided} 
                         hide={!this.props.editing}
                         onClick={this.deleteCategory}
                     /> 
@@ -239,13 +240,13 @@ class Category extends React.Component
                                 trueLinkIndex={this.context.userdata[this.props.categoryIndex].content
                                     .slice(0, i)
                                     .filter(item => item !== null).length}
-                                minimized={!this.state.isOpen} 
+                                minimized={this.props.hided} 
                                 editing={this.props.editing}
                             />
                         </CSSTransition>
                     )}
                     <AddLinkButton 
-                        minimized={!this.state.isOpen} 
+                        minimized={this.props.hided} 
                         hide={!(this.props.editing || empty)} 
                         categoryIndex={this.props.categoryIndex}
                         trueCategoryIndex={this.props.trueCategoryIndex}
