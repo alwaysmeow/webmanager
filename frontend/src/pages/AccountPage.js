@@ -10,8 +10,16 @@ class AccountPage extends React.Component
         return(
             <>
                 <Header panel={"account"}/>
-                <main>
-                    <User/>
+                <main className='account-page'>
+                    <form className='button-panel'>
+                        <div className='account-panel'>
+                            <User/>
+                            <h2>meow</h2>
+                        </div>
+                        <button className='form-item'>Change password</button>
+                        <button className='form-item'>Change username</button>
+                        <button className='form-item delete-account-button'>Delete account</button>
+                    </form>
                 </main>
             </>
         )
