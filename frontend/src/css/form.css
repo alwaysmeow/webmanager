@@ -17,8 +17,12 @@ form
 
 form h1
 {
-    color: var(--primary-bright-color);
     margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+form .title
+{
     margin-bottom: 2vh;
 }
 

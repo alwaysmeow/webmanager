@@ -3,11 +3,6 @@
     color: var(--primary-bright-color)
 }
 
-.account-page h2
-{
-    color: var(--primary-bright-color);
-}
-
 .account-panel
 {
     display: flex;

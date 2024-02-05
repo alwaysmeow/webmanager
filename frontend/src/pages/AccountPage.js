@@ -16,9 +16,31 @@ class AccountPage extends React.Component
                             <User/>
                             <h2>meow</h2>
                         </div>
-                        <button className='form-item'>Change password</button>
-                        <button className='form-item'>Change username</button>
-                        <button className='form-item delete-account-button'>Delete account</button>
+                        <button className='form-item' 
+                            onClick={(event) => {
+                                event.preventDefault()
+                                window.location.href += "/password"
+                            }}
+                        >
+                            Change password
+                        </button>
+                        <button className='form-item' 
+                            onClick={(event) => {
+                                event.preventDefault()
+                                window.location.href += "/username"
+                            }}
+                        >
+                            Change username
+                        </button>
+                        <div className="separating-line"/>
+                        <button className='form-item delete-account-button' 
+                            onClick={(event) => {
+                                event.preventDefault()
+                                window.location.href += "/delete"
+                            }}
+                        >
+                            Delete account
+                        </button>
                     </form>
                 </main>
             </>
