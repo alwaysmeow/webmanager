@@ -211,7 +211,7 @@ class RegisterForm extends React.Component
                         Send Key
                     </button>
                     <div 
-                        className={"register-container"
+                        className={"container register-container"
                         + ((this.state.invalidInput && this.state.invalidCode < 5) ? " invalid" : "")}
                     >
                         <div className="separating-line start"/>
