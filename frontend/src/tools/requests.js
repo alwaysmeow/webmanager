@@ -46,6 +46,62 @@ export async function getUserDataRequest()
     .catch(() => null)
 }
 
+export function deleteAccountRequest(password)
+{
+    const postdata = {
+        password: password
+    }
+
+    const request = {
+        method: "DELETE",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/delete_account", request)
+}
+
+export function changeUsernameRequest(password, newName)
+{
+    const postdata = {
+        password: password, 
+        newName: newName
+    }
+
+    const request = {
+        method: "PUT",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/rename_user", request)
+}
+
+export function changePasswordRequest(oldPassword, newPasswordHash)
+{
+    const postdata = {
+        oldPassword: oldPassword, 
+        newPasswordHash: newPasswordHash
+    }
+
+    const request = {
+        method: "PUT",
+        credentials: 'include',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(postdata)
+    }
+
+    fetch("api/change_password", request)
+}
+
 // Category Requests
 
 export function renameCategoryRequest(categoryIndex, newName)

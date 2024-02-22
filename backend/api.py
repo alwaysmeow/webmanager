@@ -87,7 +87,27 @@ def renameUserProcessing():
         response = {
             "success": True
         }
-    return jsonify(response), 409
+        status_code = 200
+    return jsonify(response), status_code
+
+@app.route('/api/change_password', methods=['PUT'])
+@login_required
+@swag_from('./docs/change_password.yml')
+def changePasswordProcessing():
+    data = request.get_json()
+    updateUserTiming(current_user.id)
+    if not authentication(current_user.id, hash(data["oldPassword"])):
+        response = {
+            "success": False
+        }
+        status_code = 401
+    else:
+        changePassword(current_user.id, data["newPasswordHash"])
+        response = {
+            "success": True
+        }
+        status_code = 200
+    return jsonify(response), status_code
 
 # Category Requests
 

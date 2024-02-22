@@ -53,6 +53,12 @@ def renameUser(username, newName):
         {"$set": {"username": newName}}
     )
 
+def changePassword(username, passwordHash):
+    userDataCollection.update_one(
+        {"username": username},
+        {"$set": {"passwordHash": passwordHash}}
+    )
+
 def updateUserTiming(username):
     userDataCollection.update_one(
         {"username": username},
