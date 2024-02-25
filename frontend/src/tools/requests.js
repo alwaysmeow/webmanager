@@ -46,7 +46,7 @@ export async function getUserDataRequest()
     .catch(() => null)
 }
 
-export function deleteAccountRequest(password)
+export async function deleteAccountRequest(password)
 {
     const postdata = {
         password: password
@@ -61,10 +61,10 @@ export function deleteAccountRequest(password)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/delete_account", request)
+    return await fetch("../api/delete_account", request)  // other route
 }
 
-export function changeUsernameRequest(password, newName)
+export async function changeUsernameRequest(password, newName)
 {
     const postdata = {
         password: password, 
@@ -80,10 +80,10 @@ export function changeUsernameRequest(password, newName)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/rename_user", request)
+    return await fetch("../api/rename_user", request)  // other route
 }
 
-export function changePasswordRequest(oldPassword, newPasswordHash)
+export async function changePasswordRequest(oldPassword, newPasswordHash)
 {
     const postdata = {
         oldPassword: oldPassword, 
@@ -99,7 +99,7 @@ export function changePasswordRequest(oldPassword, newPasswordHash)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/change_password", request)
+    return await fetch("../api/change_password", request) // other route
 }
 
 // Category Requests

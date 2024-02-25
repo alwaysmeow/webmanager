@@ -190,18 +190,18 @@ class RegisterForm extends React.Component
                     }}
                 >
                     <h1>Sign Up</h1>
-                    <input 
+                    <input
                         className={"form-item"
                         + ((this.state.paintRed && this.state.invalidCode === 5) ? " red" : "")
                         + (this.state.keySended ? " blue" : "")}
                         type="text"
-                        placeholder="Email" 
+                        placeholder="Email"
                         name="emailInput"
-                        value={this.state.emailInput} 
+                        value={this.state.emailInput}
                         onChange={this.Input}
                         disabled={this.state.disabledEmailInput}
                     />
-                    <button 
+                    <button
                         className={"form-item send-message-button"
                         + ((this.state.paintRed && this.state.invalidCode === 5) ? " red" : "")
                         + (this.state.disabledEmailInput ? " disabled" : "")}

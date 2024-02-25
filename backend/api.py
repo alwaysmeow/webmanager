@@ -57,8 +57,9 @@ def deleteAccountProcessing():
         status_code = 401
     else:
         try:
-            logout_user()
+            print(current_user.id)
             deleteAccount(current_user.id)
+            logout_user()
             response = {"success": True, "redirect_url": "/login"}
             status_code = 200
         except:
@@ -84,6 +85,8 @@ def renameUserProcessing():
         status_code = 409
     else:
         renameUser(current_user.id, data["newName"])
+        logout_user()
+        login_user(User(data["newName"]))
         response = {
             "success": True
         }

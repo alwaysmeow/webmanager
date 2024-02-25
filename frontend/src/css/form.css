@@ -76,16 +76,6 @@ form button.red
     background-color: var(--red);
 }
 
-.form-item.left
-{
-    transform: translateX(-5px);
-}
-
-.form-item.right
-{
-    transform: translateX(7px);
-}
-
 .separating-line
 {
     height: 0;

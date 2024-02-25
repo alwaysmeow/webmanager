@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from '../components/Header';
 import "../css/container.css"
+import { changePasswordRequest } from '../tools/requests';
+import hash from '../tools/hash'
 
 class PasswordPage extends React.Component
 {
@@ -16,11 +18,11 @@ class PasswordPage extends React.Component
             invalidInput: false
         }
 
-        this.Input = this.Input.bind(this)
-        this.Submit = this.Submit.bind(this)
+        this.input = this.input.bind(this)
+        this.submit = this.submit.bind(this)
     }
 
-    Input(event)
+    input(event)
     {
         this.setState({
             [event.target.name]: event.target.value,
@@ -29,13 +31,50 @@ class PasswordPage extends React.Component
         })
     }
 
-    Submit(event)
+    async submit(event)
     {
         event.preventDefault()
-        this.setState({
-            invalidInput: true,
-            invalidString: "error",
-        })
+        if (this.state.newPasswordInput.length < 8)
+        {
+            this.setState({
+                invalidInput: true,
+                invalidString: 'New password is too short'
+            })
+        }
+        else if (this.state.newPasswordInput !== this.state.repeatPasswordInput)
+        {
+            this.setState({
+                invalidInput: true,
+                invalidString: 'Wrong repeated password',
+                repeatPasswordInput: ''
+            })
+        }
+        else
+        {
+            changePasswordRequest(this.state.currentPasswordInput, await hash(this.state.newPasswordInput))
+            .then(response => {
+                switch (response.status) {
+                    case 200:
+                        break
+                    case 401:
+                        this.setState({
+                            invalidInput: true,
+                            invalidString: 'Wrong old password'
+                        })
+                        break
+                    default:
+                        this.setState({
+                            invalidInput: true,
+                            invalidString: 'Something wrong. Try next time'
+                        })
+                }
+                return response.json()
+            })
+            .then(data => {
+                // message
+                console.log(data);
+            })
+        }
     }
 
     render()
@@ -53,7 +92,7 @@ class PasswordPage extends React.Component
                                 placeholder="Current password"
                                 name="currentPasswordInput"
                                 value={this.state.currentPasswordInput} 
-                                onChange={this.Input}
+                                onChange={this.input}
                             />
                             <input 
                                 className={"form-item" + (this.state.paintRed ? " red" : "")} 
@@ -61,7 +100,7 @@ class PasswordPage extends React.Component
                                 placeholder="New password"
                                 name="newPasswordInput"
                                 value={this.state.newPasswordInput} 
-                                onChange={this.Input}
+                                onChange={this.input}
                             />
                             <input 
                                 className={"form-item" + (this.state.paintRed ? " red" : "")} 
@@ -69,7 +108,7 @@ class PasswordPage extends React.Component
                                 placeholder="Repeat password"
                                 name="repeatPasswordInput"
                                 value={this.state.repeatPasswordInput} 
-                                onChange={this.Input}
+                                onChange={this.input}
                             />
                             <div 
                                 className={"invalid-string"
@@ -79,7 +118,7 @@ class PasswordPage extends React.Component
                             </div>
                             <button
                                 className='form-item'
-                                onClick={this.Submit}
+                                onClick={this.submit}
                             >
                                 Change
                             </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import { deleteAccountRequest } from '../tools/requests';
 
 class DeletePage extends React.Component
 {
@@ -13,11 +14,11 @@ class DeletePage extends React.Component
             invalidInput: false
         }
 
-        this.Input = this.Input.bind(this)
-        this.Submit = this.Submit.bind(this)
+        this.input = this.input.bind(this)
+        this.submit = this.submit.bind(this)
     }
 
-    Input(event)
+    input(event)
     {
         this.setState({
             [event.target.name]: event.target.value,
@@ -26,12 +27,31 @@ class DeletePage extends React.Component
         })
     }
 
-    Submit(event)
+    submit(event)
     {
         event.preventDefault()
-        this.setState({
-            invalidInput: true,
-            invalidString: "error",
+        deleteAccountRequest(this.state.passwordInput)
+        .then(response => {
+            switch (response.status) {
+                case 200:
+                    break
+                case 401:
+                    this.setState({
+                        invalidInput: true,
+                        invalidString: 'Wrong password'
+                    })
+                    break
+                default:
+                    this.setState({
+                        invalidInput: true,
+                        invalidString: 'Something wrong. Try next time'
+                    })
+            }
+            return response.json()
+        })
+        .then(data => {
+            if (data.success)
+                window.location.href = data.redirect_url
         })
     }
 
@@ -50,7 +70,7 @@ class DeletePage extends React.Component
                                 placeholder="Password"
                                 name="passwordInput"
                                 value={this.state.passwordInput} 
-                                onChange={this.Input}
+                                onChange={this.input}
                             />
                             <div 
                                 className={"invalid-string"
@@ -60,7 +80,7 @@ class DeletePage extends React.Component
                             </div>
                             <button
                                 className='form-item delete-account-button'
-                                onClick={this.Submit}
+                                onClick={this.submit}
                             >
                                 Delete
                             </button>
