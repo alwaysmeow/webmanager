@@ -41,7 +41,7 @@ export async function getUserDataRequest()
         },
     }
     
-    return await fetch("api/userdata", request)
+    return await fetch("/api/userdata", request)
     .then(response => response.json())
     .catch(() => null)
 }
@@ -61,7 +61,7 @@ export async function deleteAccountRequest(password)
         body: JSON.stringify(postdata)
     }
 
-    return await fetch("../api/delete_account", request)  // other route
+    return await fetch("/api/delete_account", request)
 }
 
 export async function changeUsernameRequest(password, newName)
@@ -80,7 +80,7 @@ export async function changeUsernameRequest(password, newName)
         body: JSON.stringify(postdata)
     }
 
-    return await fetch("../api/rename_user", request)  // other route
+    return await fetch("/api/rename_user", request)  // other route
 }
 
 export async function changePasswordRequest(oldPassword, newPasswordHash)
@@ -99,7 +99,7 @@ export async function changePasswordRequest(oldPassword, newPasswordHash)
         body: JSON.stringify(postdata)
     }
 
-    return await fetch("../api/change_password", request) // other route
+    return await fetch("/api/change_password", request) // other route
 }
 
 // Category Requests
@@ -120,7 +120,7 @@ export function renameCategoryRequest(categoryIndex, newName)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/rename_category", request)
+    fetch("/api/rename_category", request)
 }
 
 export function deleteCategoryRequest(categoryIndex)
@@ -138,7 +138,7 @@ export function deleteCategoryRequest(categoryIndex)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/delete_category", request)
+    fetch("/api/delete_category", request)
 }
 
 export function newCategoryRequest()
@@ -148,7 +148,7 @@ export function newCategoryRequest()
         credentials: 'include'
     }
 
-    fetch("api/new_category", request)
+    fetch("/api/new_category", request)
 }
 
 export function moveCategoryRequest(oldCategoryIndex, newCategoryIndex)
@@ -167,7 +167,7 @@ export function moveCategoryRequest(oldCategoryIndex, newCategoryIndex)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/move_category", request)
+    fetch("/api/move_category", request)
 }
 
 export function toggleCategoryRequest(categoryIndex)
@@ -185,7 +185,7 @@ export function toggleCategoryRequest(categoryIndex)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/toggle_category", request)
+    fetch("/api/toggle_category", request)
 }
 
 // Link Requests
@@ -207,7 +207,7 @@ export function renameLinkRequest(categoryIndex, linkIndex, newName)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/rename_link", request)
+    fetch("/api/rename_link", request)
 }
 
 export function changeUrlRequest(categoryIndex, linkIndex, newUrl)
@@ -227,7 +227,7 @@ export function changeUrlRequest(categoryIndex, linkIndex, newUrl)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/change_url", request)
+    fetch("/api/change_url", request)
 }
 
 export function deleteLinkRequest(categoryIndex, linkIndex)
@@ -246,7 +246,7 @@ export function deleteLinkRequest(categoryIndex, linkIndex)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/delete_link", request)
+    fetch("/api/delete_link", request)
 }
 
 export function newLinkRequest(categoryIndex)
@@ -264,7 +264,7 @@ export function newLinkRequest(categoryIndex)
         body: JSON.stringify(postdata)
     }
 
-    fetch("api/new_link", request)
+    fetch("/api/new_link", request)
 }
 
 // Key Requests
@@ -284,7 +284,7 @@ export async function sendKeyRequest(email)
         body: JSON.stringify(postdata)
     }
 
-    return await fetch("api/send_key", request)
+    return await fetch("/api/send_key", request)
     .then(response => response.json())
 }
 
@@ -305,6 +305,6 @@ export async function createAccountRequest(key, username, passwordHash)
         body: JSON.stringify(postdata)
     }
 
-    return await fetch("api/create_account", request)
+    return await fetch("/api/create_account", request)
     .then(response => response.json())
 }
