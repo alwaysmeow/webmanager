@@ -65,7 +65,7 @@ class DeletePage extends React.Component
                         <h2 className='title'>Delete Account</h2>
                         <div className='container'>
                             <input 
-                                className={"form-item" + (this.state.paintRed ? " red" : "")} 
+                                className={"form-item"} 
                                 type="password" 
                                 placeholder="Password"
                                 name="passwordInput"

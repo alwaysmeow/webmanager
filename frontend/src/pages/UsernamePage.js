@@ -12,7 +12,8 @@ class UsernamePage extends React.Component
             newUsernameInput: '',
 
             invalidString: '',
-            invalidInput: false
+            invalidInput: false,
+            successStatus: false
         }
 
         this.input = this.input.bind(this)
@@ -35,6 +36,13 @@ class UsernamePage extends React.Component
         .then(response => {
             switch (response.status) {
                 case 200:
+                    this.setState({
+                        passwordInput: '',
+                        successStatus: true
+                    })
+                    setTimeout(() => {
+                        this.setState({successStatus: false})
+                    }, 500)
                     break
                 case 401:
                     this.setState({
@@ -56,10 +64,6 @@ class UsernamePage extends React.Component
             }
             return response.json()
         })
-        .then(data => {
-            // message
-            console.log(data);
-        })
     }
 
     render()
@@ -72,7 +76,7 @@ class UsernamePage extends React.Component
                         <h2 className='title'>Change Username</h2>
                         <div className='container'>
                             <input 
-                                className={"form-item" + (this.state.paintRed ? " red" : "")} 
+                                className={"form-item"} 
                                 type="password" 
                                 placeholder="Password"
                                 name="passwordInput"
@@ -80,7 +84,7 @@ class UsernamePage extends React.Component
                                 onChange={this.input}
                             />
                             <input 
-                                className={"form-item" + (this.state.paintRed ? " red" : "")}
+                                className={"form-item" + (this.state.successStatus ? " blue" : "")}
                                 placeholder="New username"
                                 name="newUsernameInput"
                                 value={this.state.newUsernameInput} 

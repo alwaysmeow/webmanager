@@ -55,6 +55,14 @@ class PasswordPage extends React.Component
             .then(response => {
                 switch (response.status) {
                     case 200:
+                        this.setState({
+                            currentPasswordInput: '',
+                            repeatPasswordInput: '',
+                            successStatus: true
+                        })
+                        setTimeout(() => {
+                            this.setState({successStatus: false})
+                        }, 500)
                         break
                     case 401:
                         this.setState({
@@ -70,10 +78,6 @@ class PasswordPage extends React.Component
                 }
                 return response.json()
             })
-            .then(data => {
-                // message
-                console.log(data);
-            })
         }
     }
 
@@ -87,7 +91,7 @@ class PasswordPage extends React.Component
                         <h2 className='title'>Change Password</h2>
                         <div className='container'>
                             <input 
-                                className={"form-item" + (this.state.paintRed ? " red" : "")} 
+                                className={"form-item"} 
                                 type="password" 
                                 placeholder="Current password"
                                 name="currentPasswordInput"
@@ -95,7 +99,7 @@ class PasswordPage extends React.Component
                                 onChange={this.input}
                             />
                             <input 
-                                className={"form-item" + (this.state.paintRed ? " red" : "")} 
+                                className={"form-item" + (this.state.successStatus ? " blue" : "")} 
                                 type="password" 
                                 placeholder="New password"
                                 name="newPasswordInput"
@@ -103,7 +107,7 @@ class PasswordPage extends React.Component
                                 onChange={this.input}
                             />
                             <input 
-                                className={"form-item" + (this.state.paintRed ? " red" : "")} 
+                                className={"form-item"} 
                                 type="password" 
                                 placeholder="Repeat password"
                                 name="repeatPasswordInput"
