@@ -5,7 +5,7 @@ from flasgger.utils import swag_from
 
 from app import app, mail
 from user import User
-from dbinterface import *
+from database import database
 from tools.keygen import generateKey
 from tools.hash import hash
 
@@ -15,8 +15,8 @@ from tools.hash import hash
 @swag_from('./docs/login.yml')
 def authorization():
     data = request.get_json()
-    updateUserTiming(data['login'])
-    if authentication(data['login'], hash(data['password'])):
+    database.updateUserTiming(data['login'])
+    if database.authentication(data['login'], hash(data['password'])):
         response = {"success": True, "redirect_url": "/"}
         login_user(User(data['login']))
         return jsonify(response), 200
@@ -28,7 +28,7 @@ def authorization():
 @login_required
 @swag_from('./docs/logout.yml')
 def logoutCurrentUser():
-    updateUserTiming(current_user.id)
+    database.updateUserTiming(current_user.id)
     try:
         logout_user()
         response = {"success": True, "redirect_url": "/login"}
@@ -42,15 +42,15 @@ def logoutCurrentUser():
 @login_required
 @swag_from('./docs/userdata.yml')
 def throwData():
-    updateUserTiming(current_user.id)
-    return getUserData(current_user.id), 200
+    database.updateUserTiming(current_user.id)
+    return database.getUserData(current_user.id), 200
 
 @app.route('/api/delete_account', methods=['DELETE'])
 @login_required
 @swag_from('./docs/delete_account.yml')
 def deleteAccountProcessing():
     data = request.get_json()
-    if not authentication(current_user.id, hash(data["password"])):
+    if not database.authentication(current_user.id, hash(data["password"])):
         response = {
             "success": False
         }
@@ -58,7 +58,7 @@ def deleteAccountProcessing():
     else:
         try:
             print(current_user.id)
-            deleteAccount(current_user.id)
+            database.deleteAccount(current_user.id)
             logout_user()
             response = {"success": True, "redirect_url": "/login"}
             status_code = 200
@@ -72,19 +72,19 @@ def deleteAccountProcessing():
 @swag_from('./docs/rename_user.yml')
 def renameUserProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if not authentication(current_user.id, hash(data["password"])):
+    database.updateUserTiming(current_user.id)
+    if not database.authentication(current_user.id, hash(data["password"])):
         response = {
             "success": False
         }
         status_code = 401
-    elif not isNameFree(data["newName"]):
+    elif not database.isNameFree(data["newName"]):
         response = {
             "success": False
         }
         status_code = 409
     else:
-        renameUser(current_user.id, data["newName"])
+        database.renameUser(current_user.id, data["newName"])
         logout_user()
         login_user(User(data["newName"]))
         response = {
@@ -98,14 +98,14 @@ def renameUserProcessing():
 @swag_from('./docs/change_password.yml')
 def changePasswordProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if not authentication(current_user.id, hash(data["oldPassword"])):
+    database.updateUserTiming(current_user.id)
+    if not database.authentication(current_user.id, hash(data["oldPassword"])):
         response = {
             "success": False
         }
         status_code = 401
     else:
-        changePassword(current_user.id, data["newPasswordHash"])
+        database.changePassword(current_user.id, data["newPasswordHash"])
         response = {
             "success": True
         }
@@ -119,9 +119,9 @@ def changePasswordProcessing():
 @swag_from('./docs/rename_category.yml')
 def renameCategoryProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if categoryExist(current_user.id, data["categoryIndex"]):
-        renameCategory(current_user.id, data["categoryIndex"], data["newName"])
+    database.updateUserTiming(current_user.id)
+    if database.categoryExist(current_user.id, data["categoryIndex"]):
+        database.renameCategory(current_user.id, data["categoryIndex"], data["newName"])
         response = {"success": True}
         statusCode = 200
     else:
@@ -134,9 +134,9 @@ def renameCategoryProcessing():
 @swag_from('./docs/delete_category.yml')
 def deleteCategoryProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if categoryExist(current_user.id, data["categoryIndex"]):
-        deleteCategory(current_user.id, data["categoryIndex"])
+    database.updateUserTiming(current_user.id)
+    if database.categoryExist(current_user.id, data["categoryIndex"]):
+        database.deleteCategory(current_user.id, data["categoryIndex"])
         response = {"success": True}
         statusCode = 200
     else:
@@ -148,8 +148,8 @@ def deleteCategoryProcessing():
 @login_required
 @swag_from('./docs/new_category.yml')
 def newCategoryProcessing():
-    updateUserTiming(current_user.id)
-    newCategory(current_user.id, "")
+    database.updateUserTiming(current_user.id)
+    database.newCategory(current_user.id, "")
     return jsonify({"success": True}), 200
 
 @app.route('/api/move_category', methods=["POST"])
@@ -157,9 +157,9 @@ def newCategoryProcessing():
 @swag_from('./docs/move_category.yml')
 def moveCategoryProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if categoryExist(current_user.id, data["oldCategoryIndex"]) and categoryExist(current_user.id, data["newCategoryIndex"]):
-        moveCategory(current_user.id, data["oldCategoryIndex"], data["newCategoryIndex"])
+    database.updateUserTiming(current_user.id)
+    if database.categoryExist(current_user.id, data["oldCategoryIndex"]) and database.categoryExist(current_user.id, data["newCategoryIndex"]):
+        database.moveCategory(current_user.id, data["oldCategoryIndex"], data["newCategoryIndex"])
         response = {"success": True}
         statusCode = 200
     else:
@@ -172,9 +172,9 @@ def moveCategoryProcessing():
 @swag_from('./docs/toggle_category.yml')
 def toggleCategoryProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if categoryExist(current_user.id, data["categoryIndex"]):
-        toggleCategory(current_user.id, data["categoryIndex"])
+    database.updateUserTiming(current_user.id)
+    if database.categoryExist(current_user.id, data["categoryIndex"]):
+        database.toggleCategory(current_user.id, data["categoryIndex"])
         response = {"success": True}
         statusCode = 200
     else:
@@ -189,9 +189,9 @@ def toggleCategoryProcessing():
 @swag_from('./docs/rename_link.yml')
 def renameLinkProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
-        renameLink(current_user.id, data["categoryIndex"], data["linkIndex"], data["newName"])
+    database.updateUserTiming(current_user.id)
+    if database.linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
+        database.renameLink(current_user.id, data["categoryIndex"], data["linkIndex"], data["newName"])
         response = {"success": True}
         statusCode = 200
     else:
@@ -204,9 +204,9 @@ def renameLinkProcessing():
 @swag_from('./docs/change_url.yml')
 def changeUrlProccessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
-        changeUrl(current_user.id, data["categoryIndex"], data["linkIndex"], data["newUrl"])
+    database.updateUserTiming(current_user.id)
+    if database.linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
+        database.changeUrl(current_user.id, data["categoryIndex"], data["linkIndex"], data["newUrl"])
         response = {"success": True}
         statusCode = 200
     else:
@@ -219,9 +219,9 @@ def changeUrlProccessing():
 @swag_from('./docs/delete_link.yml')
 def deleteLinkProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
-        deleteLink(current_user.id, data["categoryIndex"], data["linkIndex"])
+    database.updateUserTiming(current_user.id)
+    if database.linkExist(current_user.id, data["categoryIndex"], data["linkIndex"]):
+        database.deleteLink(current_user.id, data["categoryIndex"], data["linkIndex"])
         response = {"success": True}
         statusCode = 200
     else:
@@ -234,9 +234,9 @@ def deleteLinkProcessing():
 @swag_from('./docs/new_link.yml')
 def newLinkProcessing():
     data = request.get_json()
-    updateUserTiming(current_user.id)
-    if categoryExist(current_user.id, data["categoryIndex"]):
-        newLink(current_user.id, data["categoryIndex"], "", "")
+    database.updateUserTiming(current_user.id)
+    if database.categoryExist(current_user.id, data["categoryIndex"]):
+        database.newLink(current_user.id, data["categoryIndex"], "", "")
         response = {"success": True}
         statusCode = 200
     else:
@@ -250,15 +250,15 @@ def newLinkProcessing():
 @swag_from('./docs/send_key.yml')
 def sendKey():
     data = request.get_json()
-    if isEmailFree(data["email"]):
+    if database.isEmailFree(data["email"]):
         key = generateKey()
-        while findKey(key):
+        while database.findKey(key):
             key = generateKey()
-        if keySendedOnEmail(data["email"]):
-            updateKey(data["email"], key)
+        if database.keySendedOnEmail(data["email"]):
+            database.updateKey(data["email"], key)
         else:
-            newKey(data["email"], key)
-        updateKeyTiming(data["email"])
+            database.newKey(data["email"], key)
+        database.updateKeyTiming(data["email"])
         msg = Message("Key for WebManager", recipients=[data["email"]])
         msg.sender = 'webmanagerbot@gmail.com'
         msg.body = f'Your registration key: {key}'
@@ -274,12 +274,12 @@ def sendKey():
 @swag_from('./docs/create_account.yml')
 def createAccount():
     data = request.get_json()
-    if not findKey(data["key"]):
+    if not database.findKey(data["key"]):
         return jsonify({"success": False, "code": 1}), 401
-    elif not isNameFree(data["username"]):
+    elif not database.isNameFree(data["username"]):
         return jsonify({"success": False, "code": 2}), 409
     else:
-        registerAccount(data["username"], data["passwordHash"], getEmailByKey(data["key"]))
-        deleteKey(data["key"])
+        database.registerAccount(data["username"], data["passwordHash"], database.getEmailByKey(data["key"]))
+        database.deleteKey(data["key"])
         login_user(User(data["username"]))
         return jsonify({"success": True, "redirect_url": "/"}), 200
