@@ -1,6 +1,6 @@
 from celery import Celery
 from celery.schedules import crontab
-from dbinterface import deleteExpiredKeys, deleteInactiveUsers
+from database import database
 from datetime import timedelta
 
 celery = Celery("WebManagerTasks", broker="redis://localhost:6379/0")
@@ -17,5 +17,5 @@ celery.conf.beat_schedule = {
 
 @celery.task
 def dbClearing():
-    deleteInactiveUsers()
-    deleteExpiredKeys()
+    database.deleteInactiveUsers()
+    database.deleteExpiredKeys()
