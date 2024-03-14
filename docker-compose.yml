@@ -1,0 +1,12 @@
+services:
+  api:
+    build: ./backend
+    container_name: wmt_back
+    ports:
+      - '8000:8000'
+  client:
+    build: ./frontend
+    container_name: wmt_front
+    ports:
+      - '3000:3000'
+    tty: true
