@@ -1,10 +1,11 @@
-FROM node
+FROM node:alpine
 
 COPY package.json /app/package.json
 
 WORKDIR /app
 
-RUN npm install
+RUN npm install \
+    npm build
 
 COPY . .
 EXPOSE 3000

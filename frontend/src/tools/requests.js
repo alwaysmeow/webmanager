@@ -80,7 +80,7 @@ export async function changeUsernameRequest(password, newName)
         body: JSON.stringify(postdata)
     }
 
-    return await fetch("/api/rename_user", request)  // other route
+    return await fetch("/api/rename_user", request)
 }
 
 export async function changePasswordRequest(oldPassword, newPasswordHash)
@@ -99,7 +99,7 @@ export async function changePasswordRequest(oldPassword, newPasswordHash)
         body: JSON.stringify(postdata)
     }
 
-    return await fetch("/api/change_password", request) // other route
+    return await fetch("/api/change_password", request)
 }
 
 // Category Requests

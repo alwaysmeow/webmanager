@@ -1,12 +1,13 @@
 services:
   api:
     build: ./backend
-    container_name: wmt_back
+    container_name: wm-flaskserver
     ports:
       - '8000:8000'
   client:
     build: ./frontend
-    container_name: wmt_front
+    container_name: wm-reactserver
     ports:
       - '3000:3000'
+    stdin_open: true
     tty: true
