@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import { changeUsernameRequest } from '../tools/requests';
+import { changeUsernameRequest, getUserDataRequest } from '../tools/requests';
 
 class UsernamePage extends React.Component
 {
@@ -107,6 +107,15 @@ class UsernamePage extends React.Component
                 </main>
             </>
         )
+    }
+
+    componentDidMount()
+    {
+        getUserDataRequest()
+        .then(data => {
+            if (data === null)
+                window.location.href = '/login'
+        })
     }
 }
 

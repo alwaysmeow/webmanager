@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import "../css/container.css"
-import { changePasswordRequest } from '../tools/requests';
+import { changePasswordRequest, getUserDataRequest } from '../tools/requests';
 import hash from '../tools/hash'
 
 class PasswordPage extends React.Component
@@ -131,6 +131,15 @@ class PasswordPage extends React.Component
                 </main>
             </>
         )
+    }
+
+    componentDidMount()
+    {
+        getUserDataRequest()
+        .then(data => {
+            if (data === null)
+                window.location.href = '/login'
+        })
     }
 }
 

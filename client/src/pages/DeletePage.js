@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import { deleteAccountRequest } from '../tools/requests';
+import { deleteAccountRequest, getUserDataRequest } from '../tools/requests';
 
 class DeletePage extends React.Component
 {
@@ -89,6 +89,15 @@ class DeletePage extends React.Component
                 </main>
             </>
         )
+    }
+
+    componentDidMount()
+    {
+        getUserDataRequest()
+        .then(data => {
+            if (data === null)
+                window.location.href = '/login'
+        })
     }
 }
 
