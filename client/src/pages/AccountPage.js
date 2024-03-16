@@ -1,10 +1,19 @@
 import React from 'react';
 import Header from '../components/Header';
 import { User } from 'react-feather'
+import { getUserDataRequest } from '../tools/requests'; 
 import '../css/accountPage.css'
 
 class AccountPage extends React.Component
 {
+    constructor(props)
+    {
+        super(props)
+        this.state = {
+            username: ''
+        }
+    }
+
     render()
     {
         return(
@@ -14,7 +23,7 @@ class AccountPage extends React.Component
                     <form className='button-panel'>
                         <div className='account-panel'>
                             <User/>
-                            <h2>meow</h2>
+                            <h2>{this.state.username}</h2>
                         </div>
                         <button className='form-item' 
                             onClick={(event) => {
@@ -45,6 +54,17 @@ class AccountPage extends React.Component
                 </main>
             </>
         )
+    }
+
+    componentDidMount()
+    {
+        getUserDataRequest()
+        .then(data => {
+            if (data === null)
+                window.location.href = '/login'
+            else
+                this.setState({username: data.username})
+        })
     }
 }
 

@@ -1,6 +1,12 @@
+.account-page svg
+{
+    min-height: 1.5em;
+    min-width: 1.5em;
+}
+
 .account-page svg *
 {
-    color: var(--primary-bright-color)
+    color: var(--primary-bright-color);
 }
 
 .account-panel
@@ -14,7 +20,6 @@
     padding-left: 1ch;
     padding-right: 1ch;
     width: 50%;
-    overflow: scroll;
 }
 
 .delete-account-button:hover
