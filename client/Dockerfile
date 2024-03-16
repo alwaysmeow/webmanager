@@ -1,14 +1,21 @@
-FROM node:alpine
-
-COPY package.json /app/package.json
+FROM node:alpine AS builder
 
 WORKDIR /app
 
-RUN npm install \
-    npm build
+COPY package.json package.json
 
-COPY . .
-EXPOSE 3000
+RUN npm install
 
-ENTRYPOINT ["npm"]
-CMD ["start"]
+COPY src src
+COPY public public
+
+RUN npm run build
+
+FROM nginx:latest
+
+COPY --from=builder /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD [ "nginx", "-g", "daemon off;" ]
