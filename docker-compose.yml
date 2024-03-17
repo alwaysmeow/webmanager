@@ -1,13 +1,30 @@
 services:
-  api:
-    build: ./backend
-    container_name: wm-flaskserver
+  server:
+    build: ./server
+    container_name: wm-server
     ports:
       - '8000:8000'
+    networks:
+      - wm-network
+  
   client:
-    build: ./frontend
-    container_name: wm-reactserver
+    build: ./client
+    container_name: wm-client
     ports:
-      - '3000:3000'
+      - '80:80'
+    networks:
+      - wm-network
     stdin_open: true
     tty: true
+  
+  mongodb:
+    image: mongo
+    container_name: wm-mongodb
+    ports:
+      - "27018:27017"
+    networks:
+      - wm-network
+
+networks:
+  wm-network:
+    driver: bridge
