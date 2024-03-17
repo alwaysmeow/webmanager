@@ -220,5 +220,5 @@ class DataBase:
     def deleteExpiredKeys(self):
         self.keys.delete_many({"timing": {"$lt": datetime.utcnow() - self.keyLifetime}})
 
-# uri = "mongodb://localhost:27017"
-database = DataBase('localhost', 27017)
+# uri = "mongodb://mongodb:27017"
+database = DataBase('mongodb', 27017)
