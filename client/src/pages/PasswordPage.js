@@ -5,9 +5,15 @@ import { changePasswordRequest, getUserDataRequest } from '../tools/requests';
 import hash from '../tools/hash'
 
 class PasswordPage extends React.Component
-{
+{   
     constructor(props)
     {
+        getUserDataRequest()
+        .then(data => {
+            if (data === null)
+                window.location.href = '/login'
+        })
+        
         super(props)
         this.state = {
             currentPasswordInput: '',
@@ -131,15 +137,6 @@ class PasswordPage extends React.Component
                 </main>
             </>
         )
-    }
-
-    componentDidMount()
-    {
-        getUserDataRequest()
-        .then(data => {
-            if (data === null)
-                window.location.href = '/login'
-        })
     }
 }
 

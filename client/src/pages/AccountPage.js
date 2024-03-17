@@ -8,6 +8,14 @@ class AccountPage extends React.Component
 {
     constructor(props)
     {
+        getUserDataRequest()
+        .then(data => {
+            if (data === null)
+                window.location.href = '/login'
+            else
+                this.setState({username: data.username})
+        })
+
         super(props)
         this.state = {
             username: ''
@@ -54,17 +62,6 @@ class AccountPage extends React.Component
                 </main>
             </>
         )
-    }
-
-    componentDidMount()
-    {
-        getUserDataRequest()
-        .then(data => {
-            if (data === null)
-                window.location.href = '/login'
-            else
-                this.setState({username: data.username})
-        })
     }
 }
 

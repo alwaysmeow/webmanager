@@ -6,6 +6,12 @@ class UsernamePage extends React.Component
 {
     constructor(props)
     {
+        getUserDataRequest()
+        .then(data => {
+            if (data === null)
+                window.location.href = '/login'
+        })
+
         super(props)
         this.state = {
             passwordInput: '',
@@ -107,15 +113,6 @@ class UsernamePage extends React.Component
                 </main>
             </>
         )
-    }
-
-    componentDidMount()
-    {
-        getUserDataRequest()
-        .then(data => {
-            if (data === null)
-                window.location.href = '/login'
-        })
     }
 }
 
