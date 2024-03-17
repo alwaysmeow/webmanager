@@ -170,7 +170,6 @@ class RegisterForm extends React.Component
                 else
                     this.setState({invalidString: "Username is already taken"})
             }
-            console.log(response);
         }
     }
 

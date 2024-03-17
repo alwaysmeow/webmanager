@@ -42,7 +42,6 @@ class Header extends React.Component
     async logout()
     {
         const response = await logoutRequest()
-        console.log(response);
         if (response.success)
             window.location.href = response.redirect_url
     }

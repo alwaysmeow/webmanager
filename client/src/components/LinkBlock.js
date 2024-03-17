@@ -136,8 +136,6 @@ class LinkBlock extends React.Component
         const item = this.context.userdata[this.props.categoryIndex].content[this.props.linkIndex]
         if (item == null)
             return <></>
-        if (this.state.iconError)
-            console.log(this.state.name, item.url)
 
         if (this.props.editing)
         {
