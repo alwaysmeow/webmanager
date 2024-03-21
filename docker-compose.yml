@@ -2,6 +2,10 @@ services:
   server:
     build: ./server
     container_name: wm-server
+    env_file:
+      - ./server/.env
+      # FLASK_KEY
+      # MAIL_PASSWORD
     ports:
       - '8000:8000'
     networks:

@@ -22,7 +22,7 @@ app.config['SWAGGER'] = {
 }
 
 CORS(app, supports_credentials=True)
-app.secret_key = getenv("KEY")
+app.secret_key = getenv("FLASK_KEY")
 
 mail = Mail(app)
 
