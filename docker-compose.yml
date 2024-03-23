@@ -24,6 +24,10 @@ services:
   mongodb:
     image: mongo
     container_name: wm-mongodb
+    env_file:
+      - ./server/.env
+      # MONGO_INITDB_ROOT_USERNAME
+      # MONGO_INITDB_ROOT_PASSWORD
     ports:
       - "27018:27017"
     networks:

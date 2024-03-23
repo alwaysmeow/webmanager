@@ -1,9 +1,18 @@
 from pymongo.mongo_client import MongoClient
 from datetime import datetime, timedelta
 
+from dotenv import load_dotenv
+from os import getenv
+
+load_dotenv()
+
 class DataBase:
     def __init__(self, host, port):
-        client = MongoClient(host, port)
+        client = MongoClient(host=host,
+                             port=port,
+                             username=getenv("MONGO_INITDB_ROOT_USERNAME"),
+                             password=getenv("MONGO_INITDB_ROOT_PASSWORD"))
+        
         db = client['WebManagerDB']
         self.userData = db['UserData']
         self.keys = db['Keys']
