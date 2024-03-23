@@ -3,7 +3,7 @@ services:
     build: ./server
     container_name: wm-server
     env_file:
-      - ./server/.env
+      - .env
       # FLASK_KEY
       # MAIL_PASSWORD
     ports:
@@ -25,7 +25,7 @@ services:
     image: mongo
     container_name: wm-mongodb
     env_file:
-      - ./server/.env
+      - .env
       # MONGO_INITDB_ROOT_USERNAME
       # MONGO_INITDB_ROOT_PASSWORD
     ports:

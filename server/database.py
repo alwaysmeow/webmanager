@@ -1,10 +1,9 @@
 from pymongo.mongo_client import MongoClient
 from datetime import datetime, timedelta
-
-from dotenv import load_dotenv
 from os import getenv
 
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv('../.env')
 
 class DataBase:
     def __init__(self, host, port):

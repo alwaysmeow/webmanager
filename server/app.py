@@ -2,11 +2,10 @@ from flask import Flask
 from flask_mail import Mail
 from flask_cors import CORS
 from flasgger import Swagger
-
-from dotenv import load_dotenv
 from os import getenv
 
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv('../.env')
 
 app = Flask(__name__)
 
