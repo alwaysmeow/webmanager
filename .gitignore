@@ -1,2 +1,9 @@
 **/.DS_Store
 .env
+
+server/**/__pycache__
+server/requirements.txt
+
+client/node_modules
+client/build
+client/package-lock.json
