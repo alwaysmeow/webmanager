@@ -28,7 +28,8 @@ class DataBase:
                 "_id": False, 
                 "passwordHash": False, 
                 "email": False,
-                "timing": False
+                "timing": False,
+                "warningLetter": False
             }
         )
     
@@ -47,7 +48,8 @@ class DataBase:
             "email": email,
             "passwordHash": passwordHash,
             "categories": [],
-            "timing": datetime.utcnow()
+            "timing": datetime.utcnow(),
+            "warningLetter": False
         }
         self.userData.insert_one(userData)
 
@@ -69,7 +71,22 @@ class DataBase:
     def updateUserTiming(self, username):
         self.userData.update_one(
             {"username": username},
-            {"$set": {"timing": datetime.utcnow()}}
+            {"$set": 
+                {
+                    "timing": datetime.utcnow(),
+                    "warningLetter": False
+                }
+            }
+        )
+
+    def setWarningLetterSended(self, username):
+        self.userData.update_one(
+            {"username": username},
+            {"$set": 
+                {
+                    "warningLetter": True
+                }
+            }
         )
 
     def deleteInactiveUsers(self):
