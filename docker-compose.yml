@@ -1,6 +1,8 @@
 services:
   server:
-    build: ./server
+    build: 
+      context: ./server
+      dockerfile: ./api/Dockerfile
     container_name: wm-server
     env_file:
       - .env

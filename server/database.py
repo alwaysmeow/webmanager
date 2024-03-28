@@ -7,6 +7,7 @@ from os import getenv
 
 class DataBase:
     def __init__(self, host, port):
+        # client = client = MongoClient(host=host, port=port)
         client = MongoClient(host=host,
                              port=port,
                              username=getenv("MONGO_INITDB_ROOT_USERNAME"),
@@ -245,5 +246,10 @@ class DataBase:
     def deleteExpiredKeys(self):
         self.keys.delete_many({"timing": {"$lt": datetime.utcnow() - self.keyLifetime}})
 
+# prod
 # uri = "mongodb://mongodb:27017"
 database = DataBase('mongodb', 27017)
+
+# dev
+# uri = "mongodb://localhost:27017"
+# database = DataBase('localhost', 27017)

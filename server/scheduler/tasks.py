@@ -1,10 +1,14 @@
 from celery import Celery
 from celery.schedules import crontab
-from database import database
 from datetime import timedelta
+
+import sys
+sys.path.append('../')
+from database import database
 
 celery = Celery("WebManagerTasks", broker="redis://localhost:6379/0")
 
+# redis-server
 # celery -A tasks beat -l info
 # celery -A tasks worker -l info
 

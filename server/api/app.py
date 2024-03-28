@@ -4,8 +4,8 @@ from flask_cors import CORS
 from flasgger import Swagger
 from os import getenv
 
-# from dotenv import load_dotenv
-# load_dotenv('../.env')
+from dotenv import load_dotenv
+load_dotenv('../../.env')
 
 app = Flask(__name__)
 

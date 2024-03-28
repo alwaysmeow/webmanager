@@ -2,7 +2,8 @@
 .env
 
 server/**/__pycache__
-server/requirements.txt
+server/**/requirements.txt
+server/scheduler/**.db
 
 client/node_modules
 client/build
