@@ -1,5 +1,6 @@
 FROM python:3.11
 
+# context: /..
 # pip freeze > requirements.txt
 COPY ./api/requirements.txt /app/requirements.txt
 

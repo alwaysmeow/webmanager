@@ -6,8 +6,8 @@ from flasgger.utils import swag_from
 from app import app, mail
 from user import User
 
-import sys
-sys.path.append('../')
+# import sys
+# sys.path.append('../')
 
 from database import database
 from tools.keygen import generateKey
