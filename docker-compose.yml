@@ -13,6 +13,18 @@ services:
     networks:
       - wm-network
   
+  scheduler:
+    build:
+      context: ./server
+      dockerfile: ./scheduler/Dockerfile
+    container_name: wm-scheduler
+    env_file:
+      - .env
+    environment:
+      - C_FORCE_ROOT=true
+    networks:
+      - wm-network
+  
   client:
     build: ./client
     container_name: wm-client
@@ -32,6 +44,14 @@ services:
       # MONGO_INITDB_ROOT_PASSWORD
     ports:
       - "27018:27017"
+    networks:
+      - wm-network
+  
+  redis:
+    image: redis
+    container_name: wm-redis
+    ports:
+      - "6379:6379"
     networks:
       - wm-network
 

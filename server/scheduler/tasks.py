@@ -6,7 +6,10 @@ import sys
 sys.path.append('../')
 from database import database
 
-celery = Celery("WebManagerTasks", broker="redis://localhost:6379/0")
+# url = "redis://localhost:6379/0"
+url = "redis://redis:6379/0"
+
+celery = Celery("WebManagerTasks", broker="redis://redis:6379/0")
 
 # redis-server
 # celery -A tasks beat -l info
