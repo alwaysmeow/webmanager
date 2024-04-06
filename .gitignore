@@ -4,6 +4,7 @@
 server/**/__pycache__
 server/**/requirements.txt
 server/scheduler/**.db
+**.rdb
 
 client/node_modules
 client/build

@@ -9,7 +9,7 @@ from database import database
 # url = "redis://localhost:6379/0"
 url = "redis://redis:6379/0"
 
-celery = Celery("WebManagerTasks", broker="redis://redis:6379/0")
+celery = Celery("WebManagerTasks", broker=url)
 
 # redis-server
 # celery -A tasks beat -l info
@@ -17,7 +17,7 @@ celery = Celery("WebManagerTasks", broker="redis://redis:6379/0")
 
 celery.conf.beat_schedule = {
     'clearing': {
-        'task': 'WebManagerTasks.dbClearing',
+        'task': 'tasks.dbClearing',
         'schedule': timedelta(minutes=1), # test schedule
     },
 }
