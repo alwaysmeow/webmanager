@@ -22,5 +22,12 @@ class Mail:
         message["From"] = self.username
         message["To"] = recepient
         self.server.sendmail(self.username, recepient, message.as_string())
+    
+    def sendWarning(self, recepient):
+        message = MIMEText("We warn you that in a week your account will be deleted due to low activity.")
+        message["Subject"] = "Account deletion warning"
+        message["From"] = self.username
+        message["To"] = recepient
+        self.server.sendmail(self.username, recepient, message.as_string())
 
 mail = Mail()

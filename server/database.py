@@ -80,6 +80,13 @@ class DataBase:
             }
         )
 
+    def usersToWarn(self):
+        cursor = self.userData.find({
+            "timing": {"$lt": datetime.utcnow() + timedelta(weeks=1) - self.inactiveUserLifetime},
+            "warningLetter": False
+        }, {"username", "email"})
+        return list(cursor)
+
     def setWarningLetterSended(self, username):
         self.userData.update_one(
             {"username": username},
