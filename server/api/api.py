@@ -1,6 +1,5 @@
 from flask import jsonify, request
 from flask_login import login_required, login_user, logout_user, current_user
-from flask_mail import Message
 from flasgger.utils import swag_from
 
 from app import app, celery
@@ -10,7 +9,6 @@ from user import User
 # sys.path.append('../')
 
 from database import database
-from tools.keygen import generateKey
 from tools.hash import hash
 
 # User Requests
