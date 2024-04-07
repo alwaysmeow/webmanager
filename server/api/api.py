@@ -3,7 +3,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from flask_mail import Message
 from flasgger.utils import swag_from
 
-from app import app, mail
+from app import app, celery
 from user import User
 
 # import sys
@@ -255,18 +255,7 @@ def newLinkProcessing():
 def sendKey():
     data = request.get_json()
     if database.isEmailFree(data["email"]):
-        key = generateKey()
-        while database.findKey(key):
-            key = generateKey()
-        if database.keySendedOnEmail(data["email"]):
-            database.updateKey(data["email"], key)
-        else:
-            database.newKey(data["email"], key)
-        database.updateKeyTiming(data["email"])
-        msg = Message("Key for WebManager", recipients=[data["email"]])
-        msg.sender = 'webmanagerbot@gmail.com'
-        msg.body = f'Your registration key: {key}'
-        mail.send(msg)
+        celery.send_task('tasks.sendKey', args=[data["email"]])
         response = {"success": True}
         statusCode = 200
     else:

@@ -1,11 +1,11 @@
 from celery import Celery
-from celery.schedules import crontab
 from datetime import timedelta
 
 import sys
 sys.path.append('../')
 from database import database
 from mail import mail
+from tools.keygen import generateKey
 
 # url = "redis://localhost:6379/0"
 url = "redis://redis:6379/0"
@@ -33,9 +33,20 @@ def dbClearing():
     database.deleteExpiredKeys()
 
 @celery.task
+def sendKey(email):
+    key = generateKey()
+    while database.findKey(key):
+        key = generateKey()
+    if database.keySendedOnEmail(email):
+        database.updateKey(email, key)
+    else:
+        database.newKey(email, key)
+    database.updateKeyTiming(email)
+    mail.sendKey(email, key)
+
+@celery.task
 def sendWarnings():
     users = database.usersToWarn()
     for user in users:
-        print(user["username"], user["email"])
         mail.sendWarning(user["email"])
         database.setWarningLetterSended(user["username"])

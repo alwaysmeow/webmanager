@@ -13,6 +13,7 @@ RUN pip3 install -r requirements.txt
 COPY /scheduler /app
 COPY /database.py /app/database.py
 COPY /mail.py /app/mail.py
+COPY /tools /app/tools
 
 RUN chown -R celeryuser:celeryuser /app
 USER celeryuser
