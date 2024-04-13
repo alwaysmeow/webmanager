@@ -6,12 +6,14 @@ from os import getenv
 # load_dotenv('../.env')
 
 class DataBase:
-    def __init__(self, host, port):
-        # client = client = MongoClient(host=host, port=port)
-        client = MongoClient(host=host,
-                             port=port,
-                             username=getenv("MONGO_INITDB_ROOT_USERNAME"),
-                             password=getenv("MONGO_INITDB_ROOT_PASSWORD"))
+    def __init__(self, host, port, dev = False):
+        if dev:
+            client = client = MongoClient(host=host, port=port)
+        else:
+            client = MongoClient(host=host,
+                                port=port,
+                                username=getenv("MONGO_INITDB_ROOT_USERNAME"),
+                                password=getenv("MONGO_INITDB_ROOT_PASSWORD"))
         
         db = client['WebManagerDB']
         self.userData = db['UserData']
@@ -259,4 +261,4 @@ database = DataBase('mongodb', 27017)
 
 # dev
 # uri = "mongodb://localhost:27017"
-# database = DataBase('localhost', 27017)
+# database = DataBase('localhost', 27017, True)
