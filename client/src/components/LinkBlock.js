@@ -4,6 +4,7 @@ import UserDataContext from "./UserDataContext";
 import { changeUrlRequest, deleteLinkRequest, renameLinkRequest } from "../tools/requests";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { X } from 'react-feather'
+// import parseIcon from "../tools/parseIcon";
 
 class LinkBlock extends React.Component
 {
