@@ -23,6 +23,28 @@ jobs:
           echo "MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}" >> .env
           echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
 
+      - name: Set up requirements
+        run: |
+          echo "flasgger==0.9.7.1" >> server/api/requirements.txt
+          echo "Flask==2.3.3" >> server/api/requirements.txt
+          echo "Flask-Cors==4.0.0" >> server/api/requirements.txt
+          echo "Flask-Login==0.6.2" >> server/api/requirements.txt
+          echo "Flask-Mail==0.9.1" >> server/api/requirements.txt
+          echo "flask-restx==1.2.0" >> server/api/requirements.txt
+          echo "flask-swagger-generator==0.4" >> server/api/requirements.txt
+          echo "flask-swagger-ui==4.11.1" >> server/api/requirements.txt
+          echo "pymongo==4.5.0" >> server/api/requirements.txt
+          echo "python-dotenv==1.0.0" >> server/api/requirements.txt
+          echo "waitress==3.0.0" >> server/api/requirements.txt
+          echo "celery==5.3.5" >> server/api/requirements.txt
+          echo "redis==5.0.1" >> server/api/requirements.txt
+
+          echo "pymongo==4.5.0" >> server/scheduler/requirements.txt
+          echo "python-dotenv==1.0.0" >> server/scheduler/requirements.txt
+          echo "waitress==3.0.0" >> server/scheduler/requirements.txt
+          echo "celery==5.3.5" >> server/scheduler/requirements.txt
+          echo "redis==5.0.1" >> server/scheduler/requirements.txt
+
       - name: Build Docker Images
         run: docker-compose build
 
