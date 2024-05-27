@@ -64,6 +64,12 @@ jobs:
         port: 22
         script: |
           cd app/WebManager
+          docker-compose stop
+          docker rm wm-client
+          docker rm wm-server
+          docker rm wm-scheduler
+          docker rmi webmanager_client
+          docker rmi webmanager_scheduler
+          docker rmi webmanager_server
           git pull
-          ls
           docker-compose up -d
