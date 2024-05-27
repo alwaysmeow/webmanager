@@ -16,6 +16,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
+      - name: Set up environment variables
+        run: |
+          echo "FLASK_KEY=${{ secrets.FLASK_KEY }}" >> .env
+          echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
+          echo "MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}" >> .env
+          echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
+
       - name: Build Docker Images
         run: docker-compose build
 
