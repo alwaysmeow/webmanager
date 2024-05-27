@@ -3,6 +3,7 @@ services:
     build: 
       context: ./server
       dockerfile: ./api/Dockerfile
+    image: alwaysmeow/webmanager-server
     container_name: wm-server
     env_file:
       - .env
@@ -17,6 +18,7 @@ services:
     build:
       context: ./server
       dockerfile: ./scheduler/Dockerfile
+    image: alwaysmeow/webmanager-scheduler
     container_name: wm-scheduler
     env_file:
       - .env
@@ -25,6 +27,7 @@ services:
   
   client:
     build: ./client
+    image: alwaysmeow/webmanager-client
     container_name: wm-client
     ports:
       - '80:80'
