@@ -72,3 +72,4 @@ jobs:
           docker pull alwaysmeow/webmanager-scheduler:latest
           docker pull alwaysmeow/webmanager-client:latest
           docker-compose up -d
+          docker exec -it wm-client certbot --nginx -m krivtsovsergey2003@gmail.com --agree-tos -d webmanager.su
