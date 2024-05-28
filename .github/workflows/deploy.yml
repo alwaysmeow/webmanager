@@ -64,12 +64,12 @@ jobs:
         port: 22
         script: |
           cd app/WebManager
-          docker-compose stop
-          docker rm wm-client
-          docker rm wm-server
-          docker rm wm-scheduler
-          docker rmi webmanager_client
-          docker rmi webmanager_scheduler
-          docker rmi webmanager_server
+          docker-compose stop wm-client wm-server wm-scheduler
+          docker rm -f wm-client wm-server wm-scheduler || true
+          docker rmi -f webmanager-client webmanager-scheduler webmanager-server || true
           git pull
+          docker pull alwaysmeow/webmanager-server:latest
+          docker pull alwaysmeow/webmanager-scheduler:latest
+          docker pull alwaysmeow/webmanager-client:latest
           docker-compose up -d
+          docker exec -it wm-client sudo certbot --nginx -d webmanager.su -m ${{ secrets.EMAIL }} --agree-tos
