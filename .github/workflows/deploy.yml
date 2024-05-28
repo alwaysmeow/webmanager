@@ -67,7 +67,7 @@ jobs:
           docker-compose stop wm-client wm-server wm-scheduler
           docker rm -f wm-client wm-server wm-scheduler || true
           docker rmi -f webmanager-client webmanager-scheduler webmanager-server || true
-          git pull
+          git pull origin prod
           docker pull alwaysmeow/webmanager-server:latest
           docker pull alwaysmeow/webmanager-scheduler:latest
           docker pull alwaysmeow/webmanager-client:latest
