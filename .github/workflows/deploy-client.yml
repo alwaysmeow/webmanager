@@ -26,7 +26,7 @@ jobs:
       - name: Push Docker Image
         run: docker-compose push client
   
-  deploy:
+  deploy-client-image:
     needs: build-and-push-client-image
     runs-on: ubuntu-latest
     steps:
