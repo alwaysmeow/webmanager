@@ -1,5 +1,5 @@
 from pymongo.mongo_client import MongoClient
-from pymongo import errors
+from pymongo.errors import ConnectionFailure
 from datetime import datetime, timedelta
 from os import getenv
 
@@ -10,10 +10,10 @@ def dbRequest(func):
     def wrapper(self, *args, **kwargs):
         try:
             return func(self, *args, **kwargs)
-        except errors.ConnectionError as e:
-            self.connect()
+        except ConnectionFailure:
+            self.reconnect()
             return func(self, *args, **kwargs)
-        except Exception as e:
+        except:
             return None
     return wrapper
 
@@ -25,6 +25,7 @@ class DataBase:
 
         self.userData = None
         self.keys = None
+        self.client = None
         self.connect()
 
         self.keyLifetime = timedelta(weeks=1)
@@ -32,16 +33,27 @@ class DataBase:
     
     def connect(self):
         if self.dev:
-            client = MongoClient(host=self.host, port=self.port)
+            self.client = MongoClient(host=self.host, port=self.port)
         else:
-            client = MongoClient(host=self.host,
+            self.client = MongoClient(host=self.host,
                                 port=self.port,
                                 username=getenv("MONGO_INITDB_ROOT_USERNAME"),
                                 password=getenv("MONGO_INITDB_ROOT_PASSWORD"))
         
-        db = client['WebManagerDB']
+        db = self.client['WebManagerDB']
         self.userData = db['UserData']
         self.keys = db['Keys']
+    
+    def disconnect(self):
+        if self.client:
+            self.userData = None
+            self.keys = None
+            self.client.close()
+            self.client = None
+    
+    def reconnect(self):
+        self.disconnect()
+        self.connect()
 
     # Account Interface
 
