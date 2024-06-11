@@ -1,5 +1,9 @@
-name: Deploy
-on: push
+name: Server Deploy
+on: 
+  push:
+    paths:
+      - 'server/**'
+
 jobs:
   docker-build-and-push:
     runs-on: ubuntu-latest
@@ -46,10 +50,10 @@ jobs:
           echo "redis==5.0.1" >> server/scheduler/requirements.txt
 
       - name: Build Docker Images
-        run: docker-compose build
+        run: docker-compose build server scheduler
 
       - name: Push Docker Images
-        run: docker-compose push
+        run: docker-compose push server scheduler
   
   deploy:
     needs: docker-build-and-push
@@ -64,11 +68,9 @@ jobs:
         port: 22
         script: |
           cd app/WebManager
-          docker-compose stop wm-client wm-server wm-scheduler
-          docker rm -f wm-client wm-server wm-scheduler || true
-          docker rmi -f alwaysmeow/webmanager-client alwaysmeow/webmanager-scheduler alwaysmeow/webmanager-server || true
+          docker-compose stop wm-server wm-scheduler
+          docker rm -f wm-server wm-scheduler || true
+          docker rmi -f alwaysmeow/webmanager-scheduler alwaysmeow/webmanager-server || true
           git pull origin prod
           docker pull alwaysmeow/webmanager-server:latest
           docker pull alwaysmeow/webmanager-scheduler:latest
-          docker pull alwaysmeow/webmanager-client:latest
-          docker-compose up -d
