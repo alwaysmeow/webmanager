@@ -1,17 +1,41 @@
 from pymongo.mongo_client import MongoClient
+from pymongo import errors
 from datetime import datetime, timedelta
 from os import getenv
 
 # from dotenv import load_dotenv
 # load_dotenv('../.env')
 
+def dbRequest(func):
+    def wrapper(self, *args, **kwargs):
+        try:
+            return func(self, *args, **kwargs)
+        except errors.ConnectionError as e:
+            self.connect()
+            return func(self, *args, **kwargs)
+        except Exception as e:
+            return None
+    return wrapper
+
 class DataBase:
     def __init__(self, host, port, dev = False):
-        if dev:
-            client = client = MongoClient(host=host, port=port)
+        self.host = host
+        self.port = port
+        self.dev = dev
+
+        self.userData = None
+        self.keys = None
+        self.connect()
+
+        self.keyLifetime = timedelta(weeks=1)
+        self.inactiveUserLifetime = timedelta(days=365)
+    
+    def connect(self):
+        if self.dev:
+            client = MongoClient(host=self.host, port=self.port)
         else:
-            client = MongoClient(host=host,
-                                port=port,
+            client = MongoClient(host=self.host,
+                                port=self.port,
                                 username=getenv("MONGO_INITDB_ROOT_USERNAME"),
                                 password=getenv("MONGO_INITDB_ROOT_PASSWORD"))
         
@@ -19,11 +43,9 @@ class DataBase:
         self.userData = db['UserData']
         self.keys = db['Keys']
 
-        self.keyLifetime = timedelta(weeks=1)
-        self.inactiveUserLifetime = timedelta(days=365)
-    
     # Account Interface
 
+    @dbRequest
     def getUserData(self, username):
         return self.userData.find_one(
             {"username" : username}, 
@@ -36,15 +58,19 @@ class DataBase:
             }
         )
     
+    @dbRequest
     def authentication(self, username, passwordHash):
         return not self.userData.find_one({"username": username, "passwordHash": passwordHash}) is None
 
+    @dbRequest
     def isNameFree(self, username):
         return self.userData.find_one({"username": username}) is None
 
+    @dbRequest
     def isEmailFree(self, email):
         return self.userData.find_one({"email": email}) is None
 
+    @dbRequest
     def registerAccount(self, username, passwordHash, email):
         userData = {
             "username": username,
@@ -56,21 +82,25 @@ class DataBase:
         }
         self.userData.insert_one(userData)
 
+    @dbRequest
     def deleteAccount(self, username):
         self.userData.delete_one({"username": username})
 
+    @dbRequest
     def renameUser(self, username, newName):
         self.userData.update_one(
             {"username": username},
             {"$set": {"username": newName}}
         )
 
+    @dbRequest
     def changePassword(self, username, passwordHash):
         self.userData.update_one(
             {"username": username},
             {"$set": {"passwordHash": passwordHash}}
         )
 
+    @dbRequest
     def updateUserTiming(self, username):
         self.userData.update_one(
             {"username": username},
@@ -82,6 +112,7 @@ class DataBase:
             }
         )
 
+    @dbRequest
     def usersToWarn(self):
         cursor = self.userData.find({
             "timing": {"$lt": datetime.utcnow() + timedelta(weeks=1) - self.inactiveUserLifetime},
@@ -89,6 +120,7 @@ class DataBase:
         }, {"username", "email"})
         return list(cursor)
 
+    @dbRequest
     def setWarningLetterSended(self, username):
         self.userData.update_one(
             {"username": username},
@@ -99,15 +131,18 @@ class DataBase:
             }
         )
 
+    @dbRequest
     def deleteInactiveUsers(self):
         self.userData.delete_many({"timing": {"$lt": datetime.utcnow() - self.inactiveUserLifetime}})
 
     # Category Interface
 
+    @dbRequest
     def countCategories(self, username):
         userdata = self.userData.find_one({"username": username})
         return len(userdata["categories"])
 
+    @dbRequest
     def deleteCategory(self, username, categoryIndex):
         self.userData.update_one(
             {"username": username}, 
@@ -118,12 +153,14 @@ class DataBase:
             {"$pull": {"categories": None}}
         )
 
+    @dbRequest
     def renameCategory(self, username, categoryIndex, newName):
         self.userData.update_one(
             {"username": username},
             {"$set": {f"categories.{categoryIndex}.name": newName}}
         )
 
+    @dbRequest
     def newCategory(self, username, categoryName):
         self.userData.update_one(
             {"username": username},
@@ -140,6 +177,7 @@ class DataBase:
             }
         )
 
+    @dbRequest
     def moveCategory(self, username, oldCategoryIndex, newCategoryIndex):
         if oldCategoryIndex == newCategoryIndex:
             return
@@ -158,6 +196,7 @@ class DataBase:
                 {"$set": {"categories": categories}}
             )
 
+    @dbRequest
     def toggleCategory(self, username, categoryIndex):
         state = self.userData.find_one({"username" : username})["categories"][categoryIndex]["hided"]
         self.userData.update_one(
@@ -165,6 +204,7 @@ class DataBase:
             {"$set": {f"categories.{categoryIndex}.hided": not state}}
         )
 
+    @dbRequest
     def categoryExist(self, username, categoryIndex):
         if categoryIndex >= self.countCategories(username):
             return False
@@ -172,10 +212,12 @@ class DataBase:
 
     # Link Interface
 
+    @dbRequest
     def countLinks(self, username, categoryIndex):
         userdata = self.userData.find_one({"username": username})
         return len(userdata["categories"][categoryIndex]["content"])
 
+    @dbRequest
     def deleteLink(self, username, categoryIndex, linkIndex):
         self.userData.update_one(
             {"username": username}, 
@@ -186,18 +228,21 @@ class DataBase:
             {"$pull": {f"categories.{categoryIndex}.content": None}}
         )
 
+    @dbRequest
     def renameLink(self, username, categoryIndex, linkIndex, newName):
         self.userData.update_one(
             {"username": username},
             {"$set": {f"categories.{categoryIndex}.content.{linkIndex}.name": newName}}
         )
 
+    @dbRequest
     def changeUrl(self, username, categoryIndex, linkIndex, newUrl):
         self.userData.update_one(
             {"username": username},
             {"$set": {f"categories.{categoryIndex}.content.{linkIndex}.url": newUrl}}
         )
 
+    @dbRequest
     def newLink(self, username, categoryIndex, linkName, url):    
         self.userData.update_one(
             {"username": username},
@@ -213,6 +258,7 @@ class DataBase:
             }
         )
 
+    @dbRequest
     def linkExist(self, username, categoryIndex, linkIndex):
         if not self.categoryExist(username, categoryIndex):
             return False
@@ -222,36 +268,44 @@ class DataBase:
 
     # Key Interface
 
+    @dbRequest
     def findKey(self, key):
         return not self.keys.find_one({"key": key}) is None
 
+    @dbRequest
     def deleteKey(self, key):
         self.keys.delete_one({"key": key})
 
+    @dbRequest
     def newKey(self, email, key):
         self.keys.insert_one({
             "email": email,
             "key": key
         })
 
+    @dbRequest
     def keySendedOnEmail(self, email):
         return not self.keys.find_one({"email": email}) is None
 
+    @dbRequest
     def updateKey(self, email, key):
         self.keys.update_one(
             {"email": email},
             {"$set": {"key": key}}
         )
 
+    @dbRequest
     def getEmailByKey(self, key):
         return self.keys.find_one({"key": key})["email"]
 
+    @dbRequest
     def updateKeyTiming(self, email):
         self.keys.update_one(
             {"email": email},
             {"$set": {"timing": datetime.utcnow()}}
         )
 
+    @dbRequest
     def deleteExpiredKeys(self):
         self.keys.delete_many({"timing": {"$lt": datetime.utcnow() - self.keyLifetime}})
 
