@@ -52,6 +52,7 @@ services:
   redis:
     image: redis
     container_name: wm-redis
+    command: redis-server --requirepass qwerty
     ports:
       - "6379:6379"
     networks:

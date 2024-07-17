@@ -44,4 +44,3 @@ jobs:
           docker rmi -f alwaysmeow/webmanager-client || true
           git pull origin prod
           docker pull alwaysmeow/webmanager-client:latest
-          docker-compose up -d

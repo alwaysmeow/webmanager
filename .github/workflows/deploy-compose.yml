@@ -1,16 +1,19 @@
-name: Up Containers
-
-on:
-  workflow_run:
-    workflows: ["Client Deploy", "Server Deploy", "Compose Deploy"]
-    types:
-      - completed
+name: Compose Deploy
+on: 
+  push:
+    paths:
+      - './docker-compose.yml'
 
 jobs:
-  run-compose:
+  checkout:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+  
+  deploy-compose:
+    needs: build-and-push-client-image
+    runs-on: ubuntu-latest
     steps:
     - name: SSH connection
       uses: appleboy/ssh-action@v1.0.3
@@ -21,4 +24,5 @@ jobs:
         port: 22
         script: |
           cd app/WebManager
-          docker-compose up -d
+          docker-compose stop
+          git pull origin prod

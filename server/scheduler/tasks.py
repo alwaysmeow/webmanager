@@ -7,8 +7,8 @@ from database import database
 from mail import mail
 from tools.keygen import generateKey
 
-# url = "redis://localhost:6379/0"
-url = "redis://redis:6379/0"
+# url = "redis://:qwerty@localhost:6379/0"
+url = "redis://:qwerty@redis:6379/0"
 
 celery = Celery("WebManagerTasks", broker=url)
 
