@@ -20,5 +20,5 @@ app.secret_key = getenv("FLASK_KEY")
 
 swagger = Swagger(app)
 
-url = "redis://redis:6379/0"
+url = "redis://:qwerty@redis:6379/0"
 celery = Celery("WebManagerTasks", broker=url)

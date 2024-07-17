@@ -1,5 +1,6 @@
 **/.DS_Store
 .env
+**.txt
 
 server/**/__pycache__
 server/**/requirements.txt
