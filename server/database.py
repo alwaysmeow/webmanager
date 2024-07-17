@@ -323,7 +323,7 @@ class DataBase:
 
 # prod
 # uri = "mongodb://mongodb:27017"
-database = DataBase('mongodb', 27017)
+database = DataBase("mongodb", 27017)
 
 # dev
 # uri = "mongodb://localhost:27017"
