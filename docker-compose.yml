@@ -52,7 +52,9 @@ services:
   redis:
     image: redis
     container_name: wm-redis
-    command: redis-server --requirepass qwerty
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf 
     ports:
       - "6379:6379"
     networks:
