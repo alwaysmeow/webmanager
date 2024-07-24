@@ -24,6 +24,7 @@ services:
       - .env
     networks:
       - wm-network
+    restart: always
   
   client:
     build: ./client
@@ -54,9 +55,7 @@ services:
     container_name: wm-redis
     command: redis-server /usr/local/etc/redis/redis.conf
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf 
-    ports:
-      - "6379:6379"
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - wm-network
 

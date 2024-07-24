@@ -10,7 +10,7 @@ from tools.keygen import generateKey
 # url = "redis://:qwerty@localhost:6379/0"
 url = "redis://:qwerty@redis:6379/0"
 
-celery = Celery("WebManagerTasks", broker=url)
+celery = Celery("WebManagerScheduler", broker=url)
 
 # redis-server
 # celery -A tasks beat -l info
