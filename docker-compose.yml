@@ -39,7 +39,7 @@ services:
     tty: true
   
   mongodb:
-    image: mongo
+    image: mongo:6.0-focal
     container_name: wm-mongodb
     env_file:
       - .env
