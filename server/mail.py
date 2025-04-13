@@ -35,7 +35,10 @@ class Mail:
 
     def disconnect(self):
         if self.server:
-            self.server.quit()
+            try:
+                self.server.quit()
+            except:
+                print("Can't disconnect")
     
     def reconnect(self):
         self.disconnect()
