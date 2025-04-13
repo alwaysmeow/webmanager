@@ -50,10 +50,10 @@ jobs:
           echo "redis==5.0.1" >> server/scheduler/requirements.txt
 
       - name: Build Docker Images
-        run: docker-compose build server scheduler
+        run: docker compose build server scheduler
 
       - name: Push Docker Images
-        run: docker-compose push server scheduler
+        run: docker compose push server scheduler
   
   deploy:
     needs: docker-build-and-push
@@ -68,7 +68,7 @@ jobs:
         port: 22
         script: |
           cd app/WebManager
-          docker-compose stop wm-server wm-scheduler
+          docker compose stop wm-server wm-scheduler
           docker rm -f wm-server wm-scheduler || true
           docker rmi -f alwaysmeow/webmanager-scheduler alwaysmeow/webmanager-server || true
           git pull origin prod

@@ -21,10 +21,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker-compose build client
+        run: docker compose build client
 
       - name: Push Docker Image
-        run: docker-compose push client
+        run: docker compose push client
   
   deploy:
     needs: build-and-push-client-image
@@ -39,9 +39,9 @@ jobs:
         port: 22
         script: |
           cd app/WebManager
-          docker-compose stop wm-client
+          docker compose stop wm-client
           docker rm -f wm-client || true
           docker rmi -f alwaysmeow/webmanager-client || true
           git pull origin prod
           docker pull alwaysmeow/webmanager-client:latest
-          docker-compose up -d
+          docker compose up -d

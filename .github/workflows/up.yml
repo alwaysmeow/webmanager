@@ -21,4 +21,4 @@ jobs:
         port: 22
         script: |
           cd app/WebManager
-          docker-compose up -d
+          docker compose up -d
