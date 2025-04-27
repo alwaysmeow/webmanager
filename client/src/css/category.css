@@ -50,6 +50,7 @@ input.category-head:focus
     transition: var(--transition-time);
 
     overflow-x: scroll;
+    scrollbar-width: none;
 }
 
 .editing .link-list,
