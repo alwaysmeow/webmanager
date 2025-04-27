@@ -20,6 +20,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Set up environment file
+        run: touch .env
+
       - name: Build Docker Image
         run: docker compose build client
 
