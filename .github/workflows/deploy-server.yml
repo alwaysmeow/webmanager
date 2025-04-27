@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'server/**'
+  workflow_dispatch: {}
 
 jobs:
   build-and-push-server-images:

@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'client/**'
+  workflow_dispatch: {}
 
 jobs:
   build-and-push-client-image:
